@@ -1,14 +1,14 @@
 {
     "builds": [
         {
-            "src": "app.ts",
+            "src": "./src/app.ts",
             "use": "@now/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "app.ts"
+            "dest": "/src/app.ts"
         }
     ],
     "git": {
