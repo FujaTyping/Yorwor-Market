@@ -3,11 +3,13 @@
   "version": "1.0.50",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/app.ts",
+    "start": "bun run src/app.ts"
   },
   "dependencies": {
     "@elysiajs/swagger": "^1.2.0",
-    "elysia": "latest"
+    "elysia": "latest",
+    "elysia-autoload": "^1.4.0"
   },
   "devDependencies": {
     "bun-types": "latest"
