@@ -8,8 +8,11 @@
   },
   "dependencies": {
     "@elysiajs/swagger": "^1.2.0",
+    "axios": "^1.7.9",
     "elysia": "latest",
-    "elysia-autoload": "^1.4.0"
+    "elysia-autoload": "^1.4.0",
+    "elysia-rate-limit": "^4.1.0",
+    "firebase": "^11.1.0"
   },
   "devDependencies": {
     "bun-types": "latest"
