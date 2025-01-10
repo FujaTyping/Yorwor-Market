@@ -12,13 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm install && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
         env:
           NEXT_PUBLIC_apiKey: ${{ secrets.NEXT_PUBLIC_apiKey }}
           NEXT_PUBLIC_storageBucket: ${{ secrets.NEXT_PUBLIC_storageBucket }}
           NEXT_PUBLIC_messagingSenderId: ${{ secrets.NEXT_PUBLIC_messagingSenderId }}
           NEXT_PUBLIC_appId: ${{ secrets.NEXT_PUBLIC_appId }}
           NEXT_PUBLIC_measurementId: ${{ secrets.NEXT_PUBLIC_measurementId }}
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YORWORMARKET }}
