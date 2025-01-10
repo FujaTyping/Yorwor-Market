@@ -42,7 +42,7 @@ export default function Home() {
           </Button>
           {FireUser.uid ? (
             <>
-              <Link href={`/user/${FireUser.uid}`}>
+              <Link href={'/user'}>
                 <Button style={{ backgroundColor: 'white' }} startContent={<FaUser />} variant="bordered">
                   User
                 </Button>
