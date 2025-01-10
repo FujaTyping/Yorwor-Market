@@ -1,6 +1,6 @@
 const firebaseConfig = {
     apiKey: `${process.env.NEXT_PUBLIC_apiKey}`,
-    authDomain: "yorwormarket.firebaseapp.com",
+    authDomain: "market.yorwor.siraphop.me",
     projectId: "yorwormarket",
     storageBucket: `${process.env.NEXT_PUBLIC_storageBucket}`,
     messagingSenderId: `${process.env.NEXT_PUBLIC_messagingSenderId}`,
