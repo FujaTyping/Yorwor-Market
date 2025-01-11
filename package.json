@@ -7,6 +7,7 @@
     "start": "bun run src/app.ts"
   },
   "dependencies": {
+    "@elysiajs/cors": "^1.2.0",
     "@elysiajs/swagger": "^1.2.0",
     "axios": "^1.7.9",
     "elysia": "latest",
