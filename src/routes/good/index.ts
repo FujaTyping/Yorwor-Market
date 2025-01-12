@@ -1,11 +1,5 @@
 import type { ElysiaApp } from "../../app";
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import firebaseConfig from "../../firebase-config";
-import { getDocs, query, collection, orderBy } from 'firebase/firestore';
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+import { getDocs, query, collection, orderBy, where, documentId } from 'firebase/firestore';
 
 interface GGood {
     price: number;
@@ -15,20 +9,53 @@ interface GGood {
 }
 
 export default (app: ElysiaApp) =>
-    app.get("/", async () => {
-        let RealData: { Goods: GGood[] } = { Goods: [] };
-        try {
-            const querySnapshot = await getDocs(query(collection(db, "Goods"), orderBy("timestamp", "desc")));
-            RealData.Goods = [];
-            querySnapshot.forEach((doc) => {
-                const good = doc.data() as GGood;
-                RealData.Goods.push(good);
-            });
-            return RealData;
-        } catch (error: any) {
-            return {
-                error: true,
-                message: error.message || "An error occurred while fetching data",
-            };
-        }
-    });
+    app
+        .get("/", async ({ store }) => {
+            const { db } = store;
+            let RealData: { Goods: GGood[] } = { Goods: [] };
+            try {
+                const querySnapshot = await getDocs(query(collection(db, "Goods"), orderBy("timestamp", "desc")));
+                RealData.Goods = [];
+                querySnapshot.forEach((doc) => {
+                    const good = doc.data() as GGood;
+                    RealData.Goods.push(good);
+                });
+                return RealData;
+            } catch (error: any) {
+                return {
+                    error: true,
+                    message: error.message || "An error occurred while fetching data",
+                };
+            }
+        })
+        .put("/user", async ({ body, store }) => {
+            const { db } = store;
+            let RealData: { Goods: GGood[] } = { Goods: [] };
+            const { goodsIds } = body;
+
+            if (!goodsIds) {
+                return { error: true, message: "Missing goods id" };
+            }
+
+            try {
+                const querySnapshot = await getDocs(
+                    query(
+                        collection(db, "Goods"),
+                        where(documentId(), "in", goodsIds),
+                        orderBy("timestamp", "desc")
+                    )
+                );
+
+                RealData.Goods = [];
+                querySnapshot.forEach((doc) => {
+                    const good = doc.data() as GGood;
+                    RealData.Goods.push(good);
+                });
+                return RealData;
+            } catch (error: any) {
+                return {
+                    error: true,
+                    message: error.message || "An error occurred while fetching data",
+                };
+            }
+        });
