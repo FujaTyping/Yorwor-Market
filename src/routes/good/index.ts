@@ -28,7 +28,7 @@ export default (app: ElysiaApp) =>
                 };
             }
         })
-        .put("/user", async ({ body, store }) => {
+        .put("/bulk", async ({ body, store }) => {
             const { db } = store;
             let RealData: { Goods: GGood[] } = { Goods: [] };
             const { goodsIds } = body;
