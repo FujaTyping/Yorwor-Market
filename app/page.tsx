@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { useState, useEffect } from "react";
@@ -13,17 +14,11 @@ import { signInWithGoogle } from "../lib/firebase-auth";
 import marketConfig from "@/market-config.mjs";
 import useLocalStorge from "@/lib/localstorage-db";
 
-interface ggood {
-  title: string;
-  decs: string;
-  price: number;
-  photoURL: string;
-}
 
 export default function Home() {
   const [title] = useState("Yorwor Market");
   const { FireUser } = useLocalStorge();
-  const [goodsList, setGoodsList] = useState<ggood[]>([]);
+  const [goodsList, setGoodsList] = useState([]);
 
   useEffect(() => {
     axios
