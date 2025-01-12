@@ -12,6 +12,15 @@ import { getAuth, signOut } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import axios from "axios";
 import { FiLogIn } from "react-icons/fi";
+import { IoBagAdd } from "react-icons/io5";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/modal";
 
 import useLocalStorge from "@/lib/localstorage-db";
 import marketConfig from "@/market-config.mjs";
@@ -26,6 +35,12 @@ export default function UserPage() {
   const [userState, setUserState] = useState("NoMember");
   const [inputForm, setInputForm] = useState("");
   const [realUserName, setRealUserName] = useState("");
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const [Gprice, setGPrice] = useState(0);
+  const [Gtitle, setGTitle] = useState("");
+  const [Gdecs, setGDecs] = useState("");
+  const [GphotoURL, setGPhotoURL] = useState("");
 
   function createNewUser() {
     if (!inputForm == "") {
@@ -53,6 +68,29 @@ export default function UserPage() {
           });
         });
     }
+  }
+
+  function submitNewGoods() {
+    const id = toast.loading("Adding new product ...");
+    axios
+      .post(`${marketConfig.apiServer}good/new`, { email: `${FireUser.email}`, title: `${Gtitle}`, decs: `${Gdecs}`, photoURL: `${GphotoURL}`, price: Gprice })
+      .then((response) => {
+        toast.update(id, {
+          render: `Succssfully add product`,
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      })
+      .catch((error) => {
+        toast.update(id, {
+          render: `Failed to add product ${error.message}`,
+          closeOnClick: true,
+          type: "error",
+          isLoading: false,
+          autoClose: 10000,
+        });
+      });
   }
 
   useEffect(() => {
@@ -183,7 +221,17 @@ export default function UserPage() {
             ) : (
               <>
                 <div className="overflow-hidden">
-                  <h1 className="mt-5 text-left pb-3">Your product</h1>
+                  <div className="flex items-center mb-3 mt-5 gap-2">
+                    <h1>Your product</h1>
+                    <Button
+                      isIconOnly
+                      style={{ backgroundColor: "white" }}
+                      variant="bordered"
+                      onPress={onOpen}
+                    >
+                      <IoBagAdd />
+                    </Button>
+                  </div>
                   <table className="w-full text-sm leading-5 border border-gray-300 shadow-sm rounded-lg">
                     <thead className="bg-gray-100">
                       <tr>
@@ -207,9 +255,98 @@ export default function UserPage() {
             )}
           </>
         ) : (
-          "No auth found"
+          <>
+            <h1 className="text-center text-xl -mb-2">No auth found</h1>
+            <Link href={`/`}>
+              <Button
+                style={{ backgroundColor: "white" }}
+                variant="bordered"
+              >
+                Back to home
+              </Button>
+            </Link>
+          </>
         )}
       </div>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Add new product</ModalHeader>
+              <ModalBody>
+                <div>
+                  <div className="bg-white rounded-lg">
+                    <div>
+                      <form>
+                        <div className="mb-4">
+                          <label htmlFor="Gtitle" className="block text-gray-700 font-bold mb-2">
+                            Title
+                          </label>
+                          <input
+                            id="Gtitle"
+                            value={Gtitle}
+                            onChange={(e) => setGTitle(e.target.value)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            type="text"
+                            placeholder="eg. Cookie"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label htmlFor="Gdecs" className="block text-gray-700 font-bold mb-2">
+                            Decs
+                          </label>
+                          <input
+                            id="Gdecs"
+                            value={Gdecs}
+                            onChange={(e) => setGDecs(e.target.value)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            type="text"
+                            placeholder="eg. Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label htmlFor="Gprice" className="block text-gray-700 font-bold mb-2">
+                            Price
+                          </label>
+                          <input
+                            id="Gprice"
+                            value={Gprice}
+                            onChange={(e) => setGPrice(e.target.value)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            type="number"
+                            placeholder="eg. 100 , 5 , 10"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label htmlFor="GphotoURL" className="block text-gray-700 font-bold mb-2">
+                            photoURL
+                          </label>
+                          <input
+                            id="GphotoURL"
+                            value={GphotoURL}
+                            onChange={(e) => setGPhotoURL(e.target.value)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            type="text"
+                            placeholder="eg. https://i.ibb.co/<URL>"
+                          />
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button variant="bordered" color="primary" onPress={() => { onClose; submitNewGoods() }}>
+                  Submit
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </>
   );
 }
