@@ -60,12 +60,12 @@ export default (app: ElysiaApp) =>
                 };
             }
         })
-        .post("/new", async ({ body, store }) => {
+        .post("/new", async ({ body, store, error }) => {
             const { db } = store;
             const { email, decs, photoURL, price, title } = body;
 
             if (!email || !decs || !photoURL || !price || !title) {
-                return { error: true, message: "Missing good details" };
+                return error(401, { error: true, message: "Missing good details" });
             }
 
             try {
