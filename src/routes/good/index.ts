@@ -1,5 +1,6 @@
 import type { ElysiaApp } from "../../app";
-import { getDocs, query, collection, orderBy, where, documentId } from 'firebase/firestore';
+import { getDocs, query, collection, orderBy, where, documentId, setDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { generateID } from "../../lib/module";
 
 interface GGood {
     price: number;
@@ -52,6 +53,34 @@ export default (app: ElysiaApp) =>
                     RealData.Goods.push(good);
                 });
                 return RealData;
+            } catch (error: any) {
+                return {
+                    error: true,
+                    message: error.message || "An error occurred while fetching data",
+                };
+            }
+        })
+        .post("/new", async ({ body, store }) => {
+            const { db } = store;
+            const { email, decs, photoURL, price, title } = body;
+
+            if (!email || !decs || !photoURL || !price || !title) {
+                return { error: true, message: "Missing good details" };
+            }
+
+            try {
+                const UID = generateID();
+                await setDoc(doc(db, "Goods", `${UID}`), {
+                    decs: `${decs}`,
+                    title: `${title}`,
+                    id: `${UID}`,
+                    photoURL: `${photoURL}`,
+                    price: price,
+                    timestamp: serverTimestamp(),
+                });
+                await setDoc(doc(db, "User", `${email}`, "Goods", `${UID}`), {});
+
+                return `Successfully add good with id ${UID}`;
             } catch (error: any) {
                 return {
                     error: true,
