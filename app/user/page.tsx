@@ -75,12 +75,22 @@ export default function UserPage() {
     axios
       .post(`${marketConfig.apiServer}good/new`, { email: `${FireUser.email}`, title: `${Gtitle}`, decs: `${Gdecs}`, photoURL: `${GphotoURL}`, price: Gprice })
       .then((response) => {
-        toast.update(id, {
-          render: `Succssfully add product`,
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-        });
+        if (response.data.error) {
+          toast.update(id, {
+            render: `Failed to add product (Fill all the input)`,
+            closeOnClick: true,
+            type: "error",
+            isLoading: false,
+            autoClose: 10000,
+          });
+        } else {
+          toast.update(id, {
+            render: `Succssfully add product`,
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+        }
       })
       .catch((error) => {
         toast.update(id, {
