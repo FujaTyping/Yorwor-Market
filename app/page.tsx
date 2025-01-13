@@ -7,6 +7,7 @@ import { Button } from "@nextui-org/button";
 import { FcGoogle } from "react-icons/fc";
 import { FaUser } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 import { signInWithGoogle } from "../lib/firebase-auth";
@@ -17,6 +18,7 @@ import useLocalStorge from "@/lib/localstorage-db";
 
 export default function Home() {
   const [title] = useState("Yorwor Market");
+  const router = useRouter();
   const { FireUser } = useLocalStorge();
   const [goodsList, setGoodsList] = useState([]);
 
@@ -63,6 +65,7 @@ export default function Home() {
                   });
                   setTimeout(() => {
                     window.location.reload();
+                    router.push("/user");
                   }, 1500);
                 })
                 .catch((error) => {
@@ -95,40 +98,44 @@ export default function Home() {
           )}
         </div>
         <div>
-          <section
-            className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
-            id="Projects"
-          >
-            {goodsList.map((list, index) => (
-              <>
-                <div
-                  key={index}
-                  className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
-                >
-                  <a href="#HELLO">
-                    <img
-                      alt="Product"
-                      className="h-80 w-72 object-cover rounded-t-xl"
-                      src={list.photoURL}
-                    />
-                    <div className="px-4 py-3 w-72">
-                      <span className="text-gray-400 mr-3 uppercase text-xs">
-                        Product
-                      </span>
-                      <p className="text-lg font-bold text-black truncate block capitalize">
-                        {list.title}
-                      </p>
-                      <div className="flex items-center">
-                        <p className="text-lg font-semibold text-black cursor-auto my-3">
-                          {list.price} Baht
+          {
+            goodsList.length > 0 ? (
+              <section
+                className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
+                id="Projects"
+              >
+                {goodsList.map((list, index) => (
+                  <div
+                    key={index}
+                    className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                  >
+                    <a href="#HELLO">
+                      <img
+                        alt="Product"
+                        className="h-80 w-72 object-cover rounded-t-xl"
+                        src={list.photoURL}
+                      />
+                      <div className="px-4 py-3 w-72">
+                        <span className="text-gray-400 mr-3 uppercase text-xs">
+                          Product
+                        </span>
+                        <p className="text-lg font-bold text-black truncate block capitalize">
+                          {list.title}
                         </p>
+                        <div className="flex items-center">
+                          <p className="text-lg font-semibold text-black cursor-auto my-3">
+                            {list.price} Baht
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </div>
-              </>
-            ))}
-          </section>
+                    </a>
+                  </div>
+                ))}
+              </section>
+            ) : (
+              <h1 className="text-xl text-center mt-3">No products available at the moment.</h1>
+            )
+          }
         </div>
       </div>
     </>
