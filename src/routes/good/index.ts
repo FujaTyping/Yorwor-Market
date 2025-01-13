@@ -22,15 +22,13 @@ export default (app: ElysiaApp) =>
                 for (const docSnap of querySnapshot.docs) {
                     const good = docSnap.data() as GGood;
 
-                    // Fetch the 'details' document inside the 'Author' subcollection for each good
                     const authorDocRef = doc(db, "Goods", docSnap.id, "Author", "Details");
                     const authorDoc = await getDoc(authorDocRef);
 
-                    // Check if the author document exists
                     if (authorDoc.exists()) {
-                        good.author = authorDoc.data(); // Add the author data to the good object
+                        good.author = authorDoc.data();
                     } else {
-                        good.author = {}; // If no author data exists, set an empty object
+                        good.author = {};
                     }
 
                     RealData.Goods.push(good);
@@ -63,10 +61,61 @@ export default (app: ElysiaApp) =>
                 );
 
                 RealData.Goods = [];
-                querySnapshot.forEach((doc) => {
-                    const good = doc.data() as GGood;
+
+                for (const docSnapshot of querySnapshot.docs) {
+                    const good = docSnapshot.data() as GGood;
+
+                    const authorDocRef = doc(db, "Goods", docSnapshot.id, "Author", "Details");
+                    const authorDocSnap = await getDoc(authorDocRef);
+
+                    if (authorDocSnap.exists()) {
+                        good.author = authorDocSnap.data();
+                    } else {
+                        good.author = {};
+                    }
+
                     RealData.Goods.push(good);
-                });
+                }
+
+                return RealData;
+            } catch (error: any) {
+                return {
+                    error: true,
+                    message: error.message || "An error occurred while fetching data",
+                };
+            }
+
+        })
+        .put("/item", async ({ body, store }) => {
+            const { db } = store;
+            let RealData: { Goods: GGood[] } = { Goods: [] };
+            const { goodId } = body;
+
+            if (!goodId) {
+                return { error: true, message: "Missing goods id" };
+            }
+
+            try {
+                const docRef = doc(db, "Goods", goodId);
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    return { error: true, message: "Goods not found" };
+                }
+
+                const good = docSnap.data() as GGood;
+
+                const authorDocRef = doc(db, "Goods", goodId, "Author", "Details");
+                const authorDocSnap = await getDoc(authorDocRef);
+
+                if (authorDocSnap.exists()) {
+                    good.author = authorDocSnap.data();
+                } else {
+                    good.author = {};
+                }
+
+                RealData.Goods.push(good);
+
                 return RealData;
             } catch (error: any) {
                 return {
