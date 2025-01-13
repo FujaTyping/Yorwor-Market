@@ -46,9 +46,9 @@ export default (app: ElysiaApp) =>
         })
         .post("/new", async ({ body, store }) => {
             const { db } = store as { db: Firestore };
-            const { displayNAME, email } = body;
+            const { displayNAME, email,bio } = body;
 
-            if (!displayNAME || !email) {
+            if (!displayNAME || !email || !bio) {
                 return { error: true, message: "Missing email" };
             }
 
@@ -58,7 +58,8 @@ export default (app: ElysiaApp) =>
             if (!parentDocSnap.exists()) {
                 try {
                     await setDoc(doc(db, "User", `${email}`), {
-                        displayName: `${displayNAME}`
+                        displayName: `${displayNAME}`,
+                        bio:`${bio}`
                     });
 
                     return `Success create account for ${email}`;
