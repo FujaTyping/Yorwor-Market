@@ -30,8 +30,6 @@ import marketConfig from "@/market-config.mjs";
 import firebaseConfig from "@/lib/firebase-config";
 import { parse } from "path";
 
-const IMBBAPI = process.env.NEXT_PUBLIC_imbbAPI;
-
 export default function UserPage() {
   const [title] = useState("Yorwor Market");
   const router = useRouter();
@@ -103,7 +101,7 @@ export default function UserPage() {
       });
     } else {
       axios
-        .post(`https://api.imgbb.com/1/upload`, { key: IMBBAPI, image: filePrv }, {
+        .post(`https://api.imgbb.com/1/upload`, { key: "2dd550a902838594c15570cc01632214", image: filePrv }, {
           headers: {
             'Content-Type': 'multipart/form-data'
           },
