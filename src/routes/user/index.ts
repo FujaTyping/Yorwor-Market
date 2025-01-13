@@ -25,9 +25,13 @@ export default (app: ElysiaApp) =>
                 const subcollectionRef = collection(db, "User", `${uID}`, "Goods");
                 const subcollectionSnap = await getDocs(subcollectionRef);
 
-                const goodsData: string[] = [];
+                const goodsData: Record<string, string> = {};
                 subcollectionSnap.forEach((doc) => {
-                    goodsData.push(doc.id);
+                    const data = doc.data();
+                    const title = data?.title;
+                    if (title) {
+                        goodsData[doc.id] = title;
+                    }
                 });
 
                 const combinedData = {
@@ -46,7 +50,7 @@ export default (app: ElysiaApp) =>
         })
         .post("/new", async ({ body, store }) => {
             const { db } = store as { db: Firestore };
-            const { displayNAME, email,bio } = body;
+            const { displayNAME, email, bio } = body;
 
             if (!displayNAME || !email || !bio) {
                 return { error: true, message: "Missing email" };
@@ -59,7 +63,7 @@ export default (app: ElysiaApp) =>
                 try {
                     await setDoc(doc(db, "User", `${email}`), {
                         displayName: `${displayNAME}`,
-                        bio:`${bio}`
+                        bio: `${bio}`
                     });
 
                     return `Success create account for ${email}`;
