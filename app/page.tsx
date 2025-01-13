@@ -109,7 +109,7 @@ export default function Home() {
                     key={index}
                     className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                   >
-                    <a href="#HELLO">
+                    <Link href={`/product?id=${list.id}`}>
                       <img
                         alt="Product"
                         className="h-80 w-72 object-cover rounded-t-xl"
@@ -128,7 +128,7 @@ export default function Home() {
                           </p>
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 ))}
               </section>
