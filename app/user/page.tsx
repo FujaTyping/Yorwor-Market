@@ -30,6 +30,8 @@ import marketConfig from "@/market-config.mjs";
 import firebaseConfig from "@/lib/firebase-config";
 import { parse } from "path";
 
+const IMBBAPI = process.env.NEXT_PUBLIC_imbbAPI;
+
 export default function UserPage() {
   const [title] = useState("Yorwor Market");
   const router = useRouter();
@@ -101,7 +103,7 @@ export default function UserPage() {
       });
     } else {
       axios
-        .post(`https://api.imgbb.com/1/upload`, { key: `2dd550a902838594c15570cc01632214`, image: filePrv }, {
+        .post(`https://api.imgbb.com/1/upload`, { key: IMBBAPI, image: filePrv }, {
           headers: {
             'Content-Type': 'multipart/form-data'
           },
@@ -126,6 +128,9 @@ export default function UserPage() {
                   isLoading: false,
                   autoClose: 3000,
                 });
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1500);
               }
             })
             .catch((error) => {
@@ -382,7 +387,7 @@ export default function UserPage() {
                                     <FaUpload className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                                   </>
                                 ) : (<>
-                                  <img style={{ maxHeight: '10rem' }} className="rounded-lg" src={fileUrlPrv} />
+                                  <img style={{ maxHeight: '10rem' }} className="rounded-lg" src={fileUrlPrv} alt="Preview" />
                                 </>)}
                                 <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
                                   <span>{file == null ? ("Upload good thumnails") : (`${file.name}`)}</span>
