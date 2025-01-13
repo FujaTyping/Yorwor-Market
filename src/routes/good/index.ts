@@ -35,7 +35,7 @@ export default (app: ElysiaApp) =>
             const { goodsIds } = body;
 
             if (!goodsIds) {
-                return { error: true, message: "Missing goods id" };
+                return { error: true, message: "Missing goods ids" };
             }
 
             try {
@@ -63,6 +63,7 @@ export default (app: ElysiaApp) =>
         .post("/new", async ({ body, store, error }) => {
             const { db } = store;
             const { email, decs, photoURL, price, title } = body;
+            const { displayName, AuthorphotoURL } = body.author;
 
             if (!email || !decs || !photoURL || !price || !title) {
                 return error(401, { error: true, message: "Missing good details" });
@@ -73,12 +74,16 @@ export default (app: ElysiaApp) =>
                 await setDoc(doc(db, "Goods", `${UID}`), {
                     decs: `${decs}`,
                     title: `${title}`,
-                    id: `${UID}`,
                     photoURL: `${photoURL}`,
                     price: price,
                     timestamp: serverTimestamp(),
                 });
-                await setDoc(doc(db, "User", `${email}`, "Goods", `${UID}`), {});
+                await setDoc(doc(db, "Goods", `${UID}`,"Author"), {
+                    photoURL: `${AuthorphotoURL}`,
+                    email: `${email}`,
+                    displayName:`${displayName}`
+                });
+                await setDoc(doc(db, "User", `${email}`, "Goods", `${UID}`), { title: `${title}`});
 
                 return `Successfully add good with id ${UID}`;
             } catch (error: any) {
