@@ -138,6 +138,7 @@ export default (app: ElysiaApp) =>
                     decs: decs,
                     title: title,
                     photoURL: photoURL,
+                    id: UID,
                     price: price,
                     timestamp: serverTimestamp(),
                 });
