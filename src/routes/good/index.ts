@@ -63,7 +63,7 @@ export default (app: ElysiaApp) =>
         .post("/new", async ({ body, store }) => {
             const { db } = store;
             const { email, decs, photoURL, price, title } = body;
-            const { displayName, photoURL } = body.author;
+            const { displayName, AuthorphotoURL } = body.author;
 
             if (!email || !decs || !photoURL || !price || !title) {
                 return { error: true, message: "Missing good details" };
@@ -79,7 +79,7 @@ export default (app: ElysiaApp) =>
                     timestamp: serverTimestamp(),
                 });
                 await setDoc(doc(db, "Goods", `${UID}`,"Author"), {
-                    photoURL: `${photoURL}`,
+                    photoURL: `${AuthorphotoURL}`,
                     email: `${email}`,
                     displayName:`${displayName}`
                 });
