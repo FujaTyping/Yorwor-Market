@@ -101,7 +101,7 @@ export default function Home() {
           {
             goodsList.length > 0 ? (
               <section
-                className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
+                className="w-fit mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
                 id="Projects"
               >
                 {goodsList.map((list, index) => (
