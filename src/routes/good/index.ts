@@ -86,6 +86,40 @@ export default (app: ElysiaApp) =>
             }
 
         })
+        .put("/bulk/search", async ({ body, store }) => {
+            const { db } = store;
+            const { searchQuery } = body;
+
+            if (!searchQuery) {
+                return { error: true, message: "Missing search query" };
+            }
+
+            try {
+                const querySnapshot = await getDocs(collection(db, "Goods"));
+
+                const RealData = { Goods: [] as GGood[] };
+
+                for (const docSnapshot of querySnapshot.docs) {
+                    const good = docSnapshot.data() as GGood;
+
+                    if (good.title && good.title.toLowerCase().includes(searchQuery.toLowerCase())) {
+                        const authorDocRef = doc(db, "Goods", docSnapshot.id, "Author", "Details");
+                        const authorDocSnap = await getDoc(authorDocRef);
+
+                        good.author = authorDocSnap.exists() ? authorDocSnap.data() : {};
+
+                        RealData.Goods.push(good);
+                    }
+                }
+
+                return RealData;
+            } catch (error: any) {
+                return {
+                    error: true,
+                    message: error.message || "An error occurred while fetching documents",
+                };
+            }
+        })
         .put("/item", async ({ body, store }) => {
             const { db } = store;
             let RealData: { Goods: GGood[] } = { Goods: [] };
