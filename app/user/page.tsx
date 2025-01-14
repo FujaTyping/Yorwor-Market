@@ -25,6 +25,7 @@ import { Input, Textarea } from "@nextui-org/input";
 import { MdDeleteForever } from "react-icons/md";
 import { FaUpload } from "react-icons/fa6";
 import { signInWithGoogle } from "../../lib/firebase-auth";
+import { Tooltip } from "@nextui-org/tooltip";
 
 import useLocalStorge from "@/lib/localstorage-db";
 import marketConfig from "@/market-config.mjs";
@@ -379,14 +380,16 @@ export default function UserPage() {
                           <div className="max-w-lg mx-auto">
                             <div className="flex items-center mb-3 mt-5 gap-2 mx-auto">
                               <h1>Your product</h1>
-                              <Button
-                                isIconOnly
-                                style={{ backgroundColor: "white" }}
-                                variant="bordered"
-                                onPress={onOpen}
-                              >
-                                <IoBagAdd />
-                              </Button>
+                              <Tooltip content="Add new product">
+                                <Button
+                                  isIconOnly
+                                  style={{ backgroundColor: "white" }}
+                                  variant="bordered"
+                                  onPress={onOpen}
+                                >
+                                  <IoBagAdd />
+                                </Button>
+                              </Tooltip>
                             </div>
                             <Table aria-label="Goods table">
                               <TableHeader>
@@ -475,7 +478,7 @@ export default function UserPage() {
           </>
         )}
       </div>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top">
         <ModalContent>
           {(onClose) => (
             <>

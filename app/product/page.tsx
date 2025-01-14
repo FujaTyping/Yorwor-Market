@@ -4,10 +4,22 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
-import axios from "axios"
+import axios from "axios";
 import { FaCartPlus } from "react-icons/fa";
 import { Spinner } from "@nextui-org/spinner";
 import { User } from "@nextui-org/user";
+import { IoFlag } from "react-icons/io5";
+import { Tooltip } from "@nextui-org/tooltip";
+import {
+    Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    useDisclosure,
+} from "@nextui-org/modal";
+import { RadioGroup, Radio } from "@nextui-org/radio";
+import { ToastContainer, toast } from "react-toastify";
 
 import marketConfig from "@/market-config.mjs";
 
@@ -16,11 +28,50 @@ export default function Home() {
     const [title, setTitle] = useState("Yorwor Market");
     const [goodsList, setGoodsList] = useState([]);
     const [pageStatus, setPageStatus] = useState("Loading");
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [Gid, setGid] = useState("");
+    const [reportRadio, setReportRadio] = useState("");
+
+    function submitNewReport() {
+        const id = toast.loading("Adding new product ...");
+        axios
+            .post(`${marketConfig.apiServer}report/good`,
+                { gID: `${Gid}`, reason: `${reportRadio}` }
+            )
+            .then((response) => {
+                if (response.data.error) {
+                    toast.update(id, {
+                        render: `Failed report this product (Fill in all input)`,
+                        closeOnClick: true,
+                        type: "error",
+                        isLoading: false,
+                        autoClose: 10000,
+                    });
+                } else {
+                    toast.update(id, {
+                        render: `Successfully report this product`,
+                        type: "success",
+                        isLoading: false,
+                        autoClose: 3000,
+                    });
+                }
+            })
+            .catch((error: any) => {
+                toast.update(id, {
+                    render: `Failed report this product ${error.message}`,
+                    closeOnClick: true,
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 10000,
+                });
+            });
+    }
 
     useEffect(() => {
         setPageStatus("Loading");
         const queryParams = new URLSearchParams(window.location.search);
         const productId = queryParams.get('id');
+        setGid(productId);
         axios
             .put(`${marketConfig.apiServer}good/item`, { goodId: productId })
             .then((response) => {
@@ -37,6 +88,12 @@ export default function Home() {
     return (
         <>
             <title>{title}</title>
+            <ToastContainer
+                closeOnClick
+                newestOnTop
+                hideProgressBar={false}
+                position="bottom-right"
+            />
             <div className="flex flex-col items-center justify-center gap-5 m-10">
                 <div className="text-center">
                     <h1 className="text-3xl">Yorwor Market</h1>
@@ -65,8 +122,11 @@ export default function Home() {
                                             </div>
                                         </div>
                                         <div className="md:flex-1">
-                                            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                                            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2 flex items-center gap-2">
                                                 {goodsList[0].title}
+                                                <Tooltip content="Report this product">
+                                                    <IoFlag onClick={onOpen} className="w-4 h-4 text-red-500 cursor-pointer" />
+                                                </Tooltip>
                                             </h2>
                                             <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                                                 {goodsList[0].decs}
@@ -83,7 +143,7 @@ export default function Home() {
                                             </div>
                                             <div className="flex flex-col items-start">
                                                 <span className="font-bold text-gray-700 dark:text-gray-300">
-                                                    Author info:
+                                                    Author info :
                                                 </span>
                                                 <User
                                                     className="mt-2"
@@ -125,6 +185,40 @@ export default function Home() {
                     )}
                 </div>
             </div>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top">
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">Report {goodsList[0].title} ?</ModalHeader>
+                            <ModalBody>
+                                <div>
+                                    <div className="bg-white rounded-lg">
+                                        <div>
+                                            <form className="flex flex-col gap-4">
+                                                <RadioGroup onChange={(e) => setReportRadio(e.target.value)} label="Why you report this product">
+                                                    <Radio value="I dont like it">{"I don't like it"}</Radio>
+                                                    <Radio value="Copyright infringement">Copyright infringement</Radio>
+                                                    <Radio value="Prohibited goods">Prohibited goods</Radio>
+                                                    <Radio value="It is considered fraudulent">It is considered fraudulent</Radio>
+                                                    <Radio value="Selling other people products">{"Selling other people's products"}</Radio>
+                                                </RadioGroup>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" variant="light" onPress={onClose}>
+                                    Close
+                                </Button>
+                                <Button variant="bordered" color="primary" onPress={() => { onClose; submitNewReport() }}>
+                                    Submit
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
         </>
     );
 }

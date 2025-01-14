@@ -133,7 +133,7 @@ export default function Home() {
                               <Link href={`/product?id=${list.id}`}>
                                 <article key={index} className="relative">
                                   <div className="aspect-square overflow-hidden rounded-lg">
-                                    <img className="hover:scale-110 h-full w-full object-cover transition-all duration-200 rounded-lg" src={list.photoURL} alt="Product" />
+                                    <img loading="lazy" className="hover:scale-110 h-full w-full object-cover transition-all duration-200 rounded-lg" src={list.photoURL} alt="Product" />
                                   </div>
                                   <div className="absolute top-0 m-1 rounded-full bg-white">
                                     <p className="text-[10px] rounded-full bg-black p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">Sale</p>
