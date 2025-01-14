@@ -10,37 +10,43 @@ interface GGood {
     author: any;
 }
 
+let RealData: { Goods: GGood[] } = { Goods: [] };
+let lastFetchTime = 0;
+const fetchInterval = 2 * 60 * 1000;
+
 export default (app: ElysiaApp) =>
     app
         .get("/", async ({ store }) => {
             const { db } = store;
-            let RealData: { Goods: GGood[] } = { Goods: [] };
-            try {
-                const querySnapshot = await getDocs(query(collection(db, "Goods"), orderBy("timestamp", "desc")));
-                RealData.Goods = [];
+            if (Date.now() - lastFetchTime > fetchInterval) {
+                try {
+                    const querySnapshot = await getDocs(query(collection(db, "Goods"), orderBy("timestamp", "desc")));
+                    RealData.Goods = [];
 
-                for (const docSnap of querySnapshot.docs) {
-                    const good = docSnap.data() as GGood;
+                    for (const docSnap of querySnapshot.docs) {
+                        const good = docSnap.data() as GGood;
 
-                    const authorDocRef = doc(db, "Goods", docSnap.id, "Author", "Details");
-                    const authorDoc = await getDoc(authorDocRef);
+                        const authorDocRef = doc(db, "Goods", docSnap.id, "Author", "Details");
+                        const authorDoc = await getDoc(authorDocRef);
 
-                    if (authorDoc.exists()) {
-                        good.author = authorDoc.data();
-                    } else {
-                        good.author = {};
+                        if (authorDoc.exists()) {
+                            good.author = authorDoc.data();
+                        } else {
+                            good.author = {};
+                        }
+
+                        RealData.Goods.push(good);
                     }
 
-                    RealData.Goods.push(good);
+                    lastFetchTime = Date.now();
+                } catch (error: any) {
+                    return {
+                        error: true,
+                        message: error.message || "An error occurred while fetching data",
+                    };
                 }
-
-                return RealData;
-            } catch (error: any) {
-                return {
-                    error: true,
-                    message: error.message || "An error occurred while fetching data",
-                };
             }
+            return RealData;
         })
         .put("/bulk", async ({ body, store }) => {
             const { db } = store;
