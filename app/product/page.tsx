@@ -114,18 +114,23 @@ export default function Home() {
                                     <div className="flex flex-col md:flex-row gap-10">
                                         <div className="md:flex-1">
                                             <div className="rounded-lg">
-                                                <img
-                                                    className="object-cover rounded-lg max-w-full sm:max-w-md"
-                                                    src={goodsList[0].photoURL}
-                                                    alt="Product"
-                                                />
+                                                <div className="aspect-square overflow-hidden rounded-lg">
+                                                    <img loading="lazy" className="h-full w-full object-cover max-w-full sm:max-w-md rounded-lg" src={goodsList[0].photoURL} alt="Product" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="md:flex-1">
                                             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2 flex items-center gap-2">
                                                 {goodsList[0].title}
                                                 <Tooltip content="Report this product">
-                                                    <IoFlag onClick={onOpen} className="w-4 h-4 text-red-500 cursor-pointer" />
+                                                    <Button
+                                                        isIconOnly
+                                                        color="danger"
+                                                        variant="bordered"
+                                                        onPress={onOpen}
+                                                    >
+                                                        <IoFlag />
+                                                    </Button>
                                                 </Tooltip>
                                             </h2>
                                             <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
@@ -161,14 +166,16 @@ export default function Home() {
                                                 >
                                                     <Link href="/">Back to home</Link>
                                                 </Button>
-                                                <Button
-                                                    color="danger"
-                                                    variant="bordered"
-                                                    isDisabled
-                                                    startContent={<FaCartPlus />}
-                                                >
-                                                    Add to cart
-                                                </Button>
+                                                <Tooltip content="You cannot buy this right now">
+                                                    <Button
+                                                        color="danger"
+                                                        variant="bordered"
+                                                        className="cursor-not-allowed"
+                                                        startContent={<FaCartPlus />}
+                                                    >
+                                                        Add to cart
+                                                    </Button>
+                                                </Tooltip>
                                             </div>
                                         </div>
                                     </div>
