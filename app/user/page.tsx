@@ -24,6 +24,7 @@ import {
 import { Input, Textarea } from "@nextui-org/input";
 import { MdDeleteForever } from "react-icons/md";
 import { FaUpload } from "react-icons/fa6";
+import { signInWithGoogle } from "../../lib/firebase-auth";
 
 import useLocalStorge from "@/lib/localstorage-db";
 import marketConfig from "@/market-config.mjs";
@@ -178,6 +179,9 @@ export default function UserPage() {
             isLoading: false,
             autoClose: 3000,
           });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
         }
       })
       .catch((error) => {
@@ -196,25 +200,30 @@ export default function UserPage() {
       setPageStatus("Loading");
       setRealUserName(FireUser.displayName);
       setRealUserBio(FireUser.email);
-      setTitle(`Yorwor Market - ${FireUser.email}`)
-      axios
-        .put(`${marketConfig.apiServer}user`, { uID: `${FireUser.email}` })
-        .then((response) => {
-          setPageStatus("Finish");
-          if (response.data.message == "No such parent document") {
-            setUserState("NoMember");
+      if (FireUser.email.includes("@hatyaiwit.ac.th")) {
+        setTitle(`Yorwor Market - ${FireUser.email}`);
+        axios
+          .put(`${marketConfig.apiServer}user`, { uID: `${FireUser.email}` })
+          .then((response) => {
+            setPageStatus("Finish");
+            if (response.data.message == "No such parent document") {
+              setUserState("NoMember");
+              setUserDetails([]);
+            } else {
+              setUserDetails(response.data.User);
+              setRealUserName(response.data.User.displayName);
+              setRealUserBio(response.data.User.bio)
+              setUserState("YesMember");
+            }
+          })
+          .catch(() => {
+            setPageStatus("Error");
             setUserDetails([]);
-          } else {
-            setUserDetails(response.data.User);
-            setRealUserName(response.data.User.displayName);
-            setRealUserBio(response.data.User.bio)
-            setUserState("YesMember");
-          }
-        })
-        .catch(() => {
-          setPageStatus("Error");
-          setUserDetails([]);
-        });
+          });
+      } else {
+        setUserState("NoYorwor");
+        setPageStatus("Finish");
+      }
     }
   }, [FireUser]);
 
@@ -295,7 +304,7 @@ export default function UserPage() {
               <>
                 {userState == "NoMember" ? (
                   <>
-                    <div>
+                    <div className="max-w-lg mx-auto">
                       <div className="bg-white rounded-lg shadow-lg">
                         <div className="p-6">
                           <h2 className="text-2xl font-bold text-gray-800 mb-2">Register !</h2>
@@ -323,46 +332,91 @@ export default function UserPage() {
                   </>
                 ) : (
                   <>
-                    <div>
-                      <div className="max-w-lg mx-auto">
-                        <div className="flex items-center mb-3 mt-5 gap-2 mx-auto">
-                          <h1>Your product</h1>
+                    {userState == "NoYorwor" ? (
+                      <>
+                        <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center gap-4">
+                          <div>
+                            <h1 className="text-xl">Outside @hatyaiwit.ac.th</h1>
+                            <h1>Please use an school or work email</h1>
+                          </div>
                           <Button
-                            isIconOnly
+                            startContent={<FcGoogle />}
                             style={{ backgroundColor: "white" }}
                             variant="bordered"
-                            onPress={onOpen}
+                            onPress={() => {
+                              const id = toast.loading("Swaping account...");
+
+                              signInWithGoogle()
+                                .then(() => {
+                                  toast.update(id, {
+                                    render: `Login success`,
+                                    type: "success",
+                                    isLoading: false,
+                                    autoClose: 3000,
+                                  });
+                                  setTimeout(() => {
+                                    window.location.reload();
+                                  }, 1500);
+                                })
+                                .catch((error) => {
+                                  toast.update(id, {
+                                    render: `Login failed ${error.message}`,
+                                    closeOnClick: true,
+                                    type: "error",
+                                    isLoading: false,
+                                    autoClose: 10000,
+                                  });
+                                });
+                            }}
                           >
-                            <IoBagAdd />
+                            Swap account
                           </Button>
                         </div>
-                        <Table aria-label="Goods table">
-                          <TableHeader>
-                            <TableColumn>{"<:id>"}</TableColumn>
-                            <TableColumn>{"<:name>"}</TableColumn>
-                            <TableColumn className="text-red-500">Delete</TableColumn>
-                          </TableHeader>
-                          {userDetails.goods && Object.keys(userDetails.goods).length > 0 ? (
-                            <TableBody>
-                              {Object.entries(userDetails.goods).map(([id, name], index) => (
-                                <TableRow key={index}>
-                                  <TableCell>{id}</TableCell>
-                                  <TableCell>{name}</TableCell>
-                                  <TableCell
-                                    className="cursor-pointer flex justify-center text-red-500"
-                                    onClick={() => deleteGoods(id)}
-                                  >
-                                    <MdDeleteForever />
-                                  </TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          ) : (
-                            <TableBody emptyContent={"No product for this user!"}>{[]}</TableBody>
-                          )}
-                        </Table>
-                      </div>
-                    </div>
+                      </>
+                    ) : (
+                      <>
+                        <div>
+                          <div className="max-w-lg mx-auto">
+                            <div className="flex items-center mb-3 mt-5 gap-2 mx-auto">
+                              <h1>Your product</h1>
+                              <Button
+                                isIconOnly
+                                style={{ backgroundColor: "white" }}
+                                variant="bordered"
+                                onPress={onOpen}
+                              >
+                                <IoBagAdd />
+                              </Button>
+                            </div>
+                            <Table aria-label="Goods table">
+                              <TableHeader>
+                                <TableColumn>{"<:id>"}</TableColumn>
+                                <TableColumn>{"<:name>"}</TableColumn>
+                                <TableColumn className="text-red-500">Delete</TableColumn>
+                              </TableHeader>
+                              {userDetails.goods && Object.keys(userDetails.goods).length > 0 ? (
+                                <TableBody>
+                                  {Object.entries(userDetails.goods).map(([id, name], index) => (
+                                    <TableRow key={index}>
+                                      <TableCell>{id}</TableCell>
+                                      <TableCell>{name}</TableCell>
+                                      <TableCell
+                                        className="cursor-pointer flex justify-center text-red-500"
+                                        onClick={() => deleteGoods(id)}
+                                      >
+                                        <MdDeleteForever />
+                                      </TableCell>
+                                    </TableRow>
+                                  ))}
+                                </TableBody>
+                              ) : (
+                                <TableBody emptyContent={"No product for this user!"}>{[]}</TableBody>
+                              )}
+                            </Table>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </>
                 )}
               </>
@@ -370,16 +424,53 @@ export default function UserPage() {
           </>
         ) : (
           <>
-            <div className="flex flex-col items-center justify-center gap-3">
-              <h1 className="text-center text-xl">No auth found</h1>
-              <Link href="/">
+            <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center gap-4">
+              <div>
+                <h1 className="text-xl">No auth found</h1>
+                <h1>Please login</h1>
+              </div>
+              <div className="flex flex-row gap-3">
                 <Button
+                  startContent={<FcGoogle />}
                   style={{ backgroundColor: "white" }}
                   variant="bordered"
+                  onPress={() => {
+                    const id = toast.loading("Loging in...");
+
+                    signInWithGoogle()
+                      .then(() => {
+                        toast.update(id, {
+                          render: `Login success`,
+                          type: "success",
+                          isLoading: false,
+                          autoClose: 3000,
+                        });
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 1500);
+                      })
+                      .catch((error) => {
+                        toast.update(id, {
+                          render: `Login failed ${error.message}`,
+                          closeOnClick: true,
+                          type: "error",
+                          isLoading: false,
+                          autoClose: 10000,
+                        });
+                      });
+                  }}
                 >
-                  Back to home
+                  Login
                 </Button>
-              </Link>
+                <Link href="/">
+                  <Button
+                    style={{ backgroundColor: "white" }}
+                    variant="bordered"
+                  >
+                    Back to home
+                  </Button>
+                </Link>
+              </div>
             </div>
           </>
         )}
