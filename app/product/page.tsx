@@ -7,6 +7,7 @@ import { Button } from "@nextui-org/button";
 import axios from "axios"
 import { FaCartPlus } from "react-icons/fa";
 import { Spinner } from "@nextui-org/spinner";
+import { User } from "@nextui-org/user";
 
 import marketConfig from "@/market-config.mjs";
 
@@ -80,13 +81,18 @@ export default function Home() {
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div>
+                                            <div className="flex flex-col items-start">
                                                 <span className="font-bold text-gray-700 dark:text-gray-300">
                                                     Author info:
                                                 </span>
-                                                <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
-                                                    {goodsList[0].title} by : {goodsList[0].author.displayName}
-                                                </p>
+                                                <User
+                                                    className="mt-2"
+                                                    avatarProps={{
+                                                        src: goodsList[0].author.photoURL,
+                                                        size: "sm",
+                                                    }}
+                                                    name={goodsList[0].author.displayName}
+                                                />
                                             </div>
                                             <div className="flex flex-col sm:flex-row mt-5 gap-3">
                                                 <Button

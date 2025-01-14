@@ -10,6 +10,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Spinner } from "@nextui-org/spinner";
+import { Input } from "@nextui-org/input";
+import { LuPackageSearch } from "react-icons/lu";
 
 import { signInWithGoogle } from "../lib/firebase-auth";
 
@@ -112,38 +114,50 @@ export default function Home() {
             <>
               {
                 goodsList.length > 0 ? (
-                  <section
-                    className="w-fit mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
-                    id="Projects"
-                  >
-                    {goodsList.map((list, index) => (
-                      <div
-                        key={index}
-                        className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
-                      >
-                        <Link href={`/product?id=${list.id}`}>
-                          <img
-                            alt="Product"
-                            className="h-80 w-72 object-cover rounded-t-xl"
-                            src={list.photoURL}
-                          />
-                          <div className="px-4 py-3 w-72">
-                            <span className="text-gray-400 mr-3 uppercase text-xs">
-                              Product
-                            </span>
-                            <p className="text-lg font-bold text-black truncate block capitalize">
-                              {list.title}
-                            </p>
-                            <div className="flex items-center">
-                              <p className="text-lg font-semibold text-black cursor-auto my-3">
-                                {list.price} Baht
-                              </p>
-                            </div>
-                          </div>
-                        </Link>
+                  <>
+
+                    <section className="max-w-6xl">
+                      <Input
+                        className="w-full"
+                        labelPlacement="outside-left"
+                        variant="bordered"
+                        label="Search"
+                        placeholder="eg. Cookie"
+                        type="text"
+                        startContent={<LuPackageSearch />}
+                      />
+                      <div>
+                        <div className="mt-6 grid grid-cols-2 gap-6 lg:grid-cols-4 lg:gap-8">
+                          {goodsList.map((list, index) => (
+                            <>
+                              <Link href={`/product?id=${list.id}`}>
+                                <article key={index} className="relative">
+                                  <div className="aspect-square overflow-hidden rounded-lg">
+                                    <img className="hover:scale-110 h-full w-full object-cover transition-all duration-200 rounded-lg" src={list.photoURL} alt="Product" />
+                                  </div>
+                                  <div className="absolute top-0 m-1 rounded-full bg-white">
+                                    <p className="text-[10px] rounded-full bg-black p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">Sale</p>
+                                  </div>
+                                  <div className="mt-4 flex flex-col md:flex-row items-start justify-between">
+                                    <div className="flex flex-col">
+                                      <h3 className="font-bold leading-tight break-words">
+                                        {list.title}
+                                      </h3>
+                                      <h1 className="leading-tight break-words">By : {list.author.displayName}</h1>
+                                    </div>
+
+                                    <div className="text-right mt-2 md:mt-0">
+                                      <p>{list.price} ฿</p>
+                                    </div>
+                                  </div>
+                                </article>
+                              </Link>
+                            </>
+                          ))}
+                        </div>
                       </div>
-                    ))}
-                  </section>
+                    </section>
+                  </>
                 ) : (
                   <h1 className="text-xl text-center mt-3">No products available at the moment.</h1>
                 )
