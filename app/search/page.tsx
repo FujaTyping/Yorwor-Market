@@ -4,38 +4,38 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
-import { FcGoogle } from "react-icons/fc";
-import { FaUser } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { IoChevronBack } from "react-icons/io5";
 import axios from "axios";
 import { Spinner } from "@nextui-org/spinner";
 import { Input } from "@nextui-org/input";
 import { LuPackageSearch } from "react-icons/lu";
-
-import { signInWithGoogle } from "../lib/firebase-auth";
+import { useRouter } from "next/navigation";
 
 import marketConfig from "@/market-config.mjs";
-import useLocalStorge from "@/lib/localstorage-db";
 
 export default function Home() {
   const [title] = useState("Yorwor Market");
-  const router = useRouter();
-  const { FireUser } = useLocalStorge();
   const [goodsList, setGoodsList] = useState([]);
   const [pageStatus, setPageStatus] = useState("Loading");
+  const [gSearch, setGSearch] = useState("");
+  const router = useRouter();
   const [searchQ, setSearchQ] = useState("");
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       router.push(`/search?query=${searchQ}`);
+      window.location.reload();
     }
   };
 
   useEffect(() => {
     setPageStatus("Loading");
+    const queryParams = new URLSearchParams(window.location.search);
+    const GQuery = queryParams.get('query');
+    setGSearch(`${GQuery}`);
+    setSearchQ(`${GQuery}`);
     axios
-      .get(`${marketConfig.apiServer}good`)
+      .put(`${marketConfig.apiServer}good/bulk/search`, { searchQuery: `${GQuery}` })
       .then((response) => {
         setPageStatus("Finish");
         setGoodsList(response.data.Goods);
@@ -49,12 +49,6 @@ export default function Home() {
   return (
     <>
       <title>{title}</title>
-      <ToastContainer
-        closeOnClick
-        newestOnTop
-        hideProgressBar={false}
-        position="bottom-right"
-      />
       <div className="flex flex-col items-center justify-center gap-5 m-10">
         <div className="text-center">
           <h1 className="text-3xl">Yorwor Market</h1>
@@ -62,77 +56,45 @@ export default function Home() {
         </div>
         <div className="flex flex-row gap-5">
           <Button
-            startContent={<FcGoogle />}
+            startContent={<IoChevronBack />}
             style={{ backgroundColor: "white" }}
             variant="bordered"
-            onPress={() => {
-              const id = toast.loading("Loging in...");
-
-              signInWithGoogle()
-                .then(() => {
-                  toast.update(id, {
-                    render: `Login success`,
-                    type: "success",
-                    isLoading: false,
-                    autoClose: 3000,
-                  });
-                  setTimeout(() => {
-                    window.location.reload();
-                    router.push("/user");
-                  }, 1500);
-                })
-                .catch((error) => {
-                  toast.update(id, {
-                    render: `Login failed ${error.message}`,
-                    closeOnClick: true,
-                    type: "error",
-                    isLoading: false,
-                    autoClose: 10000,
-                  });
-                });
-            }}
           >
-            Google Login
+            <Link href="/">Back to home</Link>
           </Button>
-          {FireUser.uid ? (
-            <>
-              <Button
-                startContent={<FaUser />}
-                style={{ backgroundColor: "white" }}
-                variant="bordered"
-              >
-                <Link href={`/user?uid=${FireUser.uid}`}>User</Link>
-              </Button>
-            </>
-          ) : (
-            <></>
-          )}
         </div>
         <div>
           {pageStatus == "Loading" ? (
             <>
               <div className="flex items-center gap-4 mt-5">
                 <Spinner color="default" />
-                <h1 className="text-xl">Loading product</h1>
+                <h1 className="text-xl">Searching for product</h1>
               </div>
             </>
           ) : (
             <>
+              <div className="flex flex-col md:flex-row items-center gap-3">
+                <div>
+                  <Input
+                    labelPlacement="outside-left"
+                    variant="bordered"
+                    label="Search"
+                    placeholder="eg. Cookie"
+                    type="text"
+                    value={searchQ}
+                    onChange={(e) => setSearchQ(e.target.value)}
+                    startContent={<LuPackageSearch />}
+                    onKeyDown={handleKeyDown}
+                  />
+                </div>
+                <div>
+                  <p className="w-full text-xl">Result for {gSearch} : {goodsList.length} items</p>
+                </div>
+              </div>
               {
                 goodsList.length > 0 ? (
                   <>
                     <section className="max-w-6xl">
-                      <Input
-                        className="w-full"
-                        labelPlacement="outside-left"
-                        variant="bordered"
-                        label="Search"
-                        placeholder="eg. Cookie"
-                        type="text"
-                        onChange={(e) => setSearchQ(e.target.value)}
-                        startContent={<LuPackageSearch />}
-                        onKeyDown={handleKeyDown}
-                      />
                       <div>
                         <div className="mt-6 grid grid-cols-2 gap-6 lg:grid-cols-4 lg:gap-8">
                           {goodsList.map((list, index) => (
@@ -166,7 +128,7 @@ export default function Home() {
                     </section>
                   </>
                 ) : (
-                  <h1 className="text-xl text-center mt-3">No products available at the moment.</h1>
+                  <h1 className="text-xl text-center mt-5">No products for : {gSearch}</h1>
                 )
               }
             </>
