@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import Link from 'next/link'
 import { Button } from "@nextui-org/button";
 import { User } from "@nextui-org/user";
 import { useRouter } from "next/navigation";
@@ -29,9 +29,11 @@ import useLocalStorge from "@/lib/localstorage-db";
 import marketConfig from "@/market-config.mjs";
 import firebaseConfig from "@/lib/firebase-config";
 import { parse } from "path";
+import { Spinner } from "@nextui-org/spinner";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/table";
 
 export default function UserPage() {
-  const [title] = useState("Yorwor Market");
+  const [title, setTitle] = useState("Yorwor Market");
   const router = useRouter();
   const { FireUser } = useLocalStorge();
   const app = initializeApp(firebaseConfig);
@@ -45,6 +47,7 @@ export default function UserPage() {
   const [realUserName, setRealUserName] = useState("");
   const [realUserBio, setRealUserBio] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [pageStatus, setPageStatus] = useState("Loading");
 
   const [Gprice, setGPrice] = useState(0);
   const [Gtitle, setGTitle] = useState("");
@@ -190,11 +193,14 @@ export default function UserPage() {
 
   useEffect(() => {
     if (FireUser?.uid) {
-      setRealUserName(FireUser.displayName)
+      setPageStatus("Loading");
+      setRealUserName(FireUser.displayName);
       setRealUserBio(FireUser.email);
+      setTitle(`Yorwor Market - ${FireUser.email}`)
       axios
         .put(`${marketConfig.apiServer}user`, { uID: `${FireUser.email}` })
         .then((response) => {
+          setPageStatus("Finish");
           if (response.data.message == "No such parent document") {
             setUserState("NoMember");
             setUserDetails([]);
@@ -206,6 +212,7 @@ export default function UserPage() {
           }
         })
         .catch(() => {
+          setPageStatus("Error");
           setUserDetails([]);
         });
     }
@@ -213,14 +220,14 @@ export default function UserPage() {
 
   return (
     <>
-      <title>{`${title} - ${FireUser.email}`}</title>
+      <title>{title}</title>
       <ToastContainer
         closeOnClick
         newestOnTop
         hideProgressBar={false}
         position="bottom-right"
       />
-      <div className="flex flex-col items-center justify-center gap-5 m-10">
+      <div className="flex flex-col gap-5 m-10">
         <div className="text-center">
           <h1 className="text-3xl">Yorwor Market</h1>
           <h3>Hatyaiwittayalai School</h3>
@@ -235,7 +242,7 @@ export default function UserPage() {
               description={realUserBio}
               name={realUserName}
             />
-            <div className="flex flex-row gap-5">
+            <div className="flex flex-row items-center justify-center gap-5">
               <Button
                 color="danger"
                 startContent={<FcGoogle />}
@@ -270,7 +277,102 @@ export default function UserPage() {
               >
                 Logout
               </Button>
-              <Link href={`/`}>
+              <Button
+                style={{ backgroundColor: "white" }}
+                variant="bordered"
+              >
+                <Link href="/">Back to home</Link>
+              </Button>
+            </div>
+            {pageStatus == "Loading" ? (
+              <>
+                <div className="flex items-center justify-center gap-4 mt-5">
+                  <Spinner color="default" />
+                  <h1 className="text-xl">Loading user details</h1>
+                </div>
+              </>
+            ) : (
+              <>
+                {userState == "NoMember" ? (
+                  <>
+                    <div>
+                      <div className="bg-white rounded-lg shadow-lg">
+                        <div className="p-6">
+                          <h2 className="text-2xl font-bold text-gray-800 mb-2">Register !</h2>
+                          <p className="text-gray-700 mb-4">Look like you dont have account link with this email</p>
+                          <form>
+                            <div className="flex flex-col gap-3 mb-4">
+                              <Input value={inputForm} onChange={(e) => setInputForm(e.target.value)} variant="bordered" label="Display Name" placeholder="eg. John Doe" type="text" />
+                              <Input value={FireUser.email} isDisabled onChange={(e) => setInputForm(e.target.value)} variant="bordered" label="Email" type="text" />
+                              <Textarea value={inputBioForm} onChange={(e) => setInputBioForm(e.target.value)} variant="bordered" label="Bio" placeholder="eg. about you" />
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <Button
+                                style={{ backgroundColor: "white" }}
+                                variant="bordered"
+                                startContent={<FiLogIn />}
+                                onPress={createNewUser}
+                              >
+                                Submit
+                              </Button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <div className="max-w-lg mx-auto">
+                        <div className="flex items-center mb-3 mt-5 gap-2 mx-auto">
+                          <h1>Your product</h1>
+                          <Button
+                            isIconOnly
+                            style={{ backgroundColor: "white" }}
+                            variant="bordered"
+                            onPress={onOpen}
+                          >
+                            <IoBagAdd />
+                          </Button>
+                        </div>
+                        <Table aria-label="Goods table">
+                          <TableHeader>
+                            <TableColumn>{"<:id>"}</TableColumn>
+                            <TableColumn>{"<:name>"}</TableColumn>
+                            <TableColumn className="text-red-500">Delete</TableColumn>
+                          </TableHeader>
+                          {userDetails.goods && Object.keys(userDetails.goods).length > 0 ? (
+                            <TableBody>
+                              {Object.entries(userDetails.goods).map(([id, name], index) => (
+                                <TableRow key={index}>
+                                  <TableCell>{id}</TableCell>
+                                  <TableCell>{name}</TableCell>
+                                  <TableCell
+                                    className="cursor-pointer flex justify-center text-red-500"
+                                    onClick={() => deleteGoods(id)}
+                                  >
+                                    <MdDeleteForever />
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          ) : (
+                            <TableBody emptyContent={"No product for this user!"}>{[]}</TableBody>
+                          )}
+                        </Table>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="flex flex-col items-center justify-center gap-3">
+              <h1 className="text-center text-xl">No auth found</h1>
+              <Link href="/">
                 <Button
                   style={{ backgroundColor: "white" }}
                   variant="bordered"
@@ -279,87 +381,6 @@ export default function UserPage() {
                 </Button>
               </Link>
             </div>
-            {userState == "NoMember" ? (
-              <>
-                <div>
-                  <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-                    <div className="p-6">
-                      <h2 className="text-2xl font-bold text-gray-800 mb-2">Register !</h2>
-                      <p className="text-gray-700 mb-4">Look like you dont have account link with this email</p>
-                      <form>
-                        <div className="flex flex-col gap-3 mb-4">
-                          <Input value={inputForm} onChange={(e) => setInputForm(e.target.value)} variant="bordered" label="Display Name" placeholder="eg. John Doe" type="text" />
-                          <Input value={FireUser.email} isDisabled onChange={(e) => setInputForm(e.target.value)} variant="bordered" label="Email" type="text" />
-                          <Textarea value={inputBioForm} onChange={(e) => setInputBioForm(e.target.value)} variant="bordered" label="Bio" placeholder="eg. about you" />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <Button
-                            style={{ backgroundColor: "white" }}
-                            variant="bordered"
-                            startContent={<FiLogIn />}
-                            onPress={createNewUser}
-                          >
-                            Submit
-                          </Button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="overflow-hidden">
-                  <div className="flex items-center mb-3 mt-5 gap-2">
-                    <h1>Your product</h1>
-                    <Button
-                      isIconOnly
-                      style={{ backgroundColor: "white" }}
-                      variant="bordered"
-                      onPress={onOpen}
-                    >
-                      <IoBagAdd />
-                    </Button>
-                  </div>
-                  <table className="w-full text-sm leading-5 border border-gray-300 shadow-sm rounded-lg">
-                    <thead className="bg-gray-100">
-                      <tr>
-                        <th className="py-3 px-4 text-left font-medium text-gray-600">{"<:id>"}</th>
-                        <th className="py-3 px-4 text-left font-medium text-gray-600">{"<:name>"}</th>
-                        <th className="py-3 px-4 text-left font-medium text-gray-600 text-red-500">{"Delete items"}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {userDetails.goods && Object.keys(userDetails.goods).length > 0 ? (
-                        Object.entries(userDetails.goods).map(([id, name], index) => (
-                          <tr key={index} className="bg-gray-50">
-                            <td className="py-3 px-4 text-left font-medium text-gray-600">{id}</td>
-                            <td className="py-3 px-4 text-left">{name}</td>
-                            <td onClick={() => deleteGoods(id)} className="py-3 px-4 text-center text-red-500 cursor-pointer"><MdDeleteForever /></td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan="3" className="py-3 px-4 text-center">No goods available</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            )}
-          </>
-        ) : (
-          <>
-            <h1 className="text-center text-xl -mb-2">No auth found</h1>
-            <Link href={`/`}>
-              <Button
-                style={{ backgroundColor: "white" }}
-                variant="bordered"
-              >
-                Back to home
-              </Button>
-            </Link>
           </>
         )}
       </div>

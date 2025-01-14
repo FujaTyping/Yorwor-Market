@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import axios from "axios"
 import { FaCartPlus } from "react-icons/fa";
+import { Spinner } from "@nextui-org/spinner";
 
 import marketConfig from "@/market-config.mjs";
 
@@ -13,17 +14,21 @@ import marketConfig from "@/market-config.mjs";
 export default function Home() {
     const [title, setTitle] = useState("Yorwor Market");
     const [goodsList, setGoodsList] = useState([]);
+    const [pageStatus, setPageStatus] = useState("Loading");
 
     useEffect(() => {
+        setPageStatus("Loading");
         const queryParams = new URLSearchParams(window.location.search);
         const productId = queryParams.get('id');
         axios
             .put(`${marketConfig.apiServer}good/item`, { goodId: productId })
             .then((response) => {
+                setPageStatus("Finish");
                 setGoodsList(response.data.Goods);
                 setTitle(`Yorwor Market - ${response.data.Goods[0].title}`)
             })
             .catch(() => {
+                setPageStatus("Error");
                 setGoodsList([]);
             });
     }, []);
@@ -37,15 +42,22 @@ export default function Home() {
                     <h3>Hatyaiwittayalai School</h3>
                 </div>
                 <div className="p-5">
-                    <div>
-                        <div className="p-5">
+                    {pageStatus == "Loading" ? (
+                        <>
+                            <div className="flex items-center justify-center gap-4 mt-5">
+                                <Spinner color="default" />
+                                <h1 className="text-xl">Loading product details</h1>
+                            </div>
+                        </>
+                    ) : (
+                        <>
                             <div>
                                 {goodsList && goodsList.length > 0 ? (
                                     <div className="flex flex-col md:flex-row gap-10">
                                         <div className="md:flex-1">
                                             <div className="rounded-lg">
                                                 <img
-                                                    className="object-cover rounded-lg max-w-md"
+                                                    className="object-cover rounded-lg max-w-full sm:max-w-md"
                                                     src={goodsList[0].photoURL}
                                                     alt="Product"
                                                 />
@@ -64,7 +76,7 @@ export default function Home() {
                                                         Price :
                                                     </span>
                                                     <span className="text-gray-600 dark:text-gray-300">
-                                                        {" "}{goodsList[0].price} Baht
+                                                        {` ${goodsList[0].price} Baht`}
                                                     </span>
                                                 </div>
                                             </div>
@@ -76,15 +88,13 @@ export default function Home() {
                                                     {goodsList[0].title} by : {goodsList[0].author.displayName}
                                                 </p>
                                             </div>
-                                            <div className="flex flex-row mt-5 gap-3">
-                                                <Link href={`/`}>
-                                                    <Button
-                                                        style={{ backgroundColor: "white" }}
-                                                        variant="bordered"
-                                                    >
-                                                        Back to home
-                                                    </Button>
-                                                </Link>
+                                            <div className="flex flex-col sm:flex-row mt-5 gap-3">
+                                                <Button
+                                                    style={{ backgroundColor: "white" }}
+                                                    variant="bordered"
+                                                >
+                                                    <Link href="/">Back to home</Link>
+                                                </Button>
                                                 <Button
                                                     color="danger"
                                                     variant="bordered"
@@ -105,9 +115,8 @@ export default function Home() {
                                     </div>
                                 )}
                             </div>
-                        </div>
-
-                    </div>
+                        </>
+                    )}
                 </div>
             </div>
         </>

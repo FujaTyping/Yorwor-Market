@@ -9,6 +9,7 @@ import { FaUser } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { Spinner } from "@nextui-org/spinner";
 
 import { signInWithGoogle } from "../lib/firebase-auth";
 
@@ -21,14 +22,18 @@ export default function Home() {
   const router = useRouter();
   const { FireUser } = useLocalStorge();
   const [goodsList, setGoodsList] = useState([]);
+  const [pageStatus, setPageStatus] = useState("Loading");
 
   useEffect(() => {
+    setPageStatus("Loading");
     axios
       .get(`${marketConfig.apiServer}good`)
       .then((response) => {
+        setPageStatus("Finish");
         setGoodsList(response.data.Goods);
       })
       .catch(() => {
+        setPageStatus("Error");
         setGoodsList([]);
       });
   }, []);
@@ -83,59 +88,68 @@ export default function Home() {
           </Button>
           {FireUser.uid ? (
             <>
-              <Link href={`/user?uid=${FireUser.uid}`}>
-                <Button
-                  startContent={<FaUser />}
-                  style={{ backgroundColor: "white" }}
-                  variant="bordered"
-                >
-                  User
-                </Button>
-              </Link>
+              <Button
+                startContent={<FaUser />}
+                style={{ backgroundColor: "white" }}
+                variant="bordered"
+              >
+                <Link href={`/user?uid=${FireUser.uid}`}>User</Link>
+              </Button>
             </>
           ) : (
             <></>
           )}
         </div>
         <div>
-          {
-            goodsList.length > 0 ? (
-              <section
-                className="w-fit mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
-                id="Projects"
-              >
-                {goodsList.map((list, index) => (
-                  <div
-                    key={index}
-                    className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+          {pageStatus == "Loading" ? (
+            <>
+              <div className="flex items-center gap-4 mt-5">
+                <Spinner color="default" />
+                <h1 className="text-xl">Loading product</h1>
+              </div>
+            </>
+          ) : (
+            <>
+              {
+                goodsList.length > 0 ? (
+                  <section
+                    className="w-fit mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
+                    id="Projects"
                   >
-                    <Link href={`/product?id=${list.id}`}>
-                      <img
-                        alt="Product"
-                        className="h-80 w-72 object-cover rounded-t-xl"
-                        src={list.photoURL}
-                      />
-                      <div className="px-4 py-3 w-72">
-                        <span className="text-gray-400 mr-3 uppercase text-xs">
-                          Product
-                        </span>
-                        <p className="text-lg font-bold text-black truncate block capitalize">
-                          {list.title}
-                        </p>
-                        <div className="flex items-center">
-                          <p className="text-lg font-semibold text-black cursor-auto my-3">
-                            {list.price} Baht
-                          </p>
-                        </div>
+                    {goodsList.map((list, index) => (
+                      <div
+                        key={index}
+                        className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                      >
+                        <Link href={`/product?id=${list.id}`}>
+                          <img
+                            alt="Product"
+                            className="h-80 w-72 object-cover rounded-t-xl"
+                            src={list.photoURL}
+                          />
+                          <div className="px-4 py-3 w-72">
+                            <span className="text-gray-400 mr-3 uppercase text-xs">
+                              Product
+                            </span>
+                            <p className="text-lg font-bold text-black truncate block capitalize">
+                              {list.title}
+                            </p>
+                            <div className="flex items-center">
+                              <p className="text-lg font-semibold text-black cursor-auto my-3">
+                                {list.price} Baht
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
                       </div>
-                    </Link>
-                  </div>
-                ))}
-              </section>
-            ) : (
-              <h1 className="text-xl text-center mt-3">No products available at the moment.</h1>
-            )
-          }
+                    ))}
+                  </section>
+                ) : (
+                  <h1 className="text-xl text-center mt-3">No products available at the moment.</h1>
+                )
+              }
+            </>
+          )}
         </div>
       </div>
     </>
