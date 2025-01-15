@@ -20,7 +20,7 @@ import {
 } from "@nextui-org/modal";
 import { RadioGroup, Radio } from "@nextui-org/radio";
 import { ToastContainer, toast } from "react-toastify";
-import { Skeleton } from "@nextui-org/skeleton";
+import { BsBagXFill } from "react-icons/bs";
 
 import marketConfig from "@/market-config.mjs";
 
@@ -107,7 +107,10 @@ export default function Home() {
                         <>
                             <div className="flex items-center justify-center gap-4 mt-5">
                                 <Spinner color="default" />
-                                <h1 className="text-xl">Loading product details</h1>
+                                <div className="flex flex-col gap-1">
+                                    <h1 className="text-xl">Loading product details</h1>
+                                    <p>This may take a few second</p>
+                                </div>
                             </div>
                         </>
                     ) : (
@@ -116,19 +119,10 @@ export default function Home() {
                                 {goodsList && goodsList.length > 0 ? (
                                     <div className="flex flex-col md:flex-row gap-10">
                                         <div className="md:flex-1">
-                                            <div className="aspect-square overflow-hidden rounded-lg relative h-72 md:h-80 w-full">
-                                                <Skeleton className="rounded-lg">
-                                                    <div className="h-72 rounded-lg bg-default-300" />
-                                                </Skeleton>
-                                                <img
-                                                    loading="lazy"
-                                                    className="absolute inset-0 h-full w-full object-cover rounded-lg"
-                                                    src={goodsList[0].photoURL}
-                                                    alt="Product"
-                                                    onLoad={(e) => (e.target.style.opacity = 1)}
-                                                    onError={(e) => (e.target.style.display = 'none')}
-                                                    style={{ opacity: 0, zIndex: 10 }}
-                                                />
+                                            <div className="rounded-lg">
+                                                <div className="aspect-square overflow-hidden rounded-lg">
+                                                    <img loading="lazy" className="h-full w-full object-cover max-w-full sm:max-w-md rounded-lg" src={goodsList[0].photoURL} alt="Product" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="md:flex-1">
@@ -192,11 +186,12 @@ export default function Home() {
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="text-center text-gray-800 dark:text-white">
-                                        <h2 className="text-2xl mb-4">No Product Available</h2>
-                                        <p className="text-gray-600">
-                                            {"We couldn't find any products at the moment. Please check back later!"}
-                                        </p>
+                                    <div className="flex items-center flex-col md:flex-row md:gap-6">
+                                        <BsBagXFill className="w-8 h-8" />
+                                        <div className="flex flex-col gap-1 justify-center">
+                                            <h1 className="text-xl mt-3">No Product Available</h1>
+                                            <p>Check the id of the product <b>{`(${Gid})`}</b></p>
+                                        </div>
                                     </div>
                                 )}
                             </div>

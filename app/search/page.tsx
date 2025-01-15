@@ -10,6 +10,7 @@ import { Spinner } from "@nextui-org/spinner";
 import { Input } from "@nextui-org/input";
 import { LuPackageSearch } from "react-icons/lu";
 import { useRouter } from "next/navigation";
+import { BsBagXFill } from "react-icons/bs";
 
 import marketConfig from "@/market-config.mjs";
 
@@ -68,7 +69,10 @@ export default function Home() {
             <>
               <div className="flex items-center gap-4 mt-5">
                 <Spinner color="default" />
-                <h1 className="text-xl">Searching for product</h1>
+                <div className="flex flex-col gap-1">
+                  <h1 className="text-xl">Searching for product</h1>
+                  <p>This may take a few second</p>
+                </div>
               </div>
             </>
           ) : (
@@ -128,7 +132,13 @@ export default function Home() {
                     </section>
                   </>
                 ) : (
-                  <h1 className="text-xl text-center mt-5">No products for : {gSearch}</h1>
+                  <div className="flex items-center justify-center mt-8 gap-3 flex-col">
+                    <BsBagXFill className="h-8 w-8" />
+                    <div className="gap-1">
+                      <h1 className="text-xl text-center">No products for : {gSearch}</h1>
+                      <p className="text-center">Search with another query</p>
+                    </div>
+                  </div>
                 )
               }
             </>

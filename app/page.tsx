@@ -12,7 +12,7 @@ import axios from "axios";
 import { Spinner } from "@nextui-org/spinner";
 import { Input } from "@nextui-org/input";
 import { LuPackageSearch } from "react-icons/lu";
-import { Skeleton } from "@nextui-org/skeleton";
+import { BsBagXFill } from "react-icons/bs";
 
 import { signInWithGoogle } from "../lib/firebase-auth";
 
@@ -114,7 +114,10 @@ export default function Home() {
             <>
               <div className="flex items-center gap-4 mt-5">
                 <Spinner color="default" />
-                <h1 className="text-xl">Loading product</h1>
+                <div className="flex flex-col gap-1">
+                  <h1 className="text-xl">Loading product</h1>
+                  <p>This may take a few second</p>
+                </div>
               </div>
             </>
           ) : (
@@ -140,19 +143,8 @@ export default function Home() {
                             <>
                               <Link href={`/product?id=${list.id}`}>
                                 <article key={index} className="relative">
-                                  <div className="aspect-square overflow-hidden rounded-lg relative">
-                                    <Skeleton className="rounded-lg">
-                                      <div className="h-72 rounded-lg bg-default-300" />
-                                    </Skeleton>
-                                    <img
-                                      loading="lazy"
-                                      className="absolute inset-0 hover:scale-110 h-full w-full object-cover transition-all duration-200 rounded-lg"
-                                      src={list.photoURL}
-                                      alt="Product"
-                                      onLoad={(e) => (e.target.style.opacity = 1)}
-                                      onError={(e) => (e.target.style.display = 'none')}
-                                      style={{ opacity: 0, zIndex: 10 }}
-                                    />
+                                  <div className="aspect-square overflow-hidden rounded-lg">
+                                    <img loading="lazy" className="hover:scale-110 h-full w-full object-cover transition-all duration-200 rounded-lg" src={list.photoURL} alt="Product" />
                                   </div>
                                   <div style={{ zIndex: 11 }} className="absolute top-0 m-1 rounded-full bg-white">
                                     <p className="text-[10px] rounded-full bg-black p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">Sale</p>
@@ -178,7 +170,13 @@ export default function Home() {
                     </section>
                   </>
                 ) : (
-                  <h1 className="text-xl text-center mt-3">No products available at the moment.</h1>
+                  <div className="flex items-center flex-col md:flex-row md:gap-6 mt-5">
+                    <BsBagXFill className="w-8 h-8" />
+                    <div className="flex flex-col gap-1">
+                      <h1 className="text-xl text-center mt-3">No products available at the moment</h1>
+                      <p className="text-center">The api might down</p>
+                    </div>
+                  </div>
                 )
               }
             </>
