@@ -48,8 +48,10 @@ export default function UserPage() {
   const [inputBioForm, setInputBioForm] = useState("");
   const [realUserName, setRealUserName] = useState("");
   const [realUserBio, setRealUserBio] = useState("");
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const modalProduct = useDisclosure();
+  const modalDelete = useDisclosure();
   const [pageStatus, setPageStatus] = useState("Loading");
+  const [deleteGoodsID, setDeleteGoodsID] = useState("");
 
   const [Gprice, setGPrice] = useState(0);
   const [Gtitle, setGTitle] = useState("");
@@ -158,11 +160,16 @@ export default function UserPage() {
     }
   }
 
-  function deleteGoods(ProductID) {
+  function confirmDelete(ProductID) {
+    modalDelete.onOpen();
+    setDeleteGoodsID(ProductID);
+  }
+
+  function deleteGoods() {
     const id = toast.loading("Removing product ...");
     axios
       .delete(`${marketConfig.apiServer}good/delete`, {
-        data: { email: FireUser.email, pID: ProductID }
+        data: { email: FireUser.email, pID: deleteGoodsID }
       })
       .then((response) => {
         if (response.data.error) {
@@ -385,7 +392,7 @@ export default function UserPage() {
                                   isIconOnly
                                   style={{ backgroundColor: "white" }}
                                   variant="bordered"
-                                  onPress={onOpen}
+                                  onPress={modalProduct.onOpen}
                                 >
                                   <IoBagAdd />
                                 </Button>
@@ -395,7 +402,7 @@ export default function UserPage() {
                               <TableHeader>
                                 <TableColumn>{"<:id>"}</TableColumn>
                                 <TableColumn>{"<:name>"}</TableColumn>
-                                <TableColumn className="text-red-500">Delete</TableColumn>
+                                <TableColumn className="text-red-500 text-center">Delete</TableColumn>
                               </TableHeader>
                               {userDetails.goods && Object.keys(userDetails.goods).length > 0 ? (
                                 <TableBody>
@@ -405,7 +412,7 @@ export default function UserPage() {
                                       <TableCell>{name}</TableCell>
                                       <TableCell
                                         className="cursor-pointer flex justify-center text-red-500"
-                                        onClick={() => deleteGoods(id)}
+                                        onClick={() => confirmDelete(id)}
                                       >
                                         <MdDeleteForever />
                                       </TableCell>
@@ -478,7 +485,7 @@ export default function UserPage() {
           </>
         )}
       </div>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top">
+      <Modal isOpen={modalProduct.isOpen} onOpenChange={modalProduct.onOpenChange} placement="top">
         <ModalContent>
           {(onClose) => (
             <>
@@ -534,6 +541,34 @@ export default function UserPage() {
                 </Button>
                 <Button variant="bordered" color="primary" onPress={() => { onClose; submitNewGoods() }}>
                   Submit
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={modalDelete.isOpen} onOpenChange={modalDelete.onOpenChange} placement="top">
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Confirm delete</ModalHeader>
+              <ModalBody>
+                <div>
+                  <div className="bg-white rounded-lg">
+                    <div>
+                      <form className="flex flex-col gap-4">
+                        <h1>Are you sure to delete items with this id : <b>{deleteGoodsID}</b> ?</h1>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={() => deleteGoods()}>
+                  Yes
+                </Button>
+                <Button variant="bordered" color="primary" onPress={onClose}>
+                  Cancel
                 </Button>
               </ModalFooter>
             </>

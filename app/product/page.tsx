@@ -20,6 +20,7 @@ import {
 } from "@nextui-org/modal";
 import { RadioGroup, Radio } from "@nextui-org/radio";
 import { ToastContainer, toast } from "react-toastify";
+import { Skeleton } from "@nextui-org/skeleton";
 
 import marketConfig from "@/market-config.mjs";
 
@@ -31,6 +32,7 @@ export default function Home() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [Gid, setGid] = useState("");
     const [reportRadio, setReportRadio] = useState("");
+    const [oneReport, setOneReport] = useState(false);
 
     function submitNewReport() {
         const id = toast.loading("Adding new product ...");
@@ -54,6 +56,7 @@ export default function Home() {
                         isLoading: false,
                         autoClose: 3000,
                     });
+                    setOneReport(true);
                 }
             })
             .catch((error: any) => {
@@ -113,10 +116,19 @@ export default function Home() {
                                 {goodsList && goodsList.length > 0 ? (
                                     <div className="flex flex-col md:flex-row gap-10">
                                         <div className="md:flex-1">
-                                            <div className="rounded-lg">
-                                                <div className="aspect-square overflow-hidden rounded-lg">
-                                                    <img loading="lazy" className="h-full w-full object-cover max-w-full sm:max-w-md rounded-lg" src={goodsList[0].photoURL} alt="Product" />
-                                                </div>
+                                            <div className="aspect-square overflow-hidden rounded-lg relative h-72 md:h-80 w-full">
+                                                <Skeleton className="rounded-lg">
+                                                    <div className="h-72 rounded-lg bg-default-300" />
+                                                </Skeleton>
+                                                <img
+                                                    loading="lazy"
+                                                    className="absolute inset-0 h-full w-full object-cover rounded-lg"
+                                                    src={goodsList[0].photoURL}
+                                                    alt="Product"
+                                                    onLoad={(e) => (e.target.style.opacity = 1)}
+                                                    onError={(e) => (e.target.style.display = 'none')}
+                                                    style={{ opacity: 0, zIndex: 10 }}
+                                                />
                                             </div>
                                         </div>
                                         <div className="md:flex-1">
@@ -196,32 +208,56 @@ export default function Home() {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Report {goodsList[0].title} ?</ModalHeader>
-                            <ModalBody>
-                                <div>
-                                    <div className="bg-white rounded-lg">
+                            {oneReport ? (
+                                <>
+                                    <ModalHeader className="flex flex-col gap-1">{"You can't report this item !"}</ModalHeader>
+                                    <ModalBody>
                                         <div>
-                                            <form className="flex flex-col gap-4">
-                                                <RadioGroup onChange={(e) => setReportRadio(e.target.value)} label="Why you report this product">
-                                                    <Radio value="I dont like it">{"I don't like it"}</Radio>
-                                                    <Radio value="Copyright infringement">Copyright infringement</Radio>
-                                                    <Radio value="Prohibited goods">Prohibited goods</Radio>
-                                                    <Radio value="It is considered fraudulent">It is considered fraudulent</Radio>
-                                                    <Radio value="Selling other people products">{"Selling other people's products"}</Radio>
-                                                </RadioGroup>
-                                            </form>
+                                            <div className="bg-white rounded-lg">
+                                                <div>
+                                                    <form>
+                                                        <h1>{`You're already report for ${goodsList[0].title}`}</h1>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
-                                    Close
-                                </Button>
-                                <Button variant="bordered" color="primary" onPress={() => { onClose; submitNewReport() }}>
-                                    Submit
-                                </Button>
-                            </ModalFooter>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button color="danger" variant="light" onPress={onClose}>
+                                            Close
+                                        </Button>
+                                    </ModalFooter>
+                                </>
+                            ) : (
+                                <>
+                                    <ModalHeader className="flex flex-col gap-1">Report {goodsList[0].title} ?</ModalHeader>
+                                    <ModalBody>
+                                        <div>
+                                            <div className="bg-white rounded-lg">
+                                                <div>
+                                                    <form className="flex flex-col gap-4">
+                                                        <RadioGroup onChange={(e) => setReportRadio(e.target.value)} label="Why you report this product">
+                                                            <Radio value="I dont like it">{"I don't like it"}</Radio>
+                                                            <Radio value="Copyright infringement">Copyright infringement</Radio>
+                                                            <Radio value="Prohibited goods">Prohibited goods</Radio>
+                                                            <Radio value="It is considered fraudulent">It is considered fraudulent</Radio>
+                                                            <Radio value="Selling other people products">{"Selling other people's products"}</Radio>
+                                                        </RadioGroup>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button color="danger" variant="light" onPress={onClose}>
+                                            Close
+                                        </Button>
+                                        <Button variant="bordered" color="primary" onPress={() => { if (!reportRadio == "") { onClose() }; submitNewReport() }}>
+                                            Submit
+                                        </Button>
+                                    </ModalFooter>
+                                </>
+                            )}
                         </>
                     )}
                 </ModalContent>
