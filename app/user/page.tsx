@@ -305,7 +305,10 @@ export default function UserPage() {
               <>
                 <div className="flex items-center justify-center gap-4 mt-5">
                   <Spinner color="default" />
-                  <h1 className="text-xl">Loading user details</h1>
+                  <div className="flex flex-col gap-1">
+                    <h1 className="text-xl">Loading user details</h1>
+                    <p>This may take a few second</p>
+                  </div>
                 </div>
               </>
             ) : (
