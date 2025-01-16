@@ -17,9 +17,12 @@ import {
     ModalFooter,
     useDisclosure,
 } from "@nextui-org/modal";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem } from "@nextui-org/dropdown";
 import { RadioGroup, Radio } from "@nextui-org/radio";
 import { ToastContainer, toast } from "react-toastify";
 import { BsBagXFill } from "react-icons/bs";
+import { IoMdMore } from "react-icons/io";
+import { IoMdShare } from "react-icons/io";
 
 import marketConfig from "@/market-config.mjs";
 
@@ -123,18 +126,19 @@ export default function Home() {
                                         <div className="md:flex-1">
                                             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2 flex items-center gap-2">
                                                 {goodsList[0].title}
-                                                <Tooltip content="Report this product">
-                                                    <Button
-                                                        isIconOnly
-                                                        color="danger"
-                                                        variant="bordered"
-                                                        onPress={onOpen}
-                                                    >
-                                                        <IoFlag />
-                                                    </Button>
-                                                </Tooltip>
+                                                <Dropdown>
+                                                    <DropdownTrigger>
+                                                        <Button isIconOnly startContent={<IoMdMore />} variant="bordered" className="w-2"></Button>
+                                                    </DropdownTrigger>
+                                                    <DropdownMenu aria-label="Static Actions">
+                                                        <DropdownItem startContent={< IoMdShare />} key="new">Share</DropdownItem>
+                                                        <DropdownItem startContent={<IoFlag />} key="report" className="text-danger" color="danger" onPress={onOpen}>
+                                                            Report
+                                                        </DropdownItem>
+                                                    </DropdownMenu>
+                                                </Dropdown>
                                             </h2>
-                                            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                                            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 whitespace-pre-line">
                                                 {goodsList[0].decs}
                                             </p>
                                             <div className="flex flex-col md:flex-row mb-4 gap-2 md:gap-4">

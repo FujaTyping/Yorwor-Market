@@ -87,7 +87,7 @@ export default function Home() {
                                     <img loading="lazy" className="hover:scale-110 h-full w-full object-cover transition-all duration-200 rounded-lg" src={list.photoURL} alt="Product" />
                                   </div>
                                   <div style={{ zIndex: 11 }} className="absolute top-0 m-1 rounded-full bg-white">
-                                    <p className="text-[10px] rounded-full bg-black p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">Sale</p>
+                                    <p className="text-[10px] rounded-full bg-black p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">{list.availability ? ("SALE") : ("SOLD OUT")}</p>
                                   </div>
                                   <div className="mt-4 flex flex-col md:flex-row items-start justify-between">
                                     <div className="flex flex-col">
