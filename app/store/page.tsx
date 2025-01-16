@@ -63,18 +63,18 @@ export default function Home() {
                         </>
                     ) : (
                         <>
-                            <User
-                                avatarProps={{
-                                    src: uList.photoURL,
-                                    size: "lg",
-                                }}
-                                description={<p>{uList.bio}</p>}
-                                name={<p className="text-xl">{uList.displayName}</p>}
-                                className="my-2"
-                            />
                             {
                                 duckList.length > 0 ? (
                                     <>
+                                        <User
+                                            avatarProps={{
+                                                src: uList.photoURL,
+                                                size: "lg",
+                                            }}
+                                            description={<p>{uList.bio}</p>}
+                                            name={<p className="text-xl">{uList.displayName}</p>}
+                                            className="my-2"
+                                        />
                                         <section className="max-w-6xl">
                                             <div>
                                                 <h1 className="text-xl">All <b>{`${uList.displayName}'s`}</b> product : {duckList.length} items</h1>
