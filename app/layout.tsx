@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import NextTopLoader from 'nextjs-toploader';
-import { Navbar } from "@/components/navbar";
+import { NavbarNX } from "@/components/navbar";
 import { Footbar } from "@/components/footbar";
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
       <head />
       <body>
         <NextTopLoader showSpinner={false} />
-        <Navbar />
+        <NavbarNX />
         {children}
         <Footbar />
       </body>

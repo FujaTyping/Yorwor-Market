@@ -3,18 +3,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@nextui-org/button";
-import { FcGoogle } from "react-icons/fc";
-import { FaUser } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Spinner } from "@nextui-org/spinner";
 import { Input } from "@nextui-org/input";
 import { LuPackageSearch } from "react-icons/lu";
 import { BsBagXFill } from "react-icons/bs";
-
-import { signInWithGoogle } from "../lib/firebase-auth";
 
 import marketConfig from "@/market-config.mjs";
 import useLocalStorge from "@/lib/localstorage-db";
@@ -29,7 +23,7 @@ export default function Home() {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      router.push(`/search?query=${searchQ}`);
+      if (!searchQ == "") { router.push(`/search?query=${searchQ}`); }
     }
   };
 
@@ -50,64 +44,10 @@ export default function Home() {
   return (
     <>
       <title>{title}</title>
-      <ToastContainer
-        closeOnClick
-        newestOnTop
-        hideProgressBar={false}
-        position="bottom-right"
-      />
-      <div className="flex flex-col items-center justify-center gap-5 m-10">
+      <div className="flex flex-col items-center justify-center gap-5 my-5 mx-10">
         <div className="text-center">
           <h1 className="text-3xl">Yorwor Market</h1>
           <h3>Hatyaiwittayalai School</h3>
-        </div>
-        <div className="flex flex-row gap-5">
-          <Button
-            startContent={<FcGoogle />}
-            style={{ backgroundColor: "white" }}
-            variant="bordered"
-            onPress={() => {
-              const id = toast.loading("Loging in...");
-
-              signInWithGoogle()
-                .then(() => {
-                  toast.update(id, {
-                    render: `Login success`,
-                    type: "success",
-                    isLoading: false,
-                    autoClose: 3000,
-                  });
-                  setTimeout(() => {
-                    window.location.reload();
-                    router.push("/user");
-                  }, 1500);
-                })
-                .catch((error) => {
-                  toast.update(id, {
-                    render: `Login failed ${error.message}`,
-                    closeOnClick: true,
-                    type: "error",
-                    isLoading: false,
-                    autoClose: 10000,
-                  });
-                });
-            }}
-          >
-            Google Login
-          </Button>
-          {FireUser.uid ? (
-            <>
-              <Button
-                startContent={<FaUser />}
-                style={{ backgroundColor: "white" }}
-                variant="bordered"
-              >
-                <Link href={`/user`}>User</Link>
-              </Button>
-            </>
-          ) : (
-            <></>
-          )}
         </div>
         <div>
           {pageStatus == "Loading" ? (

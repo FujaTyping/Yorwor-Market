@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { Button } from "@nextui-org/button";
 import { User } from "@nextui-org/user";
 import { useRouter } from "next/navigation";
-import { FcGoogle } from "react-icons/fc";
 import { ToastContainer, toast } from "react-toastify";
 import { getAuth, signOut } from "firebase/auth";
 import { initializeApp } from "firebase/app";
@@ -244,7 +243,7 @@ export default function UserPage() {
         hideProgressBar={false}
         position="bottom-right"
       />
-      <div className="flex flex-col gap-5 m-10">
+      <div className="flex flex-col gap-5 my-5 mx-10">
         <div className="text-center">
           <h1 className="text-3xl">Yorwor Market</h1>
           <h3>Hatyaiwittayalai School</h3>
@@ -261,8 +260,38 @@ export default function UserPage() {
             />
             <div className="flex flex-row items-center justify-center gap-5">
               <Button
+                style={{ backgroundColor: "white" }}
+                variant="bordered"
+                onPress={() => {
+                  const id = toast.loading("Swaping account...");
+
+                  signInWithGoogle()
+                    .then(() => {
+                      toast.update(id, {
+                        render: `Swap success`,
+                        type: "success",
+                        isLoading: false,
+                        autoClose: 3000,
+                      });
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 1500);
+                    })
+                    .catch((error) => {
+                      toast.update(id, {
+                        render: `Swap failed ${error.message}`,
+                        closeOnClick: true,
+                        type: "error",
+                        isLoading: false,
+                        autoClose: 10000,
+                      });
+                    });
+                }}
+              >
+                Swap account
+              </Button>
+              <Button
                 color="danger"
-                startContent={<FcGoogle />}
                 variant="bordered"
                 onPress={() => {
                   const id = toast.loading("Loging out...");
@@ -293,12 +322,6 @@ export default function UserPage() {
                 }}
               >
                 Logout
-              </Button>
-              <Button
-                style={{ backgroundColor: "white" }}
-                variant="bordered"
-              >
-                <Link href="/">Back to home</Link>
               </Button>
             </div>
             {pageStatus == "Loading" ? (
@@ -350,45 +373,13 @@ export default function UserPage() {
                             <h1 className="text-xl">Outside @hatyaiwit.ac.th</h1>
                             <h1>Please use an school or work email</h1>
                           </div>
-                          <Button
-                            startContent={<FcGoogle />}
-                            style={{ backgroundColor: "white" }}
-                            variant="bordered"
-                            onPress={() => {
-                              const id = toast.loading("Swaping account...");
-
-                              signInWithGoogle()
-                                .then(() => {
-                                  toast.update(id, {
-                                    render: `Login success`,
-                                    type: "success",
-                                    isLoading: false,
-                                    autoClose: 3000,
-                                  });
-                                  setTimeout(() => {
-                                    window.location.reload();
-                                  }, 1500);
-                                })
-                                .catch((error) => {
-                                  toast.update(id, {
-                                    render: `Login failed ${error.message}`,
-                                    closeOnClick: true,
-                                    type: "error",
-                                    isLoading: false,
-                                    autoClose: 10000,
-                                  });
-                                });
-                            }}
-                          >
-                            Swap account
-                          </Button>
                         </div>
                       </>
                     ) : (
                       <>
                         <div>
                           <div className="max-w-lg mx-auto">
-                            <div className="flex items-center mb-3 mt-5 gap-2 mx-auto">
+                            <div className="flex items-center mb-3 mt-2 gap-2 mx-auto">
                               <h1>Your product</h1>
                               <Tooltip content="Add new product">
                                 <Button
@@ -441,48 +432,6 @@ export default function UserPage() {
               <div>
                 <h1 className="text-xl">No auth found</h1>
                 <h1>Please login</h1>
-              </div>
-              <div className="flex flex-row gap-3">
-                <Button
-                  startContent={<FcGoogle />}
-                  style={{ backgroundColor: "white" }}
-                  variant="bordered"
-                  onPress={() => {
-                    const id = toast.loading("Loging in...");
-
-                    signInWithGoogle()
-                      .then(() => {
-                        toast.update(id, {
-                          render: `Login success`,
-                          type: "success",
-                          isLoading: false,
-                          autoClose: 3000,
-                        });
-                        setTimeout(() => {
-                          window.location.reload();
-                        }, 1500);
-                      })
-                      .catch((error) => {
-                        toast.update(id, {
-                          render: `Login failed ${error.message}`,
-                          closeOnClick: true,
-                          type: "error",
-                          isLoading: false,
-                          autoClose: 10000,
-                        });
-                      });
-                  }}
-                >
-                  Login
-                </Button>
-                <Link href="/">
-                  <Button
-                    style={{ backgroundColor: "white" }}
-                    variant="bordered"
-                  >
-                    Back to home
-                  </Button>
-                </Link>
               </div>
             </div>
           </>
