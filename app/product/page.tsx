@@ -23,6 +23,16 @@ import { ToastContainer, toast } from "react-toastify";
 import { BsBagXFill } from "react-icons/bs";
 import { IoMdMore } from "react-icons/io";
 import { IoMdShare } from "react-icons/io";
+import {
+    FacebookShareButton,
+    FacebookIcon,
+    LineIcon,
+    LineShareButton,
+    RedditShareButton,
+    RedditIcon,
+    TwitterShareButton,
+    XIcon,
+} from "react-share";
 
 import marketConfig from "@/market-config.mjs";
 
@@ -31,10 +41,13 @@ export default function Home() {
     const [title, setTitle] = useState("Yorwor Market");
     const [goodsList, setGoodsList] = useState([]);
     const [pageStatus, setPageStatus] = useState("Loading");
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const modalReport = useDisclosure();
+    const modalShare = useDisclosure();
     const [Gid, setGid] = useState("");
     const [reportRadio, setReportRadio] = useState("");
     const [oneReport, setOneReport] = useState(false);
+    const [thisURL, setThisUrl] = useState("");
+    const [thisDecs, setThisDecs] = useState("Check out <NAME> on Yorwor Market!");
 
     function submitNewReport() {
         const id = toast.loading("Adding new product ...");
@@ -77,12 +90,14 @@ export default function Home() {
         const queryParams = new URLSearchParams(window.location.search);
         const productId = queryParams.get('id');
         setGid(productId);
+        setThisUrl(`https://market.yorwor.siraphop.me/product?id=${productId}`);
         axios
             .put(`${marketConfig.apiServer}good/item`, { goodId: productId })
             .then((response) => {
                 setPageStatus("Finish");
                 setGoodsList(response.data.Goods);
                 setTitle(`Yorwor Market - ${response.data.Goods[0].title}`)
+                setThisDecs(`🛒 Check out ${response.data.Goods[0].title} on Yorwor Market!`)
             })
             .catch(() => {
                 setPageStatus("Error");
@@ -131,8 +146,8 @@ export default function Home() {
                                                         <Button isIconOnly startContent={<IoMdMore />} variant="bordered" className="w-2"></Button>
                                                     </DropdownTrigger>
                                                     <DropdownMenu aria-label="Static Actions">
-                                                        <DropdownItem startContent={< IoMdShare />} key="new">Share</DropdownItem>
-                                                        <DropdownItem startContent={<IoFlag />} key="report" className="text-danger" color="danger" onPress={onOpen}>
+                                                        <DropdownItem startContent={< IoMdShare />} key="new" onPress={modalShare.onOpen}>Share</DropdownItem>
+                                                        <DropdownItem startContent={<IoFlag />} key="report" className="text-danger" color="danger" onPress={modalReport.onOpen}>
                                                             Report
                                                         </DropdownItem>
                                                     </DropdownMenu>
@@ -202,7 +217,7 @@ export default function Home() {
                     )}
                 </div>
             </div>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top">
+            <Modal isOpen={modalReport.isOpen} onOpenChange={modalReport.onOpenChange} placement="top">
                 <ModalContent>
                     {(onClose) => (
                         <>
@@ -221,9 +236,6 @@ export default function Home() {
                                         </div>
                                     </ModalBody>
                                     <ModalFooter>
-                                        <Button color="danger" variant="light" onPress={onClose}>
-                                            Close
-                                        </Button>
                                     </ModalFooter>
                                 </>
                             ) : (
@@ -256,6 +268,44 @@ export default function Home() {
                                     </ModalFooter>
                                 </>
                             )}
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+            <Modal isOpen={modalShare.isOpen} onOpenChange={modalShare.onOpenChange} placement="top">
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">Share {goodsList[0].title} ?</ModalHeader>
+                            <ModalBody>
+                                <div>
+                                    <div className="bg-white rounded-lg">
+                                        <div>
+                                            <h1><b>Share with text</b></h1>
+                                            <div className="mb-5 mt-1">
+                                                <p>{thisDecs} : {thisURL}</p>
+                                            </div>
+                                            <h1><b>Share with platform</b></h1>
+                                            <form className="flex justify-center gap-4 mt-3">
+                                                <FacebookShareButton url={thisURL} title={thisDecs}>
+                                                    <FacebookIcon size={40} round />
+                                                </FacebookShareButton>
+                                                <LineShareButton url={thisURL} title={thisDecs}>
+                                                    <LineIcon size={40} round />
+                                                </LineShareButton>
+                                                <RedditShareButton url={thisURL} title={thisDecs} className="Demo__some-network__share-button">
+                                                    <RedditIcon size={40} round />
+                                                </RedditShareButton>
+                                                <TwitterShareButton url={thisURL} title={thisDecs} className="Demo__some-network__share-button">
+                                                    <XIcon size={40} round />
+                                                </TwitterShareButton>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ModalBody>
+                            <ModalFooter>
+                            </ModalFooter>
                         </>
                     )}
                 </ModalContent>

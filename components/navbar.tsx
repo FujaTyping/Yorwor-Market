@@ -54,8 +54,12 @@ export const NavbarNX = () => {
                     <Avatar className="cursor-pointer" src={FireUser.photoURL} />
                   </DropdownTrigger>
                   <DropdownMenu aria-label="Static Actions">
-                    <DropdownItem as={Link} href="/user" startContent={<MdSpaceDashboard />} key="new">Dashboard</DropdownItem>
-                    <DropdownItem startContent={<IoLogOut />} key="report" className="text-danger" color="danger"
+                    <DropdownItem key="profile" className="h-14 gap-2">
+                      <p className="font-semibold">Signed in as</p>
+                      <p className="font-semibold">{FireUser.email}</p>
+                    </DropdownItem>
+                    <DropdownItem href="/user" startContent={<MdSpaceDashboard />} key="user">Dashboard</DropdownItem>
+                    <DropdownItem startContent={<IoLogOut />} key="logout" className="text-danger" color="danger"
                       onPress={() => {
                         const id = toast.loading("Loging out...");
                         const auth = getAuth(app);
