@@ -137,13 +137,21 @@ export default function Home() {
                                             <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                                                 {goodsList[0].decs}
                                             </p>
-                                            <div className="flex mb-4">
-                                                <div className="mr-4">
+                                            <div className="flex flex-col md:flex-row mb-4 gap-2 md:gap-4">
+                                                <div>
                                                     <span className="font-bold text-gray-700 dark:text-gray-300">
                                                         Price :
                                                     </span>
                                                     <span className="text-gray-600 dark:text-gray-300">
-                                                        {` ${goodsList[0].price} Baht`}
+                                                        {` ${goodsList[0].price} ฿`}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <span className="font-bold text-gray-700 dark:text-gray-300">
+                                                        Quantity :
+                                                    </span>
+                                                    <span className="text-gray-600 dark:text-gray-300">
+                                                        {goodsList[0].availability ? (` In stocks (${goodsList[0].availability})`) : (` Out of stocks`)}
                                                     </span>
                                                 </div>
                                             </div>
@@ -158,11 +166,13 @@ export default function Home() {
                                                         size: "sm",
                                                     }}
                                                     name={goodsList[0].author.displayName}
+                                                    description={`Added : ${goodsList[0].addDate}`}
                                                 />
                                             </div>
                                             <div className="flex flex-col sm:flex-row mt-5 gap-3">
                                                 <Tooltip content="You cannot buy this right now">
                                                     <Button
+                                                        isDisabled={!goodsList[0].availability}
                                                         color="danger"
                                                         variant="bordered"
                                                         className="cursor-not-allowed"

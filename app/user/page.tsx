@@ -24,6 +24,7 @@ import { Input, Textarea } from "@nextui-org/input";
 import { MdDeleteForever } from "react-icons/md";
 import { FaUpload } from "react-icons/fa6";
 import { signInWithGoogle } from "../../lib/firebase-auth";
+import { MdOutlineEdit } from "react-icons/md";
 import { Tooltip } from "@nextui-org/tooltip";
 
 import useLocalStorge from "@/lib/localstorage-db";
@@ -49,8 +50,10 @@ export default function UserPage() {
   const [realUserBio, setRealUserBio] = useState("");
   const modalProduct = useDisclosure();
   const modalDelete = useDisclosure();
+  const modalQuan = useDisclosure();
   const [pageStatus, setPageStatus] = useState("Loading");
-  const [deleteGoodsID, setDeleteGoodsID] = useState("");
+  const [goodsID, setGoodsID] = useState("");
+  const [goodsQuan, setGoodsQuan] = useState(0);
 
   const [Gprice, setGPrice] = useState(0);
   const [Gtitle, setGTitle] = useState("");
@@ -115,7 +118,7 @@ export default function UserPage() {
         .then((response) => {
           const imageLInk = response.data.data.image.url;
           axios
-            .post(`${marketConfig.apiServer}good/new`, { email: `${FireUser.email}`, title: `${Gtitle}`, decs: `${Gdecs}`, photoURL: `${imageLInk}`, price: Gprice, displayName: `${realUserName}`, AuthorphotoURL: `${FireUser.photoURL}` })
+            .post(`${marketConfig.apiServer}good/new`, { email: `${FireUser.email}`, title: `${Gtitle}`, decs: `${Gdecs}`, photoURL: `${imageLInk}`, price: Gprice, displayName: `${realUserName}`, AuthorphotoURL: `${FireUser.photoURL}`, quantity: goodsQuan })
             .then((response) => {
               if (response.data.error) {
                 toast.update(id, {
@@ -161,14 +164,20 @@ export default function UserPage() {
 
   function confirmDelete(ProductID) {
     modalDelete.onOpen();
-    setDeleteGoodsID(ProductID);
+    setGoodsID(ProductID);
+  }
+
+  function updateQuantity(ProductID, Quantity) {
+    modalQuan.onOpen();
+    setGoodsID(ProductID);
+    setGoodsQuan(Quantity);
   }
 
   function deleteGoods() {
     const id = toast.loading("Removing product ...");
     axios
       .delete(`${marketConfig.apiServer}good/delete`, {
-        data: { email: FireUser.email, pID: deleteGoodsID }
+        data: { email: FireUser.email, pID: goodsID }
       })
       .then((response) => {
         if (response.data.error) {
@@ -194,6 +203,44 @@ export default function UserPage() {
       .catch((error) => {
         toast.update(id, {
           render: `Failed to remove product ${error.message}`,
+          closeOnClick: true,
+          type: "error",
+          isLoading: false,
+          autoClose: 10000,
+        });
+      });
+  }
+
+  function updateQuantityGood() {
+    const id = toast.loading("Editing product ...");
+    axios
+      .patch(`${marketConfig.apiServer}good/item/quantity`, {
+        email: FireUser.email, gID: goodsID, Quan: goodsQuan
+      })
+      .then((response) => {
+        if (response.data.error) {
+          toast.update(id, {
+            render: `Failed to edit the product`,
+            closeOnClick: true,
+            type: "error",
+            isLoading: false,
+            autoClose: 10000,
+          });
+        } else {
+          toast.update(id, {
+            render: `Successfully edit product`,
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        }
+      })
+      .catch((error) => {
+        toast.update(id, {
+          render: `Failed to edit product ${error.message}`,
           closeOnClick: true,
           type: "error",
           isLoading: false,
@@ -396,14 +443,16 @@ export default function UserPage() {
                               <TableHeader>
                                 <TableColumn>{"<:id>"}</TableColumn>
                                 <TableColumn>{"<:name>"}</TableColumn>
+                                <TableColumn>{"<:quantity>"}</TableColumn>
                                 <TableColumn className="text-red-500 text-center">Delete</TableColumn>
                               </TableHeader>
                               {userDetails.goods && Object.keys(userDetails.goods).length > 0 ? (
                                 <TableBody>
-                                  {Object.entries(userDetails.goods).map(([id, name], index) => (
+                                  {Object.entries(userDetails.goods).map(([id, { title, availability }], index) => (
                                     <TableRow key={index}>
                                       <TableCell>{id}</TableCell>
-                                      <TableCell>{name}</TableCell>
+                                      <TableCell>{title}</TableCell>
+                                      <TableCell><div className="flex items-center gap-2">{availability} <MdOutlineEdit className="cursor-pointer" onClick={() => updateQuantity(id, availability)} /></div></TableCell>
                                       <TableCell
                                         className="cursor-pointer flex justify-center text-red-500"
                                         onClick={() => confirmDelete(id)}
@@ -449,7 +498,10 @@ export default function UserPage() {
                       <form className="flex flex-col gap-4">
                         <Input value={Gtitle} onChange={(e) => setGTitle(e.target.value)} variant="bordered" label="Title" placeholder="eg. Cookie" type="text" />
                         <Textarea value={Gdecs} onChange={(e) => setGDecs(e.target.value)} variant="bordered" label="Decs" placeholder="eg. Lorem Ipsum is simply dummy text of the printing and typesetting industry" />
-                        <Input value={Gprice.toString()} onChange={(e) => setGPrice(parseInt(e.target.value))} variant="bordered" label="Price" placeholder="0" type="number" />
+                        <div className="flex gap-3">
+                          <Input value={Gprice.toString()} onChange={(e) => setGPrice(parseInt(e.target.value))} variant="bordered" label="Price" placeholder="0" type="number" />
+                          <Input value={goodsQuan.toString()} onChange={(e) => setGoodsQuan(parseInt(e.target.value))} variant="bordered" label="Quantity" placeholder="0" type="number" />
+                        </div>
                         <div className="flex items-center">
                           <div className="relative w-full">
                             <div className="items-center justify-center mx-auto">
@@ -509,7 +561,7 @@ export default function UserPage() {
                   <div className="bg-white rounded-lg">
                     <div>
                       <form className="flex flex-col gap-4">
-                        <h1>Are you sure to delete items with this id : <b>{deleteGoodsID}</b> ?</h1>
+                        <h1>Are you sure to delete items with this id : <b>{goodsID}</b> ?</h1>
                       </form>
                     </div>
                   </div>
@@ -521,6 +573,35 @@ export default function UserPage() {
                 </Button>
                 <Button variant="bordered" color="primary" onPress={onClose}>
                   Cancel
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={modalQuan.isOpen} onOpenChange={modalQuan.onOpenChange} placement="top">
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Edit quantity</ModalHeader>
+              <ModalBody>
+                <div>
+                  <div className="bg-white rounded-lg">
+                    <div>
+                      <form className="flex flex-col gap-4">
+                        <h1>Edit quantity of <b>{goodsID}</b></h1>
+                        <Input value={goodsQuan.toString()} onChange={(e) => setGoodsQuan(parseInt(e.target.value))} variant="bordered" label="Quantity" placeholder="0" type="number" />
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose} >
+                  Close
+                </Button>
+                <Button variant="bordered" color="primary" onPress={() => updateQuantityGood()} >
+                  Submit
                 </Button>
               </ModalFooter>
             </>
