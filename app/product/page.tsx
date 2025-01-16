@@ -2,7 +2,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import axios from "axios";
 import { FaCartPlus } from "react-icons/fa";
@@ -97,11 +96,7 @@ export default function Home() {
                 hideProgressBar={false}
                 position="bottom-right"
             />
-            <div className="flex flex-col items-center justify-center gap-5 m-10">
-                <div className="text-center">
-                    <h1 className="text-3xl">Yorwor Market</h1>
-                    <h3>Hatyaiwittayalai School</h3>
-                </div>
+            <div className="flex flex-col items-center justify-center gap-5 my-5 mx-10">
                 <div className="p-5">
                     {pageStatus == "Loading" ? (
                         <>
@@ -166,12 +161,6 @@ export default function Home() {
                                                 />
                                             </div>
                                             <div className="flex flex-col sm:flex-row mt-5 gap-3">
-                                                <Button
-                                                    style={{ backgroundColor: "white" }}
-                                                    variant="bordered"
-                                                >
-                                                    <Link href="/">Back to home</Link>
-                                                </Button>
                                                 <Tooltip content="You cannot buy this right now">
                                                     <Button
                                                         color="danger"
@@ -179,7 +168,7 @@ export default function Home() {
                                                         className="cursor-not-allowed"
                                                         startContent={<FaCartPlus />}
                                                     >
-                                                        Add to cart
+                                                        Buy now
                                                     </Button>
                                                 </Tooltip>
                                             </div>
@@ -244,11 +233,11 @@ export default function Home() {
                                         </div>
                                     </ModalBody>
                                     <ModalFooter>
-                                        <Button color="danger" variant="light" onPress={onClose}>
-                                            Close
-                                        </Button>
-                                        <Button variant="bordered" color="primary" onPress={() => { if (!reportRadio == "") { onClose() }; submitNewReport() }}>
+                                        <Button color="danger" variant="light" onPress={() => { if (!reportRadio == "") { onClose() }; submitNewReport() }}>
                                             Submit
+                                        </Button>
+                                        <Button variant="bordered" color="primary" onPress={onClose}>
+                                            Close
                                         </Button>
                                     </ModalFooter>
                                 </>

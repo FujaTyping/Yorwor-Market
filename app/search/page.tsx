@@ -25,44 +25,43 @@ export default function Home() {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       router.push(`/search?query=${searchQ}`);
-      window.location.reload();
+      searchforItems(searchQ);
     }
   };
 
+  function searchforItems(GGID) {
+    if (GGID == "") {
+      router.push("/")
+    } else {
+      setPageStatus("Loading");
+      setGSearch(`${GGID}`);
+      setSearchQ(`${GGID}`);
+      axios
+        .put(`${marketConfig.apiServer}good/bulk/search`, { searchQuery: `${GGID}` })
+        .then((response) => {
+          setPageStatus("Finish");
+          setGoodsList(response.data.Goods);
+        })
+        .catch(() => {
+          setPageStatus("Error");
+          setGoodsList([]);
+        });
+    }
+  }
+
   useEffect(() => {
-    setPageStatus("Loading");
     const queryParams = new URLSearchParams(window.location.search);
     const GQuery = queryParams.get('query');
-    setGSearch(`${GQuery}`);
-    setSearchQ(`${GQuery}`);
-    axios
-      .put(`${marketConfig.apiServer}good/bulk/search`, { searchQuery: `${GQuery}` })
-      .then((response) => {
-        setPageStatus("Finish");
-        setGoodsList(response.data.Goods);
-      })
-      .catch(() => {
-        setPageStatus("Error");
-        setGoodsList([]);
-      });
+    searchforItems(GQuery);
   }, []);
 
   return (
     <>
       <title>{title}</title>
-      <div className="flex flex-col items-center justify-center gap-5 m-10">
+      <div className="flex flex-col items-center justify-center gap-5 my-5 mx-10">
         <div className="text-center">
           <h1 className="text-3xl">Yorwor Market</h1>
           <h3>Hatyaiwittayalai School</h3>
-        </div>
-        <div className="flex flex-row gap-5">
-          <Button
-            startContent={<IoChevronBack />}
-            style={{ backgroundColor: "white" }}
-            variant="bordered"
-          >
-            <Link href="/">Back to home</Link>
-          </Button>
         </div>
         <div>
           {pageStatus == "Loading" ? (
