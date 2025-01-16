@@ -64,7 +64,7 @@ export default function UserPage() {
     if (!inputForm == "") {
       const id = toast.loading("Registering ...");
       axios
-        .post(`${marketConfig.apiServer}user/new`, { displayNAME: `${inputForm}`, email: `${FireUser.email}`, bio: `${inputBioForm}` })
+        .post(`${marketConfig.apiServer}user/new`, { displayNAME: `${inputForm}`, email: `${FireUser.email}`, bio: `${inputBioForm}`, photoURL: `${FireUser.photoURL}` })
         .then((response) => {
           if (response.data.error) {
             toast.update(id, {
