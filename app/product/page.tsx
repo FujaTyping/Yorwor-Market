@@ -23,6 +23,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { BsBagXFill } from "react-icons/bs";
 import { IoMdMore } from "react-icons/io";
 import { IoMdShare } from "react-icons/io";
+import Link from "next/link";
 import {
     FacebookShareButton,
     FacebookIcon,
@@ -174,20 +175,22 @@ export default function Home() {
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div className="flex flex-col items-start">
-                                                <span className="font-bold text-gray-700 dark:text-gray-300">
-                                                    Author info :
-                                                </span>
-                                                <User
-                                                    className="mt-2"
-                                                    avatarProps={{
-                                                        src: goodsList[0].author.photoURL,
-                                                        size: "sm",
-                                                    }}
-                                                    name={goodsList[0].author.displayName}
-                                                    description={`Added : ${goodsList[0].addDate}`}
-                                                />
-                                            </div>
+                                            <Link href={`/store?email=${goodsList[0].author.email}`}>
+                                                <div className="flex flex-col items-start cursor-pointer">
+                                                    <span className="font-bold text-gray-700 dark:text-gray-300">
+                                                        Author info :
+                                                    </span>
+                                                    <User
+                                                        className="mt-2"
+                                                        avatarProps={{
+                                                            src: goodsList[0].author.photoURL,
+                                                            size: "sm",
+                                                        }}
+                                                        name={goodsList[0].author.displayName}
+                                                        description={`Added : ${goodsList[0].addDate}`}
+                                                    />
+                                                </div>
+                                            </Link>
                                             <div className="flex flex-col sm:flex-row mt-5 gap-3">
                                                 <Tooltip content="You cannot buy this right now">
                                                     <Button

@@ -8,17 +8,11 @@ import { ToastContainer, toast } from "react-toastify";
 import { Avatar } from "@nextui-org/avatar";
 import { useRouter } from "next/navigation";
 import YorworLogo from "@/app/favicon.ico";
-import { IoLogOut } from "react-icons/io5";
-import { MdSpaceDashboard } from "react-icons/md";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/dropdown";
-import { initializeApp } from "firebase/app";
-import { getAuth, signOut } from "firebase/auth";
-import firebaseConfig from "@/lib/firebase-config";
+import { Tooltip } from "@nextui-org/tooltip";
 
 export const NavbarNX = () => {
   const { FireUser } = useLocalStorge();
   const router = useRouter();
-  const app = initializeApp(firebaseConfig);
 
   return (
     <>
@@ -49,47 +43,16 @@ export const NavbarNX = () => {
           <NavbarItem>
             {FireUser.uid ? (
               <>
-                <Dropdown>
-                  <DropdownTrigger>
-                    <Avatar className="cursor-pointer" src={FireUser.photoURL} />
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="Static Actions">
-                    <DropdownItem key="profile" className="h-14 gap-2">
-                      <p className="font-semibold">Signed in as</p>
+                <Tooltip
+                  content={
+                    <div className="px-1 py-2">
+                      <p className="font-bold">Signed in as</p>
                       <p className="font-semibold">{FireUser.email}</p>
-                    </DropdownItem>
-                    <DropdownItem href="/user" startContent={<MdSpaceDashboard />} key="user">Dashboard</DropdownItem>
-                    <DropdownItem startContent={<IoLogOut />} key="logout" className="text-danger" color="danger"
-                      onPress={() => {
-                        const id = toast.loading("Loging out...");
-                        const auth = getAuth(app);
-
-                        signOut(auth)
-                          .then(() => {
-                            toast.update(id, {
-                              render: `Logout success`,
-                              type: "success",
-                              isLoading: false,
-                              autoClose: 3000,
-                            });
-                            setTimeout(() => {
-                              router.push("/");
-                              window.location.reload();
-                            }, 1500);
-                          })
-                          .catch((error) => {
-                            toast.update(id, {
-                              render: `Logout failed ${error.message}`,
-                              closeOnClick: true,
-                              type: "error",
-                              isLoading: false,
-                              autoClose: 10000,
-                            });
-                          });
-                      }}
-                    >Logout</DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
+                    </div>
+                  }
+                >
+                  <Link href={"/user"}><Avatar className="cursor-pointer" src={FireUser.photoURL} /></Link>
+                </Tooltip>
               </>
             ) : (
               <>
