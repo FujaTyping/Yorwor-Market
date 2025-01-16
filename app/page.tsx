@@ -46,8 +46,8 @@ export default function Home() {
       <title>{title}</title>
       <div className="flex flex-col items-center justify-center gap-5 my-5 mx-10">
         <div className="text-center">
-          <h1 className="text-3xl">Yorwor Market</h1>
-          <h3>Hatyaiwittayalai School</h3>
+          <h1 className="text-3xl AnakotmaiBOLD">Yorwor Market</h1>
+          <h3>โรงเรียนหาดใหญ่วิทยาลัย</h3>
         </div>
         <div>
           {pageStatus == "Loading" ? (
@@ -55,8 +55,8 @@ export default function Home() {
               <div className="flex items-center gap-4 mt-5">
                 <Spinner color="default" />
                 <div className="flex flex-col gap-1">
-                  <h1 className="text-xl">Loading product</h1>
-                  <p>This may take a few second</p>
+                  <h1 className="text-xl AnakotmaiBOLD">กำลังโหลดสินค้า</h1>
+                  <p>อาจจะใช้เวลาสัก 1-2 นาที</p>
                 </div>
               </div>
             </>
@@ -70,7 +70,7 @@ export default function Home() {
                         className="w-full"
                         labelPlacement="outside-left"
                         variant="bordered"
-                        label="Search"
+                        label="ค้าหา"
                         placeholder="eg. Cookie"
                         type="text"
                         onChange={(e) => setSearchQ(e.target.value)}
@@ -87,14 +87,14 @@ export default function Home() {
                                     <img loading="lazy" className="hover:scale-110 h-full w-full object-cover transition-all duration-200 rounded-lg" src={list.photoURL} alt="Product" />
                                   </div>
                                   <div style={{ zIndex: 11 }} className="absolute top-0 m-1 rounded-full bg-white">
-                                    <p className="text-[10px] rounded-full bg-black p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">{list.availability ? ("SALE") : ("SOLD OUT")}</p>
+                                    <p className="text-[12px] rounded-full bg-black p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">{list.availability ? ("ขาย") : ("หมดแล้ว")}</p>
                                   </div>
                                   <div className="mt-4 flex flex-col md:flex-row items-start justify-between">
                                     <div className="flex flex-col">
-                                      <h3 className="font-bold leading-tight break-words">
+                                      <h3 className="AnakotmaiBOLD leading-tight break-words">
                                         {list.title}
                                       </h3>
-                                      <h1 className="leading-tight break-words">By : {list.author.displayName}</h1>
+                                      <h1 className="leading-tight break-words">โดย : {list.author.displayName}</h1>
                                     </div>
 
                                     <div className="text-right mt-2 md:mt-0">
@@ -113,8 +113,8 @@ export default function Home() {
                   <div className="flex items-center flex-col md:flex-row md:gap-6 mt-5">
                     <BsBagXFill className="w-8 h-8" />
                     <div className="flex flex-col gap-1">
-                      <h1 className="text-xl text-center mt-3">No products available at the moment</h1>
-                      <p className="text-center">The api might down</p>
+                      <h1 className="text-xl text-center mt-3 AnakotmaiBOLD">ยังไม่มีสินค้า ณ ตอนนี้</h1>
+                      <p className="text-center">ลองเป็นคนแรกที่ลงขายของดูสิ !</p>
                     </div>
                   </div>
                 )

@@ -48,10 +48,10 @@ export default function Home() {
     const [reportRadio, setReportRadio] = useState("");
     const [oneReport, setOneReport] = useState(false);
     const [thisURL, setThisUrl] = useState("");
-    const [thisDecs, setThisDecs] = useState("Check out <NAME> on Yorwor Market!");
+    const [thisDecs, setThisDecs] = useState("เช็กเลย! <NAME> บน Yorwor Market!");
 
     function submitNewReport() {
-        const id = toast.loading("Adding new product ...");
+        const id = toast.loading("กำลังรายงานสินค้า ...");
         axios
             .post(`${marketConfig.apiServer}report/good`,
                 { gID: `${Gid}`, reason: `${reportRadio}` }
@@ -59,7 +59,7 @@ export default function Home() {
             .then((response) => {
                 if (response.data.error) {
                     toast.update(id, {
-                        render: `Failed report this product (Fill in all input)`,
+                        render: `ไม่สามารถรายงานสินค้าได้ กรุณาเลือกเหตุผล`,
                         closeOnClick: true,
                         type: "error",
                         isLoading: false,
@@ -67,7 +67,7 @@ export default function Home() {
                     });
                 } else {
                     toast.update(id, {
-                        render: `Successfully report this product`,
+                        render: `รายงานลินค้าสำเร็จแล้ว`,
                         type: "success",
                         isLoading: false,
                         autoClose: 3000,
@@ -77,7 +77,7 @@ export default function Home() {
             })
             .catch((error: any) => {
                 toast.update(id, {
-                    render: `Failed report this product ${error.message}`,
+                    render: `ไม่สามารถรายงานสินค้าได้  ${error.message}`,
                     closeOnClick: true,
                     type: "error",
                     isLoading: false,
@@ -98,7 +98,7 @@ export default function Home() {
                 setPageStatus("Finish");
                 setGoodsList(response.data.Goods);
                 setTitle(`Yorwor Market - ${response.data.Goods[0].title}`)
-                setThisDecs(`🛒 Check out ${response.data.Goods[0].title} on Yorwor Market!`)
+                setThisDecs(`🛒 เช็กเลย! ${response.data.Goods[0].title} บน Yorwor Market!`)
             })
             .catch(() => {
                 setPageStatus("Error");
@@ -122,8 +122,8 @@ export default function Home() {
                             <div className="flex items-center justify-center gap-4 mt-5">
                                 <Spinner color="default" />
                                 <div className="flex flex-col gap-1">
-                                    <h1 className="text-xl">Loading product details</h1>
-                                    <p>This may take a few second</p>
+                                    <h1 className="text-xl AnakotmaiBOLD">กำลังโหลดข้อมูลสินค้า</h1>
+                                    <p>กรุณารอสักครู่</p>
                                 </div>
                             </div>
                         </>
@@ -140,16 +140,16 @@ export default function Home() {
                                             </div>
                                         </div>
                                         <div className="md:flex-1">
-                                            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2 flex items-center gap-2">
+                                            <h2 className="text-2xl AnakotmaiBOLD text-gray-800 dark:text-white mb-2 flex items-center gap-2">
                                                 {goodsList[0].title}
                                                 <Dropdown>
                                                     <DropdownTrigger>
                                                         <Button isIconOnly startContent={<IoMdMore />} variant="bordered" className="w-2"></Button>
                                                     </DropdownTrigger>
                                                     <DropdownMenu aria-label="Static Actions">
-                                                        <DropdownItem startContent={< IoMdShare />} key="new" onPress={modalShare.onOpen}>Share</DropdownItem>
+                                                        <DropdownItem startContent={< IoMdShare />} key="new" onPress={modalShare.onOpen}>แชร์</DropdownItem>
                                                         <DropdownItem startContent={<IoFlag />} key="report" className="text-danger" color="danger" onPress={modalReport.onOpen}>
-                                                            Report
+                                                            รายงาน
                                                         </DropdownItem>
                                                     </DropdownMenu>
                                                 </Dropdown>
@@ -159,8 +159,8 @@ export default function Home() {
                                             </p>
                                             <div className="flex flex-col md:flex-row mb-4 gap-2 md:gap-4">
                                                 <div>
-                                                    <span className="font-bold text-gray-700 dark:text-gray-300">
-                                                        Price :
+                                                    <span className="AnakotmaiBOLD text-gray-700 dark:text-gray-300">
+                                                        ราคา :
                                                     </span>
                                                     <span className="text-gray-600 dark:text-gray-300">
                                                         {` ${goodsList[0].price} ฿`}
@@ -168,17 +168,17 @@ export default function Home() {
                                                 </div>
                                                 <div>
                                                     <span className="font-bold text-gray-700 dark:text-gray-300">
-                                                        Quantity :
+                                                        จำนวนสินค้า :
                                                     </span>
                                                     <span className="text-gray-600 dark:text-gray-300">
-                                                        {goodsList[0].availability ? (` In stocks (${goodsList[0].availability})`) : (` Out of stocks`)}
+                                                        {goodsList[0].availability ? (` ${goodsList[0].availability}`) : (` หมดแล้ว`)}
                                                     </span>
                                                 </div>
                                             </div>
                                             <Link href={`/store?email=${goodsList[0].author.email}`}>
                                                 <div className="flex flex-col items-start cursor-pointer">
-                                                    <span className="font-bold text-gray-700 dark:text-gray-300">
-                                                        Author info :
+                                                    <span className="AnakotmaiBOLD text-gray-700 dark:text-gray-300">
+                                                        ข้อมูลผู้ขาย :
                                                     </span>
                                                     <User
                                                         className="mt-2"
@@ -187,12 +187,12 @@ export default function Home() {
                                                             size: "sm",
                                                         }}
                                                         name={goodsList[0].author.displayName}
-                                                        description={`Added : ${goodsList[0].addDate}`}
+                                                        description={`ลงสินค้าวันที่ : ${goodsList[0].addDate}`}
                                                     />
                                                 </div>
                                             </Link>
                                             <div className="flex flex-col sm:flex-row mt-5 gap-3">
-                                                <Tooltip content="You cannot buy this right now">
+                                                <Tooltip content="ไม่สามารถชื้อได้ในขณะนี้">
                                                     <Button
                                                         isDisabled={!goodsList[0].availability}
                                                         color="danger"
@@ -200,7 +200,7 @@ export default function Home() {
                                                         className="cursor-not-allowed"
                                                         startContent={<FaCartPlus />}
                                                     >
-                                                        Buy now
+                                                        ชื้อเลย
                                                     </Button>
                                                 </Tooltip>
                                             </div>
@@ -210,8 +210,8 @@ export default function Home() {
                                     <div className="flex items-center flex-col md:flex-row md:gap-6">
                                         <BsBagXFill className="w-8 h-8" />
                                         <div className="flex flex-col gap-1 justify-center">
-                                            <h1 className="text-xl mt-3">No Product Available</h1>
-                                            <p>Check the id of the product <b>{`(${Gid})`}</b></p>
+                                            <h1 className="text-xl mt-3 AnakotmaiBOLD">ไม่มีสินค้านี้</h1>
+                                            <p>กรุณาเช็คไอดีของสินค้าให้ดี <span className="AnakotmaiBOLD">{`(${Gid})`}</span></p>
                                         </div>
                                     </div>
                                 )}
@@ -243,18 +243,18 @@ export default function Home() {
                                 </>
                             ) : (
                                 <>
-                                    <ModalHeader className="flex flex-col gap-1">Report {goodsList[0].title} ?</ModalHeader>
+                                    <ModalHeader className="flex flex-col gap-1">รายงาน {goodsList[0].title} ?</ModalHeader>
                                     <ModalBody>
                                         <div>
                                             <div className="bg-white rounded-lg">
                                                 <div>
                                                     <form className="flex flex-col gap-4">
-                                                        <RadioGroup onChange={(e) => setReportRadio(e.target.value)} label="Why you report this product">
-                                                            <Radio value="I dont like it">{"I don't like it"}</Radio>
-                                                            <Radio value="Copyright infringement">Copyright infringement</Radio>
-                                                            <Radio value="Prohibited goods">Prohibited goods</Radio>
-                                                            <Radio value="It is considered fraudulent">It is considered fraudulent</Radio>
-                                                            <Radio value="Selling other people products">{"Selling other people's products"}</Radio>
+                                                        <RadioGroup onChange={(e) => setReportRadio(e.target.value)} label="เหตุผลที่คุณรายงานสินค้านี้">
+                                                            <Radio value="I dont like it">ฉันไม่ชอบสินค้านี้</Radio>
+                                                            <Radio value="Copyright infringement">สินค้าละเมิดลิขสิทธิ์</Radio>
+                                                            <Radio value="Prohibited goods">สินค้าต้องห้าม</Radio>
+                                                            <Radio value="It is considered fraudulent">ผู้ขายมีการฉ้อโกง</Radio>
+                                                            <Radio value="Selling other people products">การขายสินค้าของผู้อื่น</Radio>
                                                         </RadioGroup>
                                                     </form>
                                                 </div>
@@ -263,10 +263,10 @@ export default function Home() {
                                     </ModalBody>
                                     <ModalFooter>
                                         <Button color="danger" variant="light" onPress={() => { if (!reportRadio == "") { onClose() }; submitNewReport() }}>
-                                            Submit
+                                            รายงาน
                                         </Button>
                                         <Button variant="bordered" color="primary" onPress={onClose}>
-                                            Close
+                                            ยกเลิก
                                         </Button>
                                     </ModalFooter>
                                 </>
@@ -279,16 +279,16 @@ export default function Home() {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Share {goodsList[0].title} ?</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">แชร์ {goodsList[0].title} ?</ModalHeader>
                             <ModalBody>
                                 <div>
                                     <div className="bg-white rounded-lg">
                                         <div>
-                                            <h1><b>Share with text</b></h1>
+                                            <h1 className="AnakotmaiBOLD">แชร์ด้วยข้อความ</h1>
                                             <div className="mb-5 mt-1">
                                                 <p>{thisDecs} : {thisURL}</p>
                                             </div>
-                                            <h1><b>Share with platform</b></h1>
+                                            <h1 className="AnakotmaiBOLD">แชร์ด้วยโซเชียลมีเดีย</h1>
                                             <form className="flex justify-center gap-4 mt-3">
                                                 <FacebookShareButton url={thisURL} title={thisDecs}>
                                                     <FacebookIcon size={40} round />

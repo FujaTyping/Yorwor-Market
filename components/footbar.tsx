@@ -9,8 +9,8 @@ export const Footbar = () => {
             <div className="flex justify-center text-teal-600 sm:justify-start">
               <img src={YorworLogo.src} className="h-8" alt="Logo" />
             </div>
-            <p className="mt-4 text-center text-sm text-gray-500 lg:mt-0 lg:text-right">
-              Copyright &copy; 2025 All rights reserved
+            <p className="mt-4 text-center text-sm lg:mt-0 lg:text-right AnakotmaiBOLD">
+              Copyright &copy; 2025 ผู้จัดทำโครงงาน {"(สงวนลิขสิทธิ์ ทั้งหมด)"}
             </p>
           </div>
         </div>

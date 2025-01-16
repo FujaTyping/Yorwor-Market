@@ -25,17 +25,17 @@ export const NavbarNX = () => {
       <Navbar shouldHideOnScroll>
         <NavbarBrand className="cursor-pointer" as={Link} href={"/"}>
           <img src={YorworLogo.src} alt="Logo" />
-          <p className="ml-2 font-bold text-inherit">Yorwor Market</p>
+          <p className="ml-2 AnakotmaiBOLD text-inherit">Yorwor Market</p>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
             <Link color="foreground" href="#">
-              About US
+              เกี่ยวกับโครงงาน
             </Link>
           </NavbarItem>
           <NavbarItem>
             <Link color="foreground" href="#">
-              Contract
+              ติดต่อ
             </Link>
           </NavbarItem>
         </NavbarContent>
@@ -46,8 +46,8 @@ export const NavbarNX = () => {
                 <Tooltip
                   content={
                     <div className="px-1 py-2">
-                      <p className="font-bold">Signed in as</p>
-                      <p className="font-semibold">{FireUser.email}</p>
+                      <p className="AnakotmaiBOLD">เข้าสู่ระบบด้วย</p>
+                      <p>{FireUser.email}</p>
                     </div>
                   }
                 >
@@ -86,7 +86,7 @@ export const NavbarNX = () => {
                       });
                   }}
                 >
-                  Login
+                  เข้าสู่ระบบบ
                 </Button>
               </>
             )}

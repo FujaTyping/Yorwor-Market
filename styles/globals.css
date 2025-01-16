@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "AnakotmaiL";
+    src: url("../assets/font/Anakotmai-Light.ttf");
+}
+
+@font-face {
+    font-family: "AnakotmaiM";
+    src: url("../assets/font/Anakotmai-Medium.ttf");
+}
+
+* {
+    font-family: "AnakotmaiL" !important;
+}
+
+.AnakotmaiBOLD {
+    font-family: "AnakotmaiM" !important;
+}
