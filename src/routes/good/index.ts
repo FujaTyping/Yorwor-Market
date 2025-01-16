@@ -1,5 +1,5 @@
 import type { ElysiaApp } from "../../app";
-import { getDocs, query, collection, orderBy, where, documentId, setDoc, doc, serverTimestamp, getDoc, deleteDoc } from 'firebase/firestore';
+import { getDocs, query, collection, orderBy, where, documentId, setDoc, doc, serverTimestamp, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { generateID } from "../../lib/module";
 
 interface GGood {
@@ -166,20 +166,28 @@ export default (app: ElysiaApp) =>
         })
         .post("/new", async ({ body, store }) => {
             const { db } = store;
-            const { email, decs, photoURL, price, title, displayName, AuthorphotoURL } = body;
+            const { email, decs, photoURL, price, title, displayName, AuthorphotoURL, quantity } = body;
 
-            if (!email || !decs || !photoURL || !price || !title || !displayName || !AuthorphotoURL) {
+            if (!email || !decs || !photoURL || !price || !title || !displayName || !AuthorphotoURL || !quantity) {
                 return { error: true, message: "Missing good details" };
             }
 
             try {
                 const UID = generateID();
+                const TToday = new Date();
+                const TThaiDate = new Intl.DateTimeFormat("th-TH", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                }).format(TToday);
                 await setDoc(doc(db, "Goods", UID), {
                     decs: decs,
                     title: title,
                     photoURL: photoURL,
                     id: UID,
                     price: price,
+                    addDate: `${TThaiDate}`,
+                    availability: quantity,
                     timestamp: serverTimestamp(),
                 });
                 await setDoc(doc(db, "Goods", UID, "Author", "Details"), {
@@ -189,6 +197,7 @@ export default (app: ElysiaApp) =>
                 });
                 await setDoc(doc(db, "User", email, "Goods", UID), {
                     title: title,
+                    availability: quantity,
                 });
                 return `Successfully added good with ID ${UID}`;
             } catch (error: any) {
@@ -229,6 +238,40 @@ export default (app: ElysiaApp) =>
                 await deleteDoc(authorDocRef);
 
                 return `Successfully removed good with ID ${pID}`;
+            } catch (error: any) {
+                return {
+                    error: true,
+                    message: error.message || "An error occurred while removing the good",
+                };
+            }
+
+        })
+        .patch("/item/quantity", async ({ body, store }) => {
+            const { db } = store;
+            const { gID, Quan, email } = body;
+
+            if (!gID || !Quan || !email) {
+                return { error: true, message: "Missing quantity number!" };
+            }
+
+            const authorDocRef = doc(db, "Goods", gID, "Author", "Details");
+            const authorDoc = await getDoc(authorDocRef);
+
+            if (!authorDoc.exists()) {
+                return { error: true, message: "No author data found for this good" };
+            }
+
+            const authorData = authorDoc.data();
+            if (authorData.email !== email) {
+                return { error: true, message: "Author email does not match" };
+            }
+
+            try {
+                const documentRef = doc(db, "Goods", gID);
+                await updateDoc(documentRef, {
+                    availability: Quan
+                })
+                return `Successfully update quantity of ${gID}`;
             } catch (error: any) {
                 return {
                     error: true,

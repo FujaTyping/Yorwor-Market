@@ -25,12 +25,17 @@ export default (app: ElysiaApp) =>
                 const subcollectionRef = collection(db, "User", `${uID}`, "Goods");
                 const subcollectionSnap = await getDocs(subcollectionRef);
 
-                const goodsData: Record<string, string> = {};
+                const goodsData: Record<string, { title: string; availability: number }> = {};
                 subcollectionSnap.forEach((doc) => {
                     const data = doc.data();
                     const title = data?.title;
-                    if (title) {
-                        goodsData[doc.id] = title;
+                    const Quan = data?.availability;
+
+                    if (title || Quan) {
+                        goodsData[doc.id] = {
+                            title: title || '',
+                            availability: parseInt(Quan) || 0
+                        };
                     }
                 });
 
