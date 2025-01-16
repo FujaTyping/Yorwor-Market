@@ -267,10 +267,11 @@ export default (app: ElysiaApp) =>
             }
 
             try {
-                const documentRef = doc(db, "Goods", gID);
-                await updateDoc(documentRef, {
-                    availability: Quan
-                })
+                const goodsDocRef = doc(db, "Goods", gID);
+                const uGoodsDocRef = doc(db, "User", email, "Goods", gID);
+
+                await updateDoc(goodsDocRef, { availability: Quan });
+                await updateDoc(uGoodsDocRef, { availability: Quan });
                 return `Successfully update quantity of ${gID}`;
             } catch (error: any) {
                 return {
@@ -278,5 +279,4 @@ export default (app: ElysiaApp) =>
                     message: error.message || "An error occurred while removing the good",
                 };
             }
-
         });
