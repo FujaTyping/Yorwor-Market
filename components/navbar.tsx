@@ -5,13 +5,20 @@ import Link from "next/link";
 import useLocalStorge from "@/lib/localstorage-db";
 import { signInWithGoogle } from "../lib/firebase-auth";
 import { ToastContainer, toast } from "react-toastify";
-import { Avatar, AvatarGroup, AvatarIcon } from "@nextui-org/avatar";
+import { Avatar } from "@nextui-org/avatar";
 import { useRouter } from "next/navigation";
 import YorworLogo from "@/app/favicon.ico";
+import { IoLogOut } from "react-icons/io5";
+import { MdSpaceDashboard } from "react-icons/md";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/dropdown";
+import { initializeApp } from "firebase/app";
+import { getAuth, signOut } from "firebase/auth";
+import firebaseConfig from "@/lib/firebase-config";
 
 export const NavbarNX = () => {
   const { FireUser } = useLocalStorge();
   const router = useRouter();
+  const app = initializeApp(firebaseConfig);
 
   return (
     <>
@@ -42,9 +49,43 @@ export const NavbarNX = () => {
           <NavbarItem>
             {FireUser.uid ? (
               <>
-                <Link href={"/user"}>
-                  <Avatar className="cursor-pointer" src={FireUser.photoURL} />
-                </Link>
+                <Dropdown>
+                  <DropdownTrigger>
+                    <Avatar className="cursor-pointer" src={FireUser.photoURL} />
+                  </DropdownTrigger>
+                  <DropdownMenu aria-label="Static Actions">
+                    <DropdownItem as={Link} href="/user" startContent={<MdSpaceDashboard />} key="new">Dashboard</DropdownItem>
+                    <DropdownItem startContent={<IoLogOut />} key="report" className="text-danger" color="danger"
+                      onPress={() => {
+                        const id = toast.loading("Loging out...");
+                        const auth = getAuth(app);
+
+                        signOut(auth)
+                          .then(() => {
+                            toast.update(id, {
+                              render: `Logout success`,
+                              type: "success",
+                              isLoading: false,
+                              autoClose: 3000,
+                            });
+                            setTimeout(() => {
+                              router.push("/");
+                              window.location.reload();
+                            }, 1500);
+                          })
+                          .catch((error) => {
+                            toast.update(id, {
+                              render: `Logout failed ${error.message}`,
+                              closeOnClick: true,
+                              type: "error",
+                              isLoading: false,
+                              autoClose: 10000,
+                            });
+                          });
+                      }}
+                    >Logout</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
               </>
             ) : (
               <>
