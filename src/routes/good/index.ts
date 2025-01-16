@@ -250,7 +250,7 @@ export default (app: ElysiaApp) =>
             const { db } = store;
             const { gID, Quan, email } = body;
 
-            if (!gID || !Quan || !email) {
+            if (!gID || !email) {
                 return { error: true, message: "Missing quantity number!" };
             }
 
