@@ -2,31 +2,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Spinner } from "@nextui-org/spinner";
-import { Input } from "@nextui-org/input";
-import { LuPackageSearch } from "react-icons/lu";
 import { BsBagXFill } from "react-icons/bs";
 import GoodsGrid from "@/components/productGrid";
 
 import marketConfig from "@/market-config.mjs";
-import useLocalStorge from "@/lib/localstorage-db";
 
 export default function Home() {
   const [title] = useState("Yorwor Market");
-  const router = useRouter();
-  const { FireUser } = useLocalStorge();
   const [goodsList, setGoodsList] = useState([]);
   const [pageStatus, setPageStatus] = useState("Loading");
-  const [searchQ, setSearchQ] = useState("");
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      if (!searchQ == "") { router.push(`/search?query=${searchQ}`); }
-    }
-  };
 
   useEffect(() => {
     setPageStatus("Loading");
@@ -67,17 +53,7 @@ export default function Home() {
                 goodsList.length > 0 ? (
                   <>
                     <section className="max-w-6xl">
-                      <Input
-                        className="w-full"
-                        labelPlacement="outside-left"
-                        variant="bordered"
-                        label="ค้าหา"
-                        placeholder="eg. Cookie"
-                        type="text"
-                        onChange={(e) => setSearchQ(e.target.value)}
-                        startContent={<LuPackageSearch />}
-                        onKeyDown={handleKeyDown}
-                      />
+                      <h1 className="text-xl my-2">สินค้าทั้งหมดของ <span className="AnakotmaiBOLD">Yorwor Market</span></h1>
                       <div>
                         <GoodsGrid goodsList={goodsList} />
                       </div>

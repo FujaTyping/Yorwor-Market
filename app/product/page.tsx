@@ -163,7 +163,7 @@ export default function ProductPage() {
                                                         ราคา :
                                                     </span>
                                                     <span className="text-gray-600 dark:text-gray-300">
-                                                        {` ${goodsList[0].price} ฿`}
+                                                        {` ${goodsList[0].price.toLocaleString()} ฿`}
                                                     </span>
                                                 </div>
                                                 <div>

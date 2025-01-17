@@ -1,4 +1,7 @@
+// @ts-nocheck
 "use client";
+
+import { useState } from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
@@ -6,13 +9,24 @@ import useLocalStorge from "@/lib/localstorage-db";
 import { signInWithGoogle } from "../lib/firebase-auth";
 import { ToastContainer, toast } from "react-toastify";
 import { Avatar } from "@nextui-org/avatar";
+import { LuPackageSearch } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import YorworLogo from "@/app/favicon.ico";
 import { Tooltip } from "@nextui-org/tooltip";
+import { Input } from "@nextui-org/input";
 
 export const NavbarNX = () => {
   const { FireUser } = useLocalStorge();
+  const [searchQ, setSearchQ] = useState("");
   const router = useRouter();
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      if (!searchQ == "") {
+        router.push(`/search?query=${searchQ}`);
+      } else { router.push("/"); }
+    }
+  };
 
   return (
     <>
@@ -40,6 +54,18 @@ export const NavbarNX = () => {
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
+          <NavbarItem>
+            <Input
+              className="w-full"
+              labelPlacement="outside-left"
+              variant="bordered"
+              placeholder="ค้นหาสินค้า"
+              type="text"
+              onChange={(e) => setSearchQ(e.target.value)}
+              startContent={<LuPackageSearch />}
+              onKeyDown={handleKeyDown}
+            />
+          </NavbarItem>
           <NavbarItem>
             {FireUser.uid ? (
               <>

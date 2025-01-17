@@ -18,7 +18,7 @@ interface GoodsListProps {
 
 const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
     return (
-        <div className="mt-6 grid grid-cols-2 gap-6 lg:grid-cols-4 lg:gap-8">
+        <div className="mt-4 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
             {goodsList.map((list, index) => (
                 <Link key={index} href={`/product?id=${list.id}`}>
                     <article className="relative">
@@ -48,7 +48,7 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
                                 </h1>
                             </div>
                             <div className="text-right mt-2 md:mt-0">
-                                <p>{list.price} ฿</p>
+                                <p>{list.price.toLocaleString()} ฿</p>
                             </div>
                         </div>
                     </article>

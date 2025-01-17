@@ -78,7 +78,7 @@ export default function StorePage() {
                                         />
                                         <section className="max-w-6xl">
                                             <div>
-                                                <h1 className="text-xl my-2">สินค้าของ <span className="AnakotmaiBOLD">{uList.displayName}</span> : ทั้งหมด {duckList.length} รายการ</h1>
+                                                <h1 className="text-xl my-2">สินค้าของ <span className="AnakotmaiBOLD">{uList.displayName}</span> : ทั้งหมด <span className="AnakotmaiBOLD">{duckList.length}</span> รายการ</h1>
                                                 <GoodsGrid goodsList={duckList} />
                                             </div>
                                         </section>
