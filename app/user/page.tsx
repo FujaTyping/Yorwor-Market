@@ -68,7 +68,7 @@ export default function UserPage() {
         .then((response) => {
           if (response.data.error) {
             toast.update(id, {
-              render: `Register failed (fill all input)`,
+              render: `ไม่สามารถสมัครสมาชิกได้ กรุณากรอกข้อมูลให้ครบถ้วน`,
               closeOnClick: true,
               type: "error",
               isLoading: false,
@@ -76,7 +76,7 @@ export default function UserPage() {
             });
           } else {
             toast.update(id, {
-              render: `Register success`,
+              render: `สมัครสมาชิกสำเร็จ`,
               type: "success",
               isLoading: false,
               autoClose: 3000,
@@ -88,7 +88,7 @@ export default function UserPage() {
         })
         .catch(() => {
           toast.update(id, {
-            render: `Register failed ${Error.message}`,
+            render: `ไม่สามารถสมัครสมาชิกได้ ${Error.message}`,
             closeOnClick: true,
             type: "error",
             isLoading: false,
@@ -99,10 +99,10 @@ export default function UserPage() {
   }
 
   function submitNewGoods() {
-    const id = toast.loading("Adding new product ...");
+    const id = toast.loading("กำลังเพิ่มสินค้า ...");
     if (!Gtitle || !Gdecs || !Gprice) {
       toast.update(id, {
-        render: `Please fill all the input`,
+        render: `กรุณากรอกข้อมูลให้ครบถ้วน`,
         closeOnClick: true,
         type: "error",
         isLoading: false,
@@ -122,7 +122,7 @@ export default function UserPage() {
             .then((response) => {
               if (response.data.error) {
                 toast.update(id, {
-                  render: `Failed to add product (Fill all the input)`,
+                  render: `ไม่สามารถเพิ่มสินค้าได้`,
                   closeOnClick: true,
                   type: "error",
                   isLoading: false,
@@ -130,7 +130,7 @@ export default function UserPage() {
                 });
               } else {
                 toast.update(id, {
-                  render: `Succssfully add product`,
+                  render: `เพิ่มสินค้าเรียบร้อยแล้ว`,
                   type: "success",
                   isLoading: false,
                   autoClose: 3000,
@@ -142,7 +142,7 @@ export default function UserPage() {
             })
             .catch((error) => {
               toast.update(id, {
-                render: `Failed to add product ${error.message}`,
+                render: `ไม่สามารถเพิ่มสินค้าได้ ${error.message}`,
                 closeOnClick: true,
                 type: "error",
                 isLoading: false,
@@ -152,7 +152,7 @@ export default function UserPage() {
         })
         .catch((error: any) => {
           toast.update(id, {
-            render: `Failed to upload image ${error.message}`,
+            render: `ไม่สามารถอัพโหลดรูปภาพได้ ${error.message}`,
             closeOnClick: true,
             type: "error",
             isLoading: false,
@@ -174,7 +174,7 @@ export default function UserPage() {
   }
 
   function deleteGoods() {
-    const id = toast.loading("Removing product ...");
+    const id = toast.loading("กำลังลบสินค้า ...");
     axios
       .delete(`${marketConfig.apiServer}good/delete`, {
         data: { email: FireUser.email, pID: goodsID }
@@ -182,7 +182,7 @@ export default function UserPage() {
       .then((response) => {
         if (response.data.error) {
           toast.update(id, {
-            render: `Failed to remove the product`,
+            render: `ไม่สามารถลบสินค้าได้`,
             closeOnClick: true,
             type: "error",
             isLoading: false,
@@ -190,7 +190,7 @@ export default function UserPage() {
           });
         } else {
           toast.update(id, {
-            render: `Successfully removed product`,
+            render: `ลบสินค้าเรียบร้อยแล้ว`,
             type: "success",
             isLoading: false,
             autoClose: 3000,
@@ -202,7 +202,7 @@ export default function UserPage() {
       })
       .catch((error) => {
         toast.update(id, {
-          render: `Failed to remove product ${error.message}`,
+          render: `ไม่สามารถลบสินค้าได้ ${error.message}`,
           closeOnClick: true,
           type: "error",
           isLoading: false,
@@ -212,7 +212,7 @@ export default function UserPage() {
   }
 
   function updateQuantityGood() {
-    const id = toast.loading("Editing product ...");
+    const id = toast.loading("กำลังแก้ไขสินค้า ...");
     axios
       .patch(`${marketConfig.apiServer}good/item/quantity`, {
         email: FireUser.email, gID: goodsID, Quan: goodsQuan
@@ -220,7 +220,7 @@ export default function UserPage() {
       .then((response) => {
         if (response.data.error) {
           toast.update(id, {
-            render: `Failed to edit the product`,
+            render: `ไม่สามารถแก้ไขสินค้าได้`,
             closeOnClick: true,
             type: "error",
             isLoading: false,
@@ -228,7 +228,7 @@ export default function UserPage() {
           });
         } else {
           toast.update(id, {
-            render: `Successfully edit product`,
+            render: `แก้ไขสินค้าเรียบร้อยแล้ว`,
             type: "success",
             isLoading: false,
             autoClose: 3000,
@@ -240,7 +240,7 @@ export default function UserPage() {
       })
       .catch((error) => {
         toast.update(id, {
-          render: `Failed to edit product ${error.message}`,
+          render: `ไม่สามารถแก้ไขสินค้าได้ ${error.message}`,
           closeOnClick: true,
           type: "error",
           isLoading: false,
@@ -292,8 +292,8 @@ export default function UserPage() {
       />
       <div className="flex flex-col gap-5 my-5 mx-10">
         <div className="text-center">
-          <h1 className="text-3xl">Yorwor Market</h1>
-          <h3>Hatyaiwittayalai School</h3>
+          <h1 className="text-3xl AnakotmaiBOLD">Yorwor Market</h1>
+          <h3>โรงเรียนหาดใหญ่วิทยาลัย</h3>
         </div>
         {FireUser.uid ? (
           <>
@@ -303,19 +303,19 @@ export default function UserPage() {
                 size: "lg",
               }}
               description={realUserBio}
-              name={realUserName}
+              name={<p className="AnakotmaiBOLD">{realUserName}</p>}
             />
             <div className="flex flex-row items-center justify-center gap-5">
               <Button
                 style={{ backgroundColor: "white" }}
                 variant="bordered"
                 onPress={() => {
-                  const id = toast.loading("Swaping account...");
+                  const id = toast.loading("กำลังสลับบัญชี ...");
 
                   signInWithGoogle()
                     .then(() => {
                       toast.update(id, {
-                        render: `Swap success`,
+                        render: `สลับบัญชีสำเร็จ`,
                         type: "success",
                         isLoading: false,
                         autoClose: 3000,
@@ -326,7 +326,7 @@ export default function UserPage() {
                     })
                     .catch((error) => {
                       toast.update(id, {
-                        render: `Swap failed ${error.message}`,
+                        render: `สลับบัญชีไม่สำเร็จ ${error.message}`,
                         closeOnClick: true,
                         type: "error",
                         isLoading: false,
@@ -335,19 +335,19 @@ export default function UserPage() {
                     });
                 }}
               >
-                Swap account
+                สลับบัญชี
               </Button>
               <Button
                 color="danger"
                 variant="bordered"
                 onPress={() => {
-                  const id = toast.loading("Loging out...");
+                  const id = toast.loading("กำลังออกจากระบบ ...");
                   const auth = getAuth(app);
 
                   signOut(auth)
                     .then(() => {
                       toast.update(id, {
-                        render: `Logout success`,
+                        render: `ออกจากระบบสำเร็จ`,
                         type: "success",
                         isLoading: false,
                         autoClose: 3000,
@@ -359,7 +359,7 @@ export default function UserPage() {
                     })
                     .catch((error) => {
                       toast.update(id, {
-                        render: `Logout failed ${error.message}`,
+                        render: `ไม่สามารถออกจากระบบได้ ${error.message}`,
                         closeOnClick: true,
                         type: "error",
                         isLoading: false,
@@ -368,7 +368,7 @@ export default function UserPage() {
                     });
                 }}
               >
-                Logout
+                ออกจากระบบ
               </Button>
             </div>
             {pageStatus == "Loading" ? (
@@ -376,8 +376,8 @@ export default function UserPage() {
                 <div className="flex items-center justify-center gap-4 mt-5">
                   <Spinner color="default" />
                   <div className="flex flex-col gap-1">
-                    <h1 className="text-xl">Loading user details</h1>
-                    <p>This may take a few second</p>
+                    <h1 className="text-xl AnakotmaiBOLD">กำลังโหลดข้อมูลผู้ใช้</h1>
+                    <p>กรุณารอสักครู่</p>
                   </div>
                 </div>
               </>
@@ -388,12 +388,12 @@ export default function UserPage() {
                     <div className="max-w-lg mx-auto">
                       <div className="bg-white rounded-lg shadow-lg">
                         <div className="p-6">
-                          <h2 className="text-2xl font-bold text-gray-800 mb-2">Register !</h2>
-                          <p className="text-gray-700 mb-4">Look like you dont have account link with this email</p>
+                          <h2 className="text-2xl AnakotmaiBOLD text-gray-800 mb-2">สมัครสมาชิก !</h2>
+                          <p className="text-gray-700 mb-4">ดูเหมือนว่ายังไม่มีบัญชีที่เชื่อมกับอีเมลนี้</p>
                           <form>
                             <div className="flex flex-col gap-3 mb-4">
-                              <Input value={inputForm} onChange={(e) => setInputForm(e.target.value)} variant="bordered" label="Display Name" placeholder="eg. John Doe" type="text" />
-                              <Input value={FireUser.email} isDisabled onChange={(e) => setInputForm(e.target.value)} variant="bordered" label="Email" type="text" />
+                              <Input value={inputForm} onChange={(e) => setInputForm(e.target.value)} variant="bordered" label="ชื่อผู้ใช้" placeholder="eg. John Doe" type="text" />
+                              <Input value={FireUser.email} isDisabled onChange={(e) => setInputForm(e.target.value)} variant="bordered" label="อีเมล" type="text" />
                               <Textarea value={inputBioForm} onChange={(e) => setInputBioForm(e.target.value)} variant="bordered" label="Bio" placeholder="eg. about you" />
                             </div>
                             <div className="flex items-center justify-between">
@@ -403,7 +403,7 @@ export default function UserPage() {
                                 startContent={<FiLogIn />}
                                 onPress={createNewUser}
                               >
-                                Submit
+                                สมัครสมาชิก
                               </Button>
                             </div>
                           </form>
@@ -417,8 +417,8 @@ export default function UserPage() {
                       <>
                         <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center gap-4">
                           <div>
-                            <h1 className="text-xl">Outside @hatyaiwit.ac.th</h1>
-                            <h1>Please use an school or work email</h1>
+                            <h1 className="text-xl AnakotmaiBOLD">บุคคลภายนอก @hatyaiwit.ac.th</h1>
+                            <h1>กรุณาใช้อีเมลโรงเรียน</h1>
                           </div>
                         </div>
                       </>
@@ -427,8 +427,8 @@ export default function UserPage() {
                         <div>
                           <div className="max-w-lg mx-auto">
                             <div className="flex items-center mb-3 mt-2 gap-2 mx-auto">
-                              <h1>Your product</h1>
-                              <Tooltip content="Add new product">
+                              <h1 className="AnakotmaiBOLD">สินค้าของคุณ</h1>
+                              <Tooltip content="เพิ่มสินค้าใหม่">
                                 <Button
                                   isIconOnly
                                   style={{ backgroundColor: "white" }}
@@ -441,16 +441,16 @@ export default function UserPage() {
                             </div>
                             <Table aria-label="Goods table">
                               <TableHeader>
-                                <TableColumn>{"<:id>"}</TableColumn>
-                                <TableColumn>{"<:name>"}</TableColumn>
-                                <TableColumn>{"<:quantity>"}</TableColumn>
-                                <TableColumn className="text-red-500 text-center">Delete</TableColumn>
+                                <TableColumn>{"<:ไอดี>"}</TableColumn>
+                                <TableColumn>{"<:ชื่อ>"}</TableColumn>
+                                <TableColumn>{"<:จำนวนสินค้า>"}</TableColumn>
+                                <TableColumn className="text-red-500 text-center">ลบ</TableColumn>
                               </TableHeader>
                               {userDetails.goods && Object.keys(userDetails.goods).length > 0 ? (
                                 <TableBody>
                                   {Object.entries(userDetails.goods).map(([id, { title, availability }], index) => (
                                     <TableRow key={index}>
-                                      <TableCell>{id}</TableCell>
+                                      <TableCell><Link href={`/product?id=${id}`}><p className="AnakotmaiBOLD cursor-pointer">{id}</p></Link></TableCell>
                                       <TableCell>{title}</TableCell>
                                       <TableCell><div className="flex items-center gap-2">{availability} <MdOutlineEdit className="cursor-pointer" onClick={() => updateQuantity(id, availability)} /></div></TableCell>
                                       <TableCell
@@ -463,7 +463,7 @@ export default function UserPage() {
                                   ))}
                                 </TableBody>
                               ) : (
-                                <TableBody emptyContent={"No product for this user!"}>{[]}</TableBody>
+                                <TableBody emptyContent={"คุณยังไม่มีสินค้าที่ขายอยู่!"}>{[]}</TableBody>
                               )}
                             </Table>
                           </div>
@@ -479,8 +479,8 @@ export default function UserPage() {
           <>
             <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center gap-4">
               <div>
-                <h1 className="text-xl">No auth found</h1>
-                <h1>Please login</h1>
+                <h1 className="text-xl AnakotmaiBOLD">คุณยังไม่ได้เข้าสู่ระบบ</h1>
+                <h1>กรุณาเข้าสู่ระบบ</h1>
               </div>
             </div>
           </>
@@ -490,17 +490,17 @@ export default function UserPage() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Add new product</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">เพิ่มสินค้าใหม่</ModalHeader>
               <ModalBody>
                 <div>
                   <div className="bg-white rounded-lg">
                     <div>
                       <form className="flex flex-col gap-4">
-                        <Input value={Gtitle} onChange={(e) => setGTitle(e.target.value)} variant="bordered" label="Title" placeholder="eg. Cookie" type="text" />
-                        <Textarea value={Gdecs} onChange={(e) => setGDecs(e.target.value)} variant="bordered" label="Decs" placeholder="eg. Lorem Ipsum is simply dummy text of the printing and typesetting industry" />
+                        <Input value={Gtitle} onChange={(e) => setGTitle(e.target.value)} variant="bordered" label="ชื่อสินค้า" placeholder="eg. Cookie" type="text" />
+                        <Textarea value={Gdecs} onChange={(e) => setGDecs(e.target.value)} variant="bordered" label="คำอธิบายสินค้า" placeholder="eg. Lorem Ipsum is simply dummy text of the printing and typesetting industry" />
                         <div className="flex gap-3">
-                          <Input value={Gprice.toString()} onChange={(e) => setGPrice(parseInt(e.target.value))} variant="bordered" label="Price" placeholder="0" type="number" />
-                          <Input value={goodsQuan.toString()} onChange={(e) => setGoodsQuan(parseInt(e.target.value))} variant="bordered" label="Quantity" placeholder="0" type="number" />
+                          <Input value={Gprice.toString()} onChange={(e) => setGPrice(parseInt(e.target.value))} variant="bordered" label="ราคา" placeholder="0" type="number" />
+                          <Input value={goodsQuan.toString()} onChange={(e) => setGoodsQuan(parseInt(e.target.value))} variant="bordered" label="จำนวนสินค้า" placeholder="0" type="number" />
                         </div>
                         <div className="flex items-center">
                           <div className="relative w-full">
@@ -514,7 +514,7 @@ export default function UserPage() {
                                   <img style={{ maxHeight: '10rem' }} className="rounded-lg" src={fileUrlPrv} alt="Preview" />
                                 </>)}
                                 <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
-                                  <span>{file == null ? ("Upload good thumnails") : (`${file.name}`)}</span>
+                                  <span>{file == null ? ("อัพโหลดรูปภาพสินค้า") : (`${file.name}`)}</span>
                                 </p>
                                 <input type="file" name="file_upload" className="hidden" accept="image/png,image/jpeg" id="input"
                                   onChange={(event) => {
@@ -541,10 +541,10 @@ export default function UserPage() {
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
-                  Close
+                  ยกเลิก
                 </Button>
                 <Button variant="bordered" color="primary" onPress={() => { onClose; submitNewGoods() }}>
-                  Submit
+                  เพิ่มสินค้า
                 </Button>
               </ModalFooter>
             </>
@@ -555,13 +555,13 @@ export default function UserPage() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Confirm delete</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">ยืนยันการลบสินค้า</ModalHeader>
               <ModalBody>
                 <div>
                   <div className="bg-white rounded-lg">
                     <div>
                       <form className="flex flex-col gap-4">
-                        <h1>Are you sure to delete items with this id : <b>{goodsID}</b> ?</h1>
+                        <h1>คุณแน่ใจว่าจะลบสินค้าที่มีไอดี : <span className="AnakotmaiBOLD">{goodsID}</span> ?</h1>
                       </form>
                     </div>
                   </div>
@@ -569,10 +569,10 @@ export default function UserPage() {
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={() => deleteGoods()}>
-                  Yes
+                  ลบ
                 </Button>
                 <Button variant="bordered" color="primary" onPress={onClose}>
-                  Cancel
+                  ยกเลิก
                 </Button>
               </ModalFooter>
             </>
@@ -583,14 +583,14 @@ export default function UserPage() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Edit quantity</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">แก้ไขจำนวนสินค้า</ModalHeader>
               <ModalBody>
                 <div>
                   <div className="bg-white rounded-lg">
                     <div>
                       <form className="flex flex-col gap-4">
-                        <h1>Edit quantity of <b>{goodsID}</b></h1>
-                        <Input value={goodsQuan.toString()} onChange={(e) => setGoodsQuan(parseInt(e.target.value))} variant="bordered" label="Quantity" placeholder="0" type="number" />
+                        <h1>แก้ไขจำนวนสินค้าของไอดี <span className="AnakotmaiBOLD">{goodsID}</span></h1>
+                        <Input value={goodsQuan.toString()} onChange={(e) => setGoodsQuan(parseInt(e.target.value))} variant="bordered" label="จำนวนสินค้า" placeholder="0" type="number" />
                       </form>
                     </div>
                   </div>
@@ -598,10 +598,10 @@ export default function UserPage() {
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose} >
-                  Close
+                  ยกเลิก
                 </Button>
                 <Button variant="bordered" color="primary" onPress={() => updateQuantityGood()} >
-                  Submit
+                  แก้ไข
                 </Button>
               </ModalFooter>
             </>
