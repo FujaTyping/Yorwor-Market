@@ -38,7 +38,7 @@ import {
 import marketConfig from "@/market-config.mjs";
 
 
-export default function Home() {
+export default function ProductPage() {
     const [title, setTitle] = useState("Yorwor Market");
     const [goodsList, setGoodsList] = useState([]);
     const [pageStatus, setPageStatus] = useState("Loading");
@@ -175,22 +175,26 @@ export default function Home() {
                                                     </span>
                                                 </div>
                                             </div>
-                                            <Link href={`/store?email=${goodsList[0].author.email}`}>
-                                                <div className="flex flex-col items-start cursor-pointer">
-                                                    <span className="AnakotmaiBOLD text-gray-700 dark:text-gray-300">
-                                                        ข้อมูลผู้ขาย :
-                                                    </span>
-                                                    <User
-                                                        className="mt-2"
-                                                        avatarProps={{
-                                                            src: goodsList[0].author.photoURL,
-                                                            size: "sm",
-                                                        }}
-                                                        name={goodsList[0].author.displayName}
-                                                        description={`ลงสินค้าวันที่ : ${goodsList[0].addDate}`}
-                                                    />
-                                                </div>
-                                            </Link>
+
+
+                                            <div className="flex flex-col items-start cursor-pointer">
+                                                <span className="AnakotmaiBOLD text-gray-700 dark:text-gray-300">
+                                                    ข้อมูลผู้ขาย :
+                                                </span>
+                                                <Link href={`/store?email=${goodsList[0].author.email}`}>
+                                                    <Tooltip content="คลิกเพื่อดูร้านค้า">
+                                                        <User
+                                                            className="mt-2"
+                                                            avatarProps={{
+                                                                src: goodsList[0].author.photoURL,
+                                                                size: "sm",
+                                                            }}
+                                                            name={goodsList[0].author.displayName}
+                                                            description={`ลงสินค้าวันที่ : ${goodsList[0].addDate}`}
+                                                        />
+                                                    </Tooltip>
+                                                </Link>
+                                            </div>
                                             <div className="flex flex-col sm:flex-row mt-5 gap-3">
                                                 <Tooltip content="ไม่สามารถชื้อได้ในขณะนี้">
                                                     <Button
@@ -250,11 +254,11 @@ export default function Home() {
                                                 <div>
                                                     <form className="flex flex-col gap-4">
                                                         <RadioGroup onChange={(e) => setReportRadio(e.target.value)} label="เหตุผลที่คุณรายงานสินค้านี้">
-                                                            <Radio value="I dont like it">ฉันไม่ชอบสินค้านี้</Radio>
-                                                            <Radio value="Copyright infringement">สินค้าละเมิดลิขสิทธิ์</Radio>
-                                                            <Radio value="Prohibited goods">สินค้าต้องห้าม</Radio>
-                                                            <Radio value="It is considered fraudulent">ผู้ขายมีการฉ้อโกง</Radio>
-                                                            <Radio value="Selling other people products">การขายสินค้าของผู้อื่น</Radio>
+                                                            <Radio value="ฉันไม่ชอบสินค้านี้">ฉันไม่ชอบสินค้านี้</Radio>
+                                                            <Radio value="สินค้าละเมิดลิขสิทธิ์">สินค้าละเมิดลิขสิทธิ์</Radio>
+                                                            <Radio value="สินค้าต้องห้าม">สินค้าต้องห้าม</Radio>
+                                                            <Radio value="ผู้ขายมีการฉ้อโกง">ผู้ขายมีการฉ้อโกง</Radio>
+                                                            <Radio value="การขายสินค้าของผู้อื่น">การขายสินค้าของผู้อื่น</Radio>
                                                         </RadioGroup>
                                                     </form>
                                                 </div>

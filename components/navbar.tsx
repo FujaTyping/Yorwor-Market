@@ -60,12 +60,12 @@ export const NavbarNX = () => {
                   color="primary"
                   variant="bordered"
                   onPress={() => {
-                    const id = toast.loading("Loging in...");
+                    const id = toast.loading("กำลังล็อกอิน ...");
 
                     signInWithGoogle()
                       .then(() => {
                         toast.update(id, {
-                          render: `Login success`,
+                          render: `ล็อกอินสำเร็จ`,
                           type: "success",
                           isLoading: false,
                           autoClose: 3000,
@@ -77,7 +77,7 @@ export const NavbarNX = () => {
                       })
                       .catch((error) => {
                         toast.update(id, {
-                          render: `Login failed ${error.message}`,
+                          render: `ไม่สามารถล็อกอินได้ ${error.message}`,
                           closeOnClick: true,
                           type: "error",
                           isLoading: false,
