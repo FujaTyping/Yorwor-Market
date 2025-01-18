@@ -26,6 +26,11 @@ import { FaUpload } from "react-icons/fa6";
 import { signInWithGoogle } from "../../lib/firebase-auth";
 import { MdOutlineEdit } from "react-icons/md";
 import { Tooltip } from "@nextui-org/tooltip";
+import { Select, SelectSection, SelectItem } from "@nextui-org/select";
+import { FaLine } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaDiscord } from "react-icons/fa";
 
 import useLocalStorge from "@/lib/localstorage-db";
 import marketConfig from "@/market-config.mjs";
@@ -53,6 +58,8 @@ export default function UserPage() {
   const modalQuan = useDisclosure();
   const [pageStatus, setPageStatus] = useState("Loading");
   const [goodsID, setGoodsID] = useState("");
+  const [platformD, setPlatformD] = useState("");
+  const [platformNameD, setPlatformNameD] = useState("");
   const [goodsQuan, setGoodsQuan] = useState(0);
 
   const [Gprice, setGPrice] = useState(0);
@@ -118,7 +125,7 @@ export default function UserPage() {
         .then((response) => {
           const imageLInk = response.data.data.image.url;
           axios
-            .post(`${marketConfig.apiServer}good/new`, { email: `${FireUser.email}`, title: `${Gtitle}`, decs: `${Gdecs}`, photoURL: `${imageLInk}`, price: Gprice, displayName: `${realUserName}`, AuthorphotoURL: `${FireUser.photoURL}`, quantity: goodsQuan })
+            .post(`${marketConfig.apiServer}good/new`, { email: `${FireUser.email}`, title: `${Gtitle}`, decs: `${Gdecs}`, photoURL: `${imageLInk}`, price: Gprice, displayName: `${realUserName}`, AuthorphotoURL: `${FireUser.photoURL}`, quantity: goodsQuan, platform: `${platformD}`, platfomName: `${platformNameD}` })
             .then((response) => {
               if (response.data.error) {
                 toast.update(id, {
@@ -284,6 +291,7 @@ export default function UserPage() {
   return (
     <>
       <title>{title}</title>
+      <meta property="og:title" content={title} />
       <ToastContainer
         closeOnClick
         newestOnTop
@@ -533,6 +541,15 @@ export default function UserPage() {
                               </label>
                             </div>
                           </div>
+                        </div>
+                        <div className="flex flex-col md:flex-row gap-3">
+                          <Select onChange={(e) => setPlatformD(e.target.value)} label="ข้อมูลติดต่อ" placeholder="กรุณาเลือกแพลตฟอร์ม" variant="bordered">
+                            <SelectItem startContent={<FaDiscord />} key="Discord">Discord</SelectItem>
+                            <SelectItem startContent={<FaLine />} key="Line">Line</SelectItem>
+                            <SelectItem startContent={<FaInstagram />} key="IG">Instargram</SelectItem>
+                            <SelectItem startContent={<FaXTwitter />} key="Twitter">Twitter</SelectItem>
+                          </Select>
+                          <Input value={platformNameD} onChange={(e) => setPlatformNameD(e.target.value)} variant="bordered" label="ชื่อผู้ใช้ หรือ ลิงค์" placeholder="eg. @Yorwor" type="text" />
                         </div>
                       </form>
                     </div>
