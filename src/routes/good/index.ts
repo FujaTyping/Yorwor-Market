@@ -8,6 +8,7 @@ interface GGood {
     decs: string;
     photoURL: string;
     author: any;
+    social: any;
 }
 
 let RealData: { Goods: GGood[] } = { Goods: [] };
@@ -27,12 +28,20 @@ export default (app: ElysiaApp) =>
                         const good = docSnap.data() as GGood;
 
                         const authorDocRef = doc(db, "Goods", docSnap.id, "Author", "Details");
+                        const socialDocRef = doc(db, "Goods", docSnap.id, "Author", "Social");
                         const authorDoc = await getDoc(authorDocRef);
+                        const socialDocSnap = await getDoc(socialDocRef);
 
                         if (authorDoc.exists()) {
                             good.author = authorDoc.data();
                         } else {
                             good.author = {};
+                        }
+
+                        if (socialDocSnap.exists()) {
+                            good.social = socialDocSnap.data();
+                        } else {
+                            good.social = {};
                         }
 
                         RealData.Goods.push(good);
@@ -72,12 +81,20 @@ export default (app: ElysiaApp) =>
                     const good = docSnapshot.data() as GGood;
 
                     const authorDocRef = doc(db, "Goods", docSnapshot.id, "Author", "Details");
+                    const socialDocRef = doc(db, "Goods", docSnapshot.id, "Author", "Social");
                     const authorDocSnap = await getDoc(authorDocRef);
+                    const socialDocSnap = await getDoc(socialDocRef);
 
                     if (authorDocSnap.exists()) {
                         good.author = authorDocSnap.data();
                     } else {
                         good.author = {};
+                    }
+
+                    if (socialDocSnap.exists()) {
+                        good.social = socialDocSnap.data();
+                    } else {
+                        good.social = {};
                     }
 
                     RealData.Goods.push(good);
@@ -101,7 +118,11 @@ export default (app: ElysiaApp) =>
             }
 
             try {
-                const querySnapshot = await getDocs(collection(db, "Goods"));
+                const goodsQuery = query(
+                    collection(db, "Goods"),
+                    orderBy("timestamp", "desc")
+                );
+                const querySnapshot = await getDocs(goodsQuery);
 
                 const RealData = { Goods: [] as GGood[] };
 
@@ -128,7 +149,6 @@ export default (app: ElysiaApp) =>
         })
         .put("/item", async ({ body, store }) => {
             const { db } = store;
-            let RealData: { Goods: GGood[] } = { Goods: [] };
             const { goodId } = body;
 
             if (!goodId) {
@@ -146,7 +166,9 @@ export default (app: ElysiaApp) =>
                 const good = docSnap.data() as GGood;
 
                 const authorDocRef = doc(db, "Goods", goodId, "Author", "Details");
+                const socialDocRef = doc(db, "Goods", goodId, "Author", "Social");
                 const authorDocSnap = await getDoc(authorDocRef);
+                const socialDocSnap = await getDoc(socialDocRef);
 
                 if (authorDocSnap.exists()) {
                     good.author = authorDocSnap.data();
@@ -154,9 +176,13 @@ export default (app: ElysiaApp) =>
                     good.author = {};
                 }
 
-                RealData.Goods.push(good);
+                if (socialDocSnap.exists()) {
+                    good.social = socialDocSnap.data();
+                } else {
+                    good.social = {};
+                }
 
-                return RealData;
+                return good;
             } catch (error: any) {
                 return {
                     error: true,
@@ -166,9 +192,9 @@ export default (app: ElysiaApp) =>
         })
         .post("/new", async ({ body, store }) => {
             const { db } = store;
-            const { email, decs, photoURL, price, title, displayName, AuthorphotoURL, quantity } = body;
+            const { email, decs, photoURL, price, title, displayName, AuthorphotoURL, quantity, platform, platfomName } = body;
 
-            if (!email || !decs || !photoURL || !price || !title || !displayName || !AuthorphotoURL || !quantity) {
+            if (!email || !decs || !photoURL || !price || !title || !displayName || !AuthorphotoURL || !quantity || !platform || !platfomName) {
                 return { error: true, message: "Missing good details" };
             }
 
@@ -194,6 +220,10 @@ export default (app: ElysiaApp) =>
                     photoURL: AuthorphotoURL,
                     email: email,
                     displayName: displayName,
+                });
+                await setDoc(doc(db, "Goods", UID, "Author", "Social"), {
+                    platform: platform,
+                    platformName: platfomName
                 });
                 await setDoc(doc(db, "User", email, "Goods", UID), {
                     title: title,
