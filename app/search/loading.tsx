@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { Spinner } from "@nextui-org/spinner";
 
 function loading() {
@@ -18,7 +18,7 @@ function loading() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default loading
+export default loading;

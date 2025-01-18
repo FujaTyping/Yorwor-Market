@@ -2,18 +2,25 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+} from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
-import useLocalStorge from "@/lib/localstorage-db";
-import { signInWithGoogle } from "../lib/firebase-auth";
 import { ToastContainer, toast } from "react-toastify";
 import { Avatar } from "@nextui-org/avatar";
 import { LuPackageSearch } from "react-icons/lu";
 import { useRouter } from "next/navigation";
-import YorworLogo from "@/app/favicon.ico";
 import { Tooltip } from "@nextui-org/tooltip";
 import { Input } from "@nextui-org/input";
+
+import { signInWithGoogle } from "../lib/firebase-auth";
+
+import YorworLogo from "@/app/favicon.ico";
+import useLocalStorge from "@/lib/localstorage-db";
 
 export const NavbarNX = () => {
   const { FireUser } = useLocalStorge();
@@ -24,7 +31,9 @@ export const NavbarNX = () => {
     if (event.key === "Enter") {
       if (!searchQ == "") {
         router.push(`/search?query=${searchQ}`);
-      } else { router.push("/"); }
+      } else {
+        router.push("/");
+      }
     }
   };
 
@@ -36,14 +45,14 @@ export const NavbarNX = () => {
         hideProgressBar={false}
         position="bottom-right"
       />
-      <Navbar shouldHideOnScroll>
-        <NavbarBrand className="cursor-pointer" as={Link} href={"/"}>
-          <img src={YorworLogo.src} alt="Logo" />
+      <Navbar shouldHideOnScroll maxWidth="full">
+        <NavbarBrand as={Link} className="cursor-pointer" href={"/"}>
+          <img alt="Logo" src={YorworLogo.src} />
           <p className="ml-2 AnakotmaiBOLD text-inherit">Yorwor Market</p>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
-            <Link color="foreground" href="#">
+            <Link color="foreground" href="/about">
               เกี่ยวกับโครงงาน
             </Link>
           </NavbarItem>
@@ -58,11 +67,11 @@ export const NavbarNX = () => {
             <Input
               className="w-full"
               labelPlacement="outside-left"
-              variant="bordered"
               placeholder="ค้นหาสินค้า"
-              type="text"
-              onChange={(e) => setSearchQ(e.target.value)}
               startContent={<LuPackageSearch />}
+              type="text"
+              variant="bordered"
+              onChange={(e) => setSearchQ(e.target.value)}
               onKeyDown={handleKeyDown}
             />
           </NavbarItem>
@@ -77,7 +86,12 @@ export const NavbarNX = () => {
                     </div>
                   }
                 >
-                  <Link href={"/user"}><Avatar className="cursor-pointer" src={FireUser.photoURL} /></Link>
+                  <Link href={"/user"}>
+                    <Avatar
+                      className="cursor-pointer"
+                      src={FireUser.photoURL}
+                    />
+                  </Link>
                 </Tooltip>
               </>
             ) : (
