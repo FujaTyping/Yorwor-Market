@@ -2,13 +2,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { Spinner } from "@nextui-org/spinner";
 import { useRouter } from "next/navigation";
 import { BsBagXFill } from "react-icons/bs";
-import GoodsGrid from "@/components/productGrid";
 
+import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
 
 export default function SearchPage() {
@@ -27,7 +27,9 @@ export default function SearchPage() {
       setPageStatus("Loading");
       setGSearch(`${GGID}`);
       axios
-        .put(`${marketConfig.apiServer}good/bulk/search`, { searchQuery: `${GGID}` })
+        .put(`${marketConfig.apiServer}good/bulk/search`, {
+          searchQuery: `${GGID}`,
+        })
         .then((response) => {
           setPageStatus("Finish");
           setGoodsList(response.data.Goods);
@@ -40,7 +42,8 @@ export default function SearchPage() {
   }
 
   useEffect(() => {
-    const GQuery = searchParams.get('query');
+    const GQuery = searchParams.get("query");
+
     if (GQuery) {
       setQuery(GQuery);
     }
@@ -55,7 +58,7 @@ export default function SearchPage() {
   return (
     <>
       <title>{title}</title>
-      <meta property="og:title" content={title} />
+      <meta content={title} property="og:title" />
       <div className="flex flex-col items-center justify-center gap-5 my-5 mx-10">
         <div className="text-center">
           <h1 className="text-3xl AnakotmaiBOLD">Yorwor Market</h1>
@@ -74,26 +77,32 @@ export default function SearchPage() {
             </>
           ) : (
             <>
-              {
-                goodsList.length > 0 ? (
-                  <>
-                    <section className="max-w-6xl">
-                      <p className="w-full text-xl">เจอสินค้าสำหรับ <span className="AnakotmaiBOLD">{gSearch}</span> : <span className="AnakotmaiBOLD">{goodsList.length}</span> รายการ</p>
-                      <div>
-                        <GoodsGrid goodsList={goodsList} />
-                      </div>
-                    </section>
-                  </>
-                ) : (
-                  <div className="flex items-center justify-center mt-4 gap-3 flex-col">
-                    <BsBagXFill className="h-8 w-8" />
-                    <div className="gap-1">
-                      <h1 className="text-xl text-center">ไม่เจอสินค้าสำหรับการค้นหา : <span className="AnakotmaiBOLD">{gSearch}</span></h1>
-                      <p className="text-center">ลองค้นหาด้วยคำอื่นดูสิ</p>
+              {goodsList.length > 0 ? (
+                <>
+                  <section className="max-w-6xl">
+                    <p className="w-full text-xl">
+                      เจอสินค้าสำหรับ{" "}
+                      <span className="AnakotmaiBOLD">{gSearch}</span> :{" "}
+                      <span className="AnakotmaiBOLD">{goodsList.length}</span>{" "}
+                      รายการ
+                    </p>
+                    <div>
+                      <GoodsGrid goodsList={goodsList} />
                     </div>
+                  </section>
+                </>
+              ) : (
+                <div className="flex items-center justify-center mt-4 gap-3 flex-col">
+                  <BsBagXFill className="h-8 w-8" />
+                  <div className="gap-1">
+                    <h1 className="text-xl text-center">
+                      ไม่เจอสินค้าสำหรับการค้นหา :{" "}
+                      <span className="AnakotmaiBOLD">{gSearch}</span>
+                    </h1>
+                    <p className="text-center">ลองค้นหาด้วยคำอื่นดูสิ</p>
                   </div>
-                )
-              }
+                </div>
+              )}
             </>
           )}
         </div>

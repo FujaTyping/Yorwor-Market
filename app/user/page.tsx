@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from 'next/link'
+import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import { User } from "@nextui-org/user";
 import { useRouter } from "next/navigation";
@@ -23,21 +23,28 @@ import {
 import { Input, Textarea } from "@nextui-org/input";
 import { MdDeleteForever } from "react-icons/md";
 import { FaUpload } from "react-icons/fa6";
-import { signInWithGoogle } from "../../lib/firebase-auth";
 import { MdOutlineEdit } from "react-icons/md";
 import { Tooltip } from "@nextui-org/tooltip";
-import { Select, SelectSection, SelectItem } from "@nextui-org/select";
+import { Select, SelectItem } from "@nextui-org/select";
 import { FaLine } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaDiscord } from "react-icons/fa";
+import { Spinner } from "@nextui-org/spinner";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@nextui-org/table";
+
+import { signInWithGoogle } from "../../lib/firebase-auth";
 
 import useLocalStorge from "@/lib/localstorage-db";
 import marketConfig from "@/market-config.mjs";
 import firebaseConfig from "@/lib/firebase-config";
-import { parse } from "path";
-import { Spinner } from "@nextui-org/spinner";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/table";
 
 export default function UserPage() {
   const [title, setTitle] = useState("Yorwor Market");
@@ -70,8 +77,14 @@ export default function UserPage() {
   function createNewUser() {
     if (!inputForm == "") {
       const id = toast.loading("Registering ...");
+
       axios
-        .post(`${marketConfig.apiServer}user/new`, { displayNAME: `${inputForm}`, email: `${FireUser.email}`, bio: `${inputBioForm}`, photoURL: `${FireUser.photoURL}` })
+        .post(`${marketConfig.apiServer}user/new`, {
+          displayNAME: `${inputForm}`,
+          email: `${FireUser.email}`,
+          bio: `${inputBioForm}`,
+          photoURL: `${FireUser.photoURL}`,
+        })
         .then((response) => {
           if (response.data.error) {
             toast.update(id, {
@@ -107,6 +120,7 @@ export default function UserPage() {
 
   function submitNewGoods() {
     const id = toast.loading("กำลังเพิ่มสินค้า ...");
+
     if (!Gtitle || !Gdecs || !Gprice) {
       toast.update(id, {
         render: `กรุณากรอกข้อมูลให้ครบถ้วน`,
@@ -117,15 +131,31 @@ export default function UserPage() {
       });
     } else {
       axios
-        .post(`https://api.imgbb.com/1/upload`, { key: "2dd550a902838594c15570cc01632214", image: filePrv }, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+        .post(
+          `https://api.imgbb.com/1/upload`,
+          { key: "2dd550a902838594c15570cc01632214", image: filePrv },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           },
-        })
+        )
         .then((response) => {
           const imageLInk = response.data.data.image.url;
+
           axios
-            .post(`${marketConfig.apiServer}good/new`, { email: `${FireUser.email}`, title: `${Gtitle}`, decs: `${Gdecs}`, photoURL: `${imageLInk}`, price: Gprice, displayName: `${realUserName}`, AuthorphotoURL: `${FireUser.photoURL}`, quantity: goodsQuan, platform: `${platformD}`, platfomName: `${platformNameD}` })
+            .post(`${marketConfig.apiServer}good/new`, {
+              email: `${FireUser.email}`,
+              title: `${Gtitle}`,
+              decs: `${Gdecs}`,
+              photoURL: `${imageLInk}`,
+              price: Gprice,
+              displayName: `${realUserName}`,
+              AuthorphotoURL: `${FireUser.photoURL}`,
+              quantity: goodsQuan,
+              platform: `${platformD}`,
+              platfomName: `${platformNameD}`,
+            })
             .then((response) => {
               if (response.data.error) {
                 toast.update(id, {
@@ -182,9 +212,10 @@ export default function UserPage() {
 
   function deleteGoods() {
     const id = toast.loading("กำลังลบสินค้า ...");
+
     axios
       .delete(`${marketConfig.apiServer}good/delete`, {
-        data: { email: FireUser.email, pID: goodsID }
+        data: { email: FireUser.email, pID: goodsID },
       })
       .then((response) => {
         if (response.data.error) {
@@ -220,9 +251,12 @@ export default function UserPage() {
 
   function updateQuantityGood() {
     const id = toast.loading("กำลังแก้ไขสินค้า ...");
+
     axios
       .patch(`${marketConfig.apiServer}good/item/quantity`, {
-        email: FireUser.email, gID: goodsID, Quan: goodsQuan
+        email: FireUser.email,
+        gID: goodsID,
+        Quan: goodsQuan,
       })
       .then((response) => {
         if (response.data.error) {
@@ -273,7 +307,7 @@ export default function UserPage() {
             } else {
               setUserDetails(response.data.User);
               setRealUserName(response.data.User.displayName);
-              setRealUserBio(response.data.User.bio)
+              setRealUserBio(response.data.User.bio);
               setUserState("YesMember");
             }
           })
@@ -291,7 +325,7 @@ export default function UserPage() {
   return (
     <>
       <title>{title}</title>
-      <meta property="og:title" content={title} />
+      <meta content={title} property="og:title" />
       <ToastContainer
         closeOnClick
         newestOnTop
@@ -384,7 +418,9 @@ export default function UserPage() {
                 <div className="flex items-center justify-center gap-4 mt-5">
                   <Spinner color="default" />
                   <div className="flex flex-col gap-1">
-                    <h1 className="text-xl AnakotmaiBOLD">กำลังโหลดข้อมูลผู้ใช้</h1>
+                    <h1 className="text-xl AnakotmaiBOLD">
+                      กำลังโหลดข้อมูลผู้ใช้
+                    </h1>
                     <p>กรุณารอสักครู่</p>
                   </div>
                 </div>
@@ -396,19 +432,45 @@ export default function UserPage() {
                     <div className="max-w-lg mx-auto">
                       <div className="bg-white rounded-lg shadow-lg">
                         <div className="p-6">
-                          <h2 className="text-2xl AnakotmaiBOLD text-gray-800 mb-2">สมัครสมาชิก !</h2>
-                          <p className="text-gray-700 mb-4">ดูเหมือนว่ายังไม่มีบัญชีที่เชื่อมกับอีเมลนี้</p>
+                          <h2 className="text-2xl AnakotmaiBOLD text-gray-800 mb-2">
+                            สมัครสมาชิก !
+                          </h2>
+                          <p className="text-gray-700 mb-4">
+                            ดูเหมือนว่ายังไม่มีบัญชีที่เชื่อมกับอีเมลนี้
+                          </p>
                           <form>
                             <div className="flex flex-col gap-3 mb-4">
-                              <Input value={inputForm} onChange={(e) => setInputForm(e.target.value)} variant="bordered" label="ชื่อผู้ใช้" placeholder="eg. John Doe" type="text" />
-                              <Input value={FireUser.email} isDisabled onChange={(e) => setInputForm(e.target.value)} variant="bordered" label="อีเมล" type="text" />
-                              <Textarea value={inputBioForm} onChange={(e) => setInputBioForm(e.target.value)} variant="bordered" label="Bio" placeholder="eg. about you" />
+                              <Input
+                                label="ชื่อผู้ใช้"
+                                placeholder="eg. John Doe"
+                                type="text"
+                                value={inputForm}
+                                variant="bordered"
+                                onChange={(e) => setInputForm(e.target.value)}
+                              />
+                              <Input
+                                isDisabled
+                                label="อีเมล"
+                                type="text"
+                                value={FireUser.email}
+                                variant="bordered"
+                                onChange={(e) => setInputForm(e.target.value)}
+                              />
+                              <Textarea
+                                label="Bio"
+                                placeholder="eg. about you"
+                                value={inputBioForm}
+                                variant="bordered"
+                                onChange={(e) =>
+                                  setInputBioForm(e.target.value)
+                                }
+                              />
                             </div>
                             <div className="flex items-center justify-between">
                               <Button
+                                startContent={<FiLogIn />}
                                 style={{ backgroundColor: "white" }}
                                 variant="bordered"
-                                startContent={<FiLogIn />}
                                 onPress={createNewUser}
                               >
                                 สมัครสมาชิก
@@ -425,7 +487,9 @@ export default function UserPage() {
                       <>
                         <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center gap-4">
                           <div>
-                            <h1 className="text-xl AnakotmaiBOLD">บุคคลภายนอก @hatyaiwit.ac.th</h1>
+                            <h1 className="text-xl AnakotmaiBOLD">
+                              บุคคลภายนอก @hatyaiwit.ac.th
+                            </h1>
                             <h1>กรุณาใช้อีเมลโรงเรียน</h1>
                           </div>
                         </div>
@@ -452,26 +516,51 @@ export default function UserPage() {
                                 <TableColumn>{"<:ไอดี>"}</TableColumn>
                                 <TableColumn>{"<:ชื่อ>"}</TableColumn>
                                 <TableColumn>{"<:จำนวนสินค้า>"}</TableColumn>
-                                <TableColumn className="text-red-500 text-center">ลบ</TableColumn>
+                                <TableColumn className="text-red-500 text-center">
+                                  ลบ
+                                </TableColumn>
                               </TableHeader>
-                              {userDetails.goods && Object.keys(userDetails.goods).length > 0 ? (
+                              {userDetails.goods &&
+                              Object.keys(userDetails.goods).length > 0 ? (
                                 <TableBody>
-                                  {Object.entries(userDetails.goods).map(([id, { title, availability }], index) => (
-                                    <TableRow key={index}>
-                                      <TableCell><Link href={`/product?id=${id}`}><p className="AnakotmaiBOLD cursor-pointer">{id}</p></Link></TableCell>
-                                      <TableCell>{title}</TableCell>
-                                      <TableCell><div className="flex items-center gap-2">{availability} <MdOutlineEdit className="cursor-pointer" onClick={() => updateQuantity(id, availability)} /></div></TableCell>
-                                      <TableCell
-                                        className="cursor-pointer flex justify-center text-red-500"
-                                        onClick={() => confirmDelete(id)}
-                                      >
-                                        <MdDeleteForever />
-                                      </TableCell>
-                                    </TableRow>
-                                  ))}
+                                  {Object.entries(userDetails.goods).map(
+                                    ([id, { title, availability }], index) => (
+                                      <TableRow key={index}>
+                                        <TableCell>
+                                          <Link href={`/product?id=${id}`}>
+                                            <p className="AnakotmaiBOLD cursor-pointer">
+                                              {id}
+                                            </p>
+                                          </Link>
+                                        </TableCell>
+                                        <TableCell>{title}</TableCell>
+                                        <TableCell>
+                                          <div className="flex items-center gap-2">
+                                            {availability}{" "}
+                                            <MdOutlineEdit
+                                              className="cursor-pointer"
+                                              onClick={() =>
+                                                updateQuantity(id, availability)
+                                              }
+                                            />
+                                          </div>
+                                        </TableCell>
+                                        <TableCell
+                                          className="cursor-pointer flex justify-center text-red-500"
+                                          onClick={() => confirmDelete(id)}
+                                        >
+                                          <MdDeleteForever />
+                                        </TableCell>
+                                      </TableRow>
+                                    ),
+                                  )}
                                 </TableBody>
                               ) : (
-                                <TableBody emptyContent={"คุณยังไม่มีสินค้าที่ขายอยู่!"}>{[]}</TableBody>
+                                <TableBody
+                                  emptyContent={"คุณยังไม่มีสินค้าที่ขายอยู่!"}
+                                >
+                                  {[]}
+                                </TableBody>
                               )}
                             </Table>
                           </div>
@@ -487,50 +576,115 @@ export default function UserPage() {
           <>
             <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center gap-4">
               <div>
-                <h1 className="text-xl AnakotmaiBOLD">คุณยังไม่ได้เข้าสู่ระบบ</h1>
+                <h1 className="text-xl AnakotmaiBOLD">
+                  คุณยังไม่ได้เข้าสู่ระบบ
+                </h1>
                 <h1>กรุณาเข้าสู่ระบบ</h1>
               </div>
             </div>
           </>
         )}
       </div>
-      <Modal isOpen={modalProduct.isOpen} onOpenChange={modalProduct.onOpenChange} placement="top">
+      <Modal
+        isOpen={modalProduct.isOpen}
+        placement="top"
+        onOpenChange={modalProduct.onOpenChange}
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">เพิ่มสินค้าใหม่</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                เพิ่มสินค้าใหม่
+              </ModalHeader>
               <ModalBody>
                 <div>
                   <div className="bg-white rounded-lg">
                     <div>
                       <form className="flex flex-col gap-4">
-                        <Input value={Gtitle} onChange={(e) => setGTitle(e.target.value)} variant="bordered" label="ชื่อสินค้า" placeholder="eg. Cookie" type="text" />
-                        <Textarea value={Gdecs} onChange={(e) => setGDecs(e.target.value)} variant="bordered" label="คำอธิบายสินค้า" placeholder="eg. Lorem Ipsum is simply dummy text of the printing and typesetting industry" />
+                        <Input
+                          label="ชื่อสินค้า"
+                          placeholder="eg. Cookie"
+                          type="text"
+                          value={Gtitle}
+                          variant="bordered"
+                          onChange={(e) => setGTitle(e.target.value)}
+                        />
+                        <Textarea
+                          label="คำอธิบายสินค้า"
+                          placeholder="eg. Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+                          value={Gdecs}
+                          variant="bordered"
+                          onChange={(e) => setGDecs(e.target.value)}
+                        />
                         <div className="flex gap-3">
-                          <Input value={Gprice.toString()} onChange={(e) => setGPrice(parseInt(e.target.value))} variant="bordered" label="ราคา" placeholder="0" type="number" />
-                          <Input value={goodsQuan.toString()} onChange={(e) => setGoodsQuan(parseInt(e.target.value))} variant="bordered" label="จำนวนสินค้า" placeholder="0" type="number" />
+                          <Input
+                            label="ราคา"
+                            placeholder="0"
+                            type="number"
+                            value={Gprice.toString()}
+                            variant="bordered"
+                            onChange={(e) =>
+                              setGPrice(parseInt(e.target.value))
+                            }
+                          />
+                          <Input
+                            label="จำนวนสินค้า"
+                            placeholder="0"
+                            type="number"
+                            value={goodsQuan.toString()}
+                            variant="bordered"
+                            onChange={(e) =>
+                              setGoodsQuan(parseInt(e.target.value))
+                            }
+                          />
                         </div>
                         <div className="flex items-center">
                           <div className="relative w-full">
                             <div className="items-center justify-center mx-auto">
-                              <label className="flex justify-center flex-col items-center p-3 py-5 w-full transition bg-white border-2 border-gray-300 border-solid rounded-md appearance-none cursor-pointer" id="drop">
+                              <label
+                                className="flex justify-center flex-col items-center p-3 py-5 w-full transition bg-white border-2 border-gray-300 border-solid rounded-md appearance-none cursor-pointer"
+                                id="drop"
+                              >
                                 {file == null ? (
                                   <>
                                     <FaUpload className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                                   </>
-                                ) : (<>
-                                  <img style={{ maxHeight: '10rem' }} className="rounded-lg" src={fileUrlPrv} alt="Preview" />
-                                </>)}
+                                ) : (
+                                  <>
+                                    <img
+                                      alt="Preview"
+                                      className="rounded-lg"
+                                      src={fileUrlPrv}
+                                      style={{ maxHeight: "10rem" }}
+                                    />
+                                  </>
+                                )}
                                 <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
-                                  <span>{file == null ? ("อัพโหลดรูปภาพสินค้า") : (`${file.name}`)}</span>
+                                  <span>
+                                    {file == null
+                                      ? "อัพโหลดรูปภาพสินค้า"
+                                      : `${file.name}`}
+                                  </span>
                                 </p>
-                                <input type="file" name="file_upload" className="hidden" accept="image/png,image/jpeg" id="input"
+                                <input
+                                  accept="image/png,image/jpeg"
+                                  className="hidden"
+                                  id="input"
+                                  name="file_upload"
+                                  type="file"
                                   onChange={(event) => {
                                     if (event.target.files) {
-                                      const selectedFile = event.target.files[0];
+                                      const selectedFile =
+                                        event.target.files[0];
+
                                       setFile(selectedFile);
-                                      setFileUrlPrv(URL.createObjectURL(event.target.files[0]));
+                                      setFileUrlPrv(
+                                        URL.createObjectURL(
+                                          event.target.files[0],
+                                        ),
+                                      );
                                       const reader = new FileReader();
+
                                       reader.onloadend = () => {
                                         setFilePrv(reader.result);
                                       };
@@ -543,13 +697,39 @@ export default function UserPage() {
                           </div>
                         </div>
                         <div className="flex flex-col md:flex-row gap-3">
-                          <Select onChange={(e) => setPlatformD(e.target.value)} label="ข้อมูลติดต่อ" placeholder="กรุณาเลือกแพลตฟอร์ม" variant="bordered">
-                            <SelectItem startContent={<FaDiscord />} key="Discord">Discord</SelectItem>
-                            <SelectItem startContent={<FaLine />} key="Line">Line</SelectItem>
-                            <SelectItem startContent={<FaInstagram />} key="IG">Instargram</SelectItem>
-                            <SelectItem startContent={<FaXTwitter />} key="Twitter">Twitter</SelectItem>
+                          <Select
+                            label="ข้อมูลติดต่อ"
+                            placeholder="กรุณาเลือกแพลตฟอร์ม"
+                            variant="bordered"
+                            onChange={(e) => setPlatformD(e.target.value)}
+                          >
+                            <SelectItem
+                              key="Discord"
+                              startContent={<FaDiscord />}
+                            >
+                              Discord
+                            </SelectItem>
+                            <SelectItem key="Line" startContent={<FaLine />}>
+                              Line
+                            </SelectItem>
+                            <SelectItem key="IG" startContent={<FaInstagram />}>
+                              Instargram
+                            </SelectItem>
+                            <SelectItem
+                              key="Twitter"
+                              startContent={<FaXTwitter />}
+                            >
+                              Twitter
+                            </SelectItem>
                           </Select>
-                          <Input value={platformNameD} onChange={(e) => setPlatformNameD(e.target.value)} variant="bordered" label="ชื่อผู้ใช้ หรือ ลิงค์" placeholder="eg. @Yorwor" type="text" />
+                          <Input
+                            label="ชื่อผู้ใช้ หรือ ลิงค์"
+                            placeholder="eg. @Yorwor"
+                            type="text"
+                            value={platformNameD}
+                            variant="bordered"
+                            onChange={(e) => setPlatformNameD(e.target.value)}
+                          />
                         </div>
                       </form>
                     </div>
@@ -560,7 +740,14 @@ export default function UserPage() {
                 <Button color="danger" variant="light" onPress={onClose}>
                   ยกเลิก
                 </Button>
-                <Button variant="bordered" color="primary" onPress={() => { onClose; submitNewGoods() }}>
+                <Button
+                  color="primary"
+                  variant="bordered"
+                  onPress={() => {
+                    onClose;
+                    submitNewGoods();
+                  }}
+                >
                   เพิ่มสินค้า
                 </Button>
               </ModalFooter>
@@ -568,27 +755,40 @@ export default function UserPage() {
           )}
         </ModalContent>
       </Modal>
-      <Modal isOpen={modalDelete.isOpen} onOpenChange={modalDelete.onOpenChange} placement="top">
+      <Modal
+        isOpen={modalDelete.isOpen}
+        placement="top"
+        onOpenChange={modalDelete.onOpenChange}
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">ยืนยันการลบสินค้า</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                ยืนยันการลบสินค้า
+              </ModalHeader>
               <ModalBody>
                 <div>
                   <div className="bg-white rounded-lg">
                     <div>
                       <form className="flex flex-col gap-4">
-                        <h1>คุณแน่ใจว่าจะลบสินค้าที่มีไอดี : <span className="AnakotmaiBOLD">{goodsID}</span> ?</h1>
+                        <h1>
+                          คุณแน่ใจว่าจะลบสินค้าที่มีไอดี :{" "}
+                          <span className="AnakotmaiBOLD">{goodsID}</span> ?
+                        </h1>
                       </form>
                     </div>
                   </div>
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={() => deleteGoods()}>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={() => deleteGoods()}
+                >
                   ลบ
                 </Button>
-                <Button variant="bordered" color="primary" onPress={onClose}>
+                <Button color="primary" variant="bordered" onPress={onClose}>
                   ยกเลิก
                 </Button>
               </ModalFooter>
@@ -596,28 +796,50 @@ export default function UserPage() {
           )}
         </ModalContent>
       </Modal>
-      <Modal isOpen={modalQuan.isOpen} onOpenChange={modalQuan.onOpenChange} placement="top">
+      <Modal
+        isOpen={modalQuan.isOpen}
+        placement="top"
+        onOpenChange={modalQuan.onOpenChange}
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">แก้ไขจำนวนสินค้า</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                แก้ไขจำนวนสินค้า
+              </ModalHeader>
               <ModalBody>
                 <div>
                   <div className="bg-white rounded-lg">
                     <div>
                       <form className="flex flex-col gap-4">
-                        <h1>แก้ไขจำนวนสินค้าของไอดี <span className="AnakotmaiBOLD">{goodsID}</span></h1>
-                        <Input value={goodsQuan.toString()} onChange={(e) => setGoodsQuan(parseInt(e.target.value))} variant="bordered" label="จำนวนสินค้า" placeholder="0" type="number" />
+                        <h1>
+                          แก้ไขจำนวนสินค้าของไอดี{" "}
+                          <span className="AnakotmaiBOLD">{goodsID}</span>
+                        </h1>
+                        <Input
+                          label="จำนวนสินค้า"
+                          placeholder="0"
+                          type="number"
+                          value={goodsQuan.toString()}
+                          variant="bordered"
+                          onChange={(e) =>
+                            setGoodsQuan(parseInt(e.target.value))
+                          }
+                        />
                       </form>
                     </div>
                   </div>
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose} >
+                <Button color="danger" variant="light" onPress={onClose}>
                   ยกเลิก
                 </Button>
-                <Button variant="bordered" color="primary" onPress={() => updateQuantityGood()} >
+                <Button
+                  color="primary"
+                  variant="bordered"
+                  onPress={() => updateQuantityGood()}
+                >
                   แก้ไข
                 </Button>
               </ModalFooter>
