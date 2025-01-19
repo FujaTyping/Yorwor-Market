@@ -254,14 +254,13 @@ export default function ProductPage() {
                               <Button
                                 color="primary"
                                 startContent={<IoBagHandle />}
-                                variant="bordered"
                                 {...(isValidUrl(goodsList.social.platformName)
                                   ? {
-                                      as: "a",
-                                      href: goodsList.social.platformName,
-                                      target: "_blank",
-                                      rel: "noopener noreferrer",
-                                    }
+                                    as: "a",
+                                    href: goodsList.social.platformName,
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                  }
                                   : {})}
                               >
                                 ติดต่อผู้ขายผ่าน {goodsList.social.platform}{" "}
@@ -277,7 +276,6 @@ export default function ProductPage() {
                             <Button
                               isDisabled
                               startContent={<IoBagHandle />}
-                              variant="bordered"
                             >
                               ผู้ขายไม่ได้ให้ช่องทางติดต่อไว้
                             </Button>
