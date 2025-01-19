@@ -36,7 +36,7 @@ export default (app: ElysiaApp) =>
                     ]
                 };
                 axios.post(Url, Payload)
-                return "Successfuly send a repost to admin";
+                return "Successfuly send a report to admin";
             } catch (error: any) {
                 return {
                     error: true,

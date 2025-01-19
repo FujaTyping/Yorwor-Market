@@ -1,6 +1,7 @@
 import type { ElysiaApp } from "../../app";
 import { getDocs, query, collection, orderBy, where, documentId, setDoc, doc, serverTimestamp, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { generateID } from "../../lib/module";
+import axios from "axios";
 
 interface GGood {
     price: number;
@@ -206,29 +207,43 @@ export default (app: ElysiaApp) =>
                     month: "long",
                     year: "numeric",
                 }).format(TToday);
-                await setDoc(doc(db, "Goods", UID), {
-                    decs: decs,
-                    title: title,
-                    photoURL: photoURL,
-                    id: UID,
-                    price: price,
-                    addDate: `${TThaiDate}`,
-                    availability: quantity,
-                    timestamp: serverTimestamp(),
-                });
-                await setDoc(doc(db, "Goods", UID, "Author", "Details"), {
-                    photoURL: AuthorphotoURL,
-                    email: email,
-                    displayName: displayName,
-                });
-                await setDoc(doc(db, "Goods", UID, "Author", "Social"), {
-                    platform: platform,
-                    platformName: platfomName
-                });
-                await setDoc(doc(db, "User", email, "Goods", UID), {
-                    title: title,
-                    availability: quantity,
-                });
+
+                axios
+                    .post(
+                        `https://api.imgbb.com/1/upload`,
+                        { key: "2dd550a902838594c15570cc01632214", image: photoURL },
+                        {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            },
+                        },
+                    )
+                    .then(async (response) => {
+                        const imageLInk = response.data.data.image.url;
+                        await setDoc(doc(db, "Goods", UID), {
+                            decs: decs,
+                            title: title,
+                            photoURL: imageLInk,
+                            id: UID,
+                            price: price,
+                            addDate: `${TThaiDate}`,
+                            availability: quantity,
+                            timestamp: serverTimestamp(),
+                        });
+                        await setDoc(doc(db, "Goods", UID, "Author", "Details"), {
+                            photoURL: AuthorphotoURL,
+                            email: email,
+                            displayName: displayName,
+                        });
+                        await setDoc(doc(db, "Goods", UID, "Author", "Social"), {
+                            platform: platform,
+                            platformName: platfomName
+                        });
+                        await setDoc(doc(db, "User", email, "Goods", UID), {
+                            title: title,
+                            availability: quantity,
+                        });
+                    });
                 return `Successfully added good with ID ${UID}`;
             } catch (error: any) {
                 return {

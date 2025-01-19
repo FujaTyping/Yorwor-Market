@@ -1,5 +1,5 @@
 import type { ElysiaApp } from "../../app";
-import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
+import { getDocs, collection, doc, getDoc, Firestore } from 'firebase/firestore';
 
 export default (app: ElysiaApp) =>
     app
