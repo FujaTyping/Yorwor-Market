@@ -110,7 +110,7 @@ function ContactPage() {
                     </div>
 
                     <div className="p-4 lg:col-span-2">
-                        <form>
+                        <div>
                             <div className="grid sm:grid-cols-2 gap-8">
                                 <Input
                                     label="ชื่อ"
@@ -192,7 +192,7 @@ function ContactPage() {
                             >
                                 ส่งคำขอ
                             </Button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
