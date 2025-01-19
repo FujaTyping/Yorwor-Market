@@ -121,7 +121,7 @@ export default function UserPage() {
   function submitNewGoods() {
     const id = toast.loading("กำลังเพิ่มสินค้า ...");
 
-    if (!Gtitle || !Gdecs || !Gprice || !file) {
+    if (!Gtitle || !Gdecs || !Gprice || !file || !goodsQuan || !platformD || !platformNameD) {
       toast.update(id, {
         render: `กรุณากรอกข้อมูลให้ครบถ้วน`,
         closeOnClick: true,
@@ -131,42 +131,65 @@ export default function UserPage() {
       });
     } else {
       axios
-        .post(`${marketConfig.apiServer}good/new`, {
-          email: `${FireUser.email}`,
-          title: `${Gtitle}`,
-          decs: `${Gdecs}`,
-          photoURL: `${filePrv}`,
-          price: Gprice,
-          displayName: `${realUserName}`,
-          AuthorphotoURL: `${FireUser.photoURL}`,
-          quantity: goodsQuan,
-          platform: `${platformD}`,
-          platfomName: `${platformNameD}`,
-        })
+        .post(
+          `https://api.imgbb.com/1/upload`,
+          { key: "2dd550a902838594c15570cc01632214", image: filePrv },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          },
+        )
         .then((response) => {
-          if (response.data.error) {
-            toast.update(id, {
-              render: `ไม่สามารถเพิ่มสินค้าได้`,
-              closeOnClick: true,
-              type: "error",
-              isLoading: false,
-              autoClose: 10000,
+          const imageLInk = response.data.data.image.url;
+
+          axios
+            .post(`${marketConfig.apiServer}good/new`, {
+              email: `${FireUser.email}`,
+              title: `${Gtitle}`,
+              decs: `${Gdecs}`,
+              photoURL: `${imageLInk}`,
+              price: Gprice,
+              displayName: `${realUserName}`,
+              AuthorphotoURL: `${FireUser.photoURL}`,
+              quantity: goodsQuan,
+              platform: `${platformD}`,
+              platfomName: `${platformNameD}`,
+            })
+            .then((response) => {
+              if (response.data.error) {
+                toast.update(id, {
+                  render: `ไม่สามารถเพิ่มสินค้าได้`,
+                  closeOnClick: true,
+                  type: "error",
+                  isLoading: false,
+                  autoClose: 10000,
+                });
+              } else {
+                toast.update(id, {
+                  render: `เพิ่มสินค้าเรียบร้อยแล้ว`,
+                  type: "success",
+                  isLoading: false,
+                  autoClose: 3000,
+                });
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1500);
+              }
+            })
+            .catch((error) => {
+              toast.update(id, {
+                render: `ไม่สามารถเพิ่มสินค้าได้ ${error.message}`,
+                closeOnClick: true,
+                type: "error",
+                isLoading: false,
+                autoClose: 10000,
+              });
             });
-          } else {
-            toast.update(id, {
-              render: `เพิ่มสินค้าเรียบร้อยแล้ว`,
-              type: "success",
-              isLoading: false,
-              autoClose: 3000,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 1500);
-          }
         })
-        .catch((error) => {
+        .catch((error: any) => {
           toast.update(id, {
-            render: `ไม่สามารถเพิ่มสินค้าได้ ${error.message}`,
+            render: `ไม่สามารถอัพโหลดรูปภาพได้ ${error.message}`,
             closeOnClick: true,
             type: "error",
             isLoading: false,
