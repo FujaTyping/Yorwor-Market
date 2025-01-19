@@ -55,9 +55,6 @@ function ContactPage() {
                         isLoading: false,
                         autoClose: 3000,
                     });
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
                 }
             })
             .catch((error) => {
