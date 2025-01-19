@@ -31,8 +31,13 @@ export default function StorePage() {
             goodsIds: response.data.User.goods,
           })
           .then((response) => {
-            setPageStatus("Finish");
-            setDuckList(response.data.Goods);
+            if (response.data.error) {
+              setPageStatus("Error");
+              setDuckList([]);
+            } else {
+              setPageStatus("Finish");
+              setDuckList(response.data.Goods);
+            }
           })
           .catch(() => {
             setPageStatus("Error");

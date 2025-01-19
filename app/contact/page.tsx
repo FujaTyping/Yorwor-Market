@@ -1,0 +1,203 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { MdContactMail } from "react-icons/md";
+import { FaMapPin } from "react-icons/fa6";
+import { Input, Textarea } from "@nextui-org/input";
+import { Select, SelectItem } from "@nextui-org/select";
+import { RadioGroup, Radio } from "@nextui-org/radio";
+import { Button } from "@nextui-org/button";
+import { IoSend } from "react-icons/io5";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+import marketConfig from "@/market-config.mjs";
+import useLocalStorge from "@/lib/localstorage-db";
+
+function ContactPage() {
+    const { FireUser } = useLocalStorge();
+    const [title] = useState("Yorwor Market - ติดต่อ รายงานปัญหา");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [ux, setUX] = useState("");
+    const [topic, setTopic] = useState("");
+    const [text, setText] = useState("");
+
+    useEffect(() => {
+        if (FireUser?.uid) {
+            setEmail(`${FireUser.email}`)
+        }
+    }, [FireUser]);
+
+    function sendRequest() {
+        const id = toast.loading("กำลังส่งข้อมูล ...");
+
+        axios
+            .post(`${marketConfig.apiServer}contact`, {
+                email: `${email}`,
+                name: `${name}`,
+                ux: `${ux}`,
+                topic: `${topic}`,
+                text: `${text}`
+            })
+            .then((response) => {
+                if (response.data.error) {
+                    toast.update(id, {
+                        render: `ไม่สามารถส่งข้อมูลได้ กรุณากรอกข้อมูลให้ครบถ้วน`,
+                        closeOnClick: true,
+                        type: "error",
+                        isLoading: false,
+                        autoClose: 10000,
+                    });
+                } else {
+                    toast.update(id, {
+                        render: `ส่งข้อมูลเรียบร้อยแล้ว`,
+                        type: "success",
+                        isLoading: false,
+                        autoClose: 3000,
+                    });
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                }
+            })
+            .catch((error) => {
+                toast.update(id, {
+                    render: `ไม่สามารถส่งข้อมูลได้ ${error.message}`,
+                    closeOnClick: true,
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 10000,
+                });
+            });
+    }
+
+    return (
+        <>
+            <title>{title}</title>
+            <meta content={title} property="og:title" />
+            <ToastContainer
+                closeOnClick
+                newestOnTop
+                hideProgressBar={false}
+                position="bottom-right"
+            />
+            <div className="max-w-6xl mx-auto px-10 mt-5 mb-5">
+                <div className="text-center px-6">
+                    <h2 className="text-gray-800 text-4xl AnakotmaiBOLD">ติดต่อเรา</h2>
+                    <p className="text-sm mt-2">หากคุณมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ สามารถติดต่อเราได้ผ่านช่องทางต่อไปนี้</p>
+                </div>
+
+                <div className="grid lg:grid-cols-3 items-start gap-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-lg mt-8">
+
+                    <div className="bg-[#011c2b] rounded-lg p-6 h-full max-lg:order-1">
+                        <h2 className="text-xl text-white">ข้อมูลการติดต่อ</h2>
+                        <p className="text-sm text-gray-300 mt-4">หากคุณมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ สามารถติดต่อเราได้ผ่านช่องทางต่อไปนี้</p>
+
+                        <ul className="mt-16 space-y-4">
+                            <li className="flex items-center">
+                                <MdContactMail className="w-4 h-4 text-gray-300" />
+                                <p className="text-sm text-gray-300 ml-4">
+                                    yorwor@siraphop.me
+                                </p>
+                            </li>
+                            <li className="flex items-center">
+                                <FaMapPin className="w-4 h-4 text-gray-300" />
+                                <p className="text-sm text-gray-300 ml-4">
+                                    468 ถ.เพชรเกษม ต.หาดใหญ่ อ.หาดใหญ่ จ.สงขลา 90110
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="p-4 lg:col-span-2">
+                        <form>
+                            <div className="grid sm:grid-cols-2 gap-8">
+                                <Input
+                                    label="ชื่อ"
+                                    placeholder="eg. Ellen Joe"
+                                    type="text"
+                                    variant="bordered"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                                <Input
+                                    label="อีเมล"
+                                    placeholder="eg. 52647@hatyaiwit.ac.th"
+                                    type="text"
+                                    variant="bordered"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+
+                                <div className="relative flex items-center sm:col-span-2">
+                                    <Select
+                                        label="ประสบการณ์ในการใช้ Yorwor Market"
+                                        placeholder="กรุณาเลือกตัวเลือก"
+                                        variant="bordered"
+                                        value={ux}
+                                        onChange={(e) => setUX(e.target.value)}
+                                    >
+                                        <SelectItem
+                                            key="ดีมาก"
+                                        >
+                                            ดีมาก
+                                        </SelectItem>
+                                        <SelectItem key="ดี">
+                                            ดี
+                                        </SelectItem>
+                                        <SelectItem key="พอได้">
+                                            พอได้
+                                        </SelectItem>
+                                        <SelectItem
+                                            key="ใช้ไม่ได้เลย"
+                                        >
+                                            ใช้ไม่ได้เลย
+                                        </SelectItem>
+                                        <SelectItem
+                                            key="แย่มาก"
+                                        >
+                                            แย่มาก
+                                        </SelectItem>
+                                    </Select>
+                                </div>
+
+                                <div className="col-span-full">
+                                    <RadioGroup label="หัวข้อในการติดต่อ" orientation="horizontal"
+                                        onChange={(e) => setTopic(e.target.value)}
+                                        value={topic}
+                                    >
+                                        <Radio value="ปัญหาทั่วไป">ปัญหาทั่วไป</Radio>
+                                        <Radio value="ปัญหาด้านเทคนิค">ปัญหาด้านเทคนิค</Radio>
+                                        <Radio value="รายงานปัญหา">รายงานปัญหา</Radio>
+                                        <Radio value="ข้อเสนอแนะ">ข้อเสนอแนะ</Radio>
+                                    </RadioGroup>
+                                </div>
+
+                                <div className="relative flex items-center sm:col-span-2">
+                                    <Textarea
+                                        label="ข้อความที่จะติดต่อ"
+                                        placeholder="eg. Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+                                        variant="bordered"
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+
+                            <Button
+                                color="primary"
+                                className="mt-8 flex items-center justify-center text-sm lg:ml-auto max-lg:w-full rounded-lg px-4 py-3"
+                                startContent={<IoSend />}
+                                onPress={sendRequest}
+                            >
+                                ส่งคำขอ
+                            </Button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default ContactPage
