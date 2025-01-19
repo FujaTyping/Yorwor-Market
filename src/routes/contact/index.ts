@@ -15,7 +15,7 @@ export default (app: ElysiaApp) =>
                 const Payload = {
                     "embeds": [
                         {
-                            "title": "🎈 มีคนสางข้อความมีถึง Yorwor Market",
+                            "title": "🎈 มีคนส่งข้อความมาถึง Yorwor Market",
                             "description": `**${name}** : ${text}`,
                             "color": 4892137,
                             "fields": [
@@ -36,7 +36,7 @@ export default (app: ElysiaApp) =>
                             ],
                             "author": {
                                 "name": "Market - Notify",
-                                "url": `market.yorwor.siraphop.me/contact`,
+                                "url": `https://market.yorwor.siraphop.me/contact`,
                                 "icon_url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/ตรีจักร.png"
                             },
                             "footer": {
@@ -46,7 +46,7 @@ export default (app: ElysiaApp) =>
                     ]
                 };
                 axios.post(Url, Payload)
-                return "Successfuly send a request to admin";
+                return "Successfuly send a report to admin";
             } catch (error: any) {
                 return {
                     error: true,
