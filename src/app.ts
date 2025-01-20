@@ -13,7 +13,16 @@ const PORT = 3000;
 
 const app = new Elysia()
     .use(cors())
-    .use(swagger())
+    .use(swagger({
+        path: '/document',
+        hideDownloadButton: true,
+        documentation: {
+            info: {
+                title: 'Yorwor Market OpenAPI',
+                version: '0.0.1'
+            }
+        }
+    }))
     .use(await autoload())
     .use(rateLimit())
     .state('db', db)

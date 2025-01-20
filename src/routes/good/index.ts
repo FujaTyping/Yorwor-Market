@@ -11,51 +11,46 @@ interface GGood {
     social: any;
 }
 
-let RealData: { Goods: GGood[] } = { Goods: [] };
-let lastFetchTime = 0;
-const fetchInterval = 2 * 60 * 1000;
-
 export default (app: ElysiaApp) =>
     app
         .get("/", async ({ store }) => {
             const { db } = store;
-            if (Date.now() - lastFetchTime > fetchInterval) {
-                try {
-                    const querySnapshot = await getDocs(query(collection(db, "Goods"), orderBy("timestamp", "desc")));
-                    RealData.Goods = [];
+            let RealData: { Goods: GGood[] } = { Goods: [] };
 
-                    for (const docSnap of querySnapshot.docs) {
-                        const good = docSnap.data() as GGood;
+            try {
+                const querySnapshot = await getDocs(query(collection(db, "Goods"), orderBy("timestamp", "desc")));
+                RealData.Goods = [];
 
-                        const authorDocRef = doc(db, "Goods", docSnap.id, "Author", "Details");
-                        const socialDocRef = doc(db, "Goods", docSnap.id, "Author", "Social");
-                        const authorDoc = await getDoc(authorDocRef);
-                        const socialDocSnap = await getDoc(socialDocRef);
+                for (const docSnap of querySnapshot.docs) {
+                    const good = docSnap.data() as GGood;
 
-                        if (authorDoc.exists()) {
-                            good.author = authorDoc.data();
-                        } else {
-                            good.author = {};
-                        }
+                    const authorDocRef = doc(db, "Goods", docSnap.id, "Author", "Details");
+                    const socialDocRef = doc(db, "Goods", docSnap.id, "Author", "Social");
+                    const authorDoc = await getDoc(authorDocRef);
+                    const socialDocSnap = await getDoc(socialDocRef);
 
-                        if (socialDocSnap.exists()) {
-                            good.social = socialDocSnap.data();
-                        } else {
-                            good.social = {};
-                        }
-
-                        RealData.Goods.push(good);
+                    if (authorDoc.exists()) {
+                        good.author = authorDoc.data();
+                    } else {
+                        good.author = {};
                     }
 
-                    lastFetchTime = Date.now();
-                } catch (error: any) {
-                    return {
-                        error: true,
-                        message: error.message || "An error occurred while fetching data",
-                    };
+                    if (socialDocSnap.exists()) {
+                        good.social = socialDocSnap.data();
+                    } else {
+                        good.social = {};
+                    }
+
+                    RealData.Goods.push(good);
                 }
+
+                return RealData;
+            } catch (error: any) {
+                return {
+                    error: true,
+                    message: error.message || "An error occurred while fetching data",
+                };
             }
-            return RealData;
         })
         .put("/bulk", async ({ body, store }) => {
             const { db } = store;
