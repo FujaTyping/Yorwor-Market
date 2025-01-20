@@ -21,7 +21,7 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
   return (
     <>
       {goodsList.length > 0 ? (
-        <div className="mt-4 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+        <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           {goodsList.map((list, index) => (
             <Link key={index} href={`/product?id=${list.id}`}>
               <article className="relative">
@@ -34,14 +34,14 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
                   />
                 </div>
                 <div
-                  className="absolute top-0 m-1 rounded-full bg-white"
+                  className="absolute top-0 m-1 rounded-full bg-white backdrop-blur-sm bg-opacity-50"
                   style={{ zIndex: 11 }}
                 >
                   <p className="text-[12px] rounded-full bg-black p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">
                     {list.availability ? "ขาย" : "หมดแล้ว"}
                   </p>
                 </div>
-                <div className="mt-4 flex flex-col md:flex-row items-start justify-between">
+                <div className="mt-4 px-3 pb-3 flex flex-col md:flex-row items-start justify-between">
                   <div className="flex flex-col">
                     <h3 className="AnakotmaiBOLD leading-tight break-words">
                       {list.title}
