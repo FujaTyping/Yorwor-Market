@@ -67,8 +67,8 @@ export default function SearchPage() {
         <div>
           {pageStatus == "Loading" ? (
             <>
-              <div className="flex items-center gap-4 mt-5">
-                <Spinner color="default" />
+              <div className="flex items-center justify-center flex-col h-screen gap-4 mt-5">
+                <Spinner size="lg" />
                 <div className="flex flex-col gap-1">
                   <h1 className="text-xl AnakotmaiBOLD">กำลังค้นหาสินค้า</h1>
                   <p>กรุณารอสักครู่</p>
@@ -92,7 +92,7 @@ export default function SearchPage() {
                   </section>
                 </>
               ) : (
-                <div className="flex items-center justify-center mt-4 gap-3 flex-col">
+                <div className="flex flex-col h-screen items-center justify-center mt-4 gap-3 flex-col">
                   <BsBagXFill className="h-8 w-8" />
                   <div className="gap-1">
                     <h1 className="text-xl text-center">

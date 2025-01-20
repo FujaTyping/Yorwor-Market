@@ -415,8 +415,8 @@ export default function UserPage() {
             </div>
             {pageStatus == "Loading" ? (
               <>
-                <div className="flex items-center justify-center gap-4 mt-5">
-                  <Spinner color="default" />
+                <div className="flex items-center justify-center flex-col justify-center h-screen gap-4 mt-5">
+                  <Spinner size="lg" />
                   <div className="flex flex-col gap-1">
                     <h1 className="text-xl AnakotmaiBOLD">
                       กำลังโหลดข้อมูลผู้ใช้
@@ -496,7 +496,7 @@ export default function UserPage() {
                       </>
                     ) : (
                       <>
-                        <div>
+                        <div className="pb-3">
                           <div className="max-w-lg mx-auto">
                             <div className="flex items-center mb-3 mt-2 gap-2 mx-auto">
                               <h1 className="AnakotmaiBOLD">สินค้าของคุณ</h1>
@@ -574,7 +574,7 @@ export default function UserPage() {
           </>
         ) : (
           <>
-            <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center gap-4">
+            <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center items-center h-screen gap-4">
               <div>
                 <h1 className="text-xl AnakotmaiBOLD">
                   คุณยังไม่ได้เข้าสู่ระบบ

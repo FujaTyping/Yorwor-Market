@@ -32,7 +32,7 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <head />
       <body>
-        <NextTopLoader showSpinner={false} />
+        <NextTopLoader showSpinner={false} showAtBottom={true} color="#ef4444" height={4} />
         <NavbarNX />
         {children}
         <Footbar />

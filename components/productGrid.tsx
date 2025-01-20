@@ -37,9 +37,11 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
                   className="absolute top-0 m-1 rounded-full bg-white backdrop-blur-sm bg-opacity-50"
                   style={{ zIndex: 11 }}
                 >
-                  <p className="text-[12px] rounded-full bg-black p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">
-                    {list.availability ? "ขาย" : "หมดแล้ว"}
-                  </p>
+                  {list.availability ? (
+                    <p className="text-[12px] rounded-full bg-blue-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">ขาย</p>
+                  ) : (
+                    <p className="text-[12px] rounded-full bg-red-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">หมดแล้ว</p>
+                  )}
                 </div>
                 <div className="mt-4 px-3 pb-3 flex flex-col md:flex-row items-start justify-between">
                   <div className="flex flex-col">
@@ -59,7 +61,7 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
           ))}
         </div>
       ) : (
-        <div className="flex items-center flex-col md:flex-row md:gap-6 mt-5">
+        <div className="flex items-center flex-col h-screen justify-center md:flex-row md:gap-6 mt-5">
           <BsBagXFill className="w-8 h-8" />
           <div className="flex flex-col gap-1">
             <h1 className="text-xl text-center mt-3 AnakotmaiBOLD">

@@ -9,7 +9,7 @@ function loading() {
           <h1 className="text-3xl AnakotmaiBOLD">Yorwor Market</h1>
           <h3>โรงเรียนหาดใหญ่วิทยาลัย</h3>
         </div>
-        <div className="flex items-center gap-4 mt-5">
+        <div className="flex items-center justify-center h-screen gap-4 mt-5">
           <Spinner color="default" />
           <div className="flex flex-col gap-1">
             <h1 className="text-xl AnakotmaiBOLD">กำลังดึงข้อมูลการค้นหา</h1>
