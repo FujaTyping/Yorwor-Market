@@ -62,8 +62,8 @@ export default function StorePage() {
         <div className="flex flex-col justify-center">
           {pageStatus == "Loading" ? (
             <>
-              <div className="flex items-center gap-4 mt-5">
-                <Spinner color="default" />
+              <div className="flex flex-col h-screen justify-center items-center gap-4 mt-5">
+                <Spinner size="lg" />
                 <div className="flex flex-col gap-1">
                   <h1 className="text-xl AnakotmaiBOLD">
                     กำลังโหลดข้อมูลร้านค้า
@@ -101,7 +101,7 @@ export default function StorePage() {
                   </section>
                 </>
               ) : (
-                <div className="flex items-center justify-center my-3 gap-3 flex-col">
+                <div className="flex items-center justify-center flex-col h-screen my-3 gap-3 flex-col">
                   <BsBagXFill className="h-8 w-8" />
                   <div className="gap-1">
                     <h1 className="text-xl text-center">

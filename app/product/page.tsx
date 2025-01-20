@@ -139,8 +139,8 @@ export default function ProductPage() {
         <div className="p-5">
           {pageStatus == "Loading" ? (
             <>
-              <div className="flex items-center justify-center gap-4 mt-5">
-                <Spinner color="default" />
+              <div className="flex flex-col h-screen items-center justify-center gap-4 mt-5">
+                <Spinner size="lg" />
                 <div className="flex flex-col gap-1">
                   <h1 className="text-xl AnakotmaiBOLD">
                     กำลังโหลดข้อมูลสินค้า
@@ -174,7 +174,7 @@ export default function ProductPage() {
                       </div>
                     </div>
                     <div className="md:flex-1">
-                      <h2 className="text-2xl AnakotmaiBOLD text-gray-800 dark:text-white mb-2 flex items-center gap-2">
+                      <h2 className="text-2xl AnakotmaiBOLD mb-2 flex items-center gap-2">
                         {goodsList.title}
                         <Dropdown>
                           <DropdownTrigger>
@@ -205,23 +205,23 @@ export default function ProductPage() {
                           </DropdownMenu>
                         </Dropdown>
                       </h2>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 whitespace-pre-line">
+                      <p className="text-gray-600 text-sm mb-4 whitespace-pre-line">
                         {goodsList.decs}
                       </p>
                       <div className="flex flex-col md:flex-row mb-4 gap-2 md:gap-4">
                         <div>
-                          <span className="AnakotmaiBOLD text-gray-700 dark:text-gray-300">
+                          <span className="AnakotmaiBOLD text-gray-700">
                             ราคา :
                           </span>
-                          <span className="text-gray-600 dark:text-gray-300">
+                          <span className="text-gray-600">
                             {` ${goodsList.price.toLocaleString()} ฿`}
                           </span>
                         </div>
                         <div>
-                          <span className="font-bold text-gray-700 dark:text-gray-300">
+                          <span className="font-bold text-gray-700">
                             จำนวนสินค้า :
                           </span>
-                          <span className="text-gray-600 dark:text-gray-300">
+                          <span className="text-gray-600">
                             {goodsList.availability
                               ? ` ${goodsList.availability}`
                               : ` หมดแล้ว`}
@@ -230,7 +230,7 @@ export default function ProductPage() {
                       </div>
 
                       <div className="flex flex-col items-start cursor-pointer">
-                        <span className="AnakotmaiBOLD text-gray-700 dark:text-gray-300">
+                        <span className="AnakotmaiBOLD text-gray-700">
                           ข้อมูลผู้ขาย :
                         </span>
                         <Link href={`/store?email=${goodsList.author.email}`}>
@@ -285,7 +285,7 @@ export default function ProductPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center flex-col md:flex-row md:gap-6">
+                  <div className="flex items-center flex-col h-screen justify-center md:gap-6">
                     <BsBagXFill className="w-8 h-8" />
                     <div className="flex flex-col gap-1 justify-center">
                       <h1 className="text-xl mt-3 AnakotmaiBOLD">

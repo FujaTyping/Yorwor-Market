@@ -78,28 +78,28 @@ function ContactPage() {
                 hideProgressBar={false}
                 position="bottom-right"
             />
-            <div className="max-w-6xl mx-auto px-10 mt-5 mb-5">
+            <div className="max-w-6xl mx-auto px-10 py-10">
                 <div className="text-center px-6">
                     <h2 className="text-gray-800 text-4xl AnakotmaiBOLD">ติดต่อเรา</h2>
                     <p className="text-sm mt-2">หากคุณมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ สามารถติดต่อเราได้ผ่านช่องทางต่อไปนี้</p>
                 </div>
 
-                <div className="grid lg:grid-cols-3 items-start gap-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-lg mt-8">
+                <div className="grid lg:grid-cols-3 items-start gap-4 rounded-lg mt-8 shadow-lg mb-4">
 
-                    <div className="bg-[#011c2b] rounded-lg p-6 h-full max-lg:order-1">
-                        <h2 className="text-xl text-white">ข้อมูลการติดต่อ</h2>
-                        <p className="text-sm text-gray-300 mt-4">หากคุณมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ สามารถติดต่อเราได้ผ่านช่องทางต่อไปนี้</p>
+                    <div className="bg-blue-500 rounded-lg p-6 h-full max-lg:order-1 text-white">
+                        <h2 className="text-xl text-white AnakotmaiBOLD">ข้อมูลการติดต่อ</h2>
+                        <p className="text-sm mt-4 AnakotmaiBOLD">หากคุณมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ สามารถติดต่อเราได้ผ่านช่องทางต่อไปนี้</p>
 
                         <ul className="mt-16 space-y-4">
                             <li className="flex items-center">
-                                <MdContactMail className="w-4 h-4 text-gray-300" />
-                                <p className="text-sm text-gray-300 ml-4">
+                                <MdContactMail className="w-4 h-4" />
+                                <p className="text-sm ml-4">
                                     yorwor@siraphop.me
                                 </p>
                             </li>
                             <li className="flex items-center">
-                                <FaMapPin className="w-4 h-4 text-gray-300" />
-                                <p className="text-sm text-gray-300 ml-4">
+                                <FaMapPin className="w-4 h-4" />
+                                <p className="text-sm ml-4">
                                     468 ถ.เพชรเกษม ต.หาดใหญ่ อ.หาดใหญ่ จ.สงขลา 90110
                                 </p>
                             </li>

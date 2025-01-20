@@ -45,7 +45,7 @@ export const NavbarNX = () => {
         hideProgressBar={false}
         position="bottom-right"
       />
-      <Navbar shouldHideOnScroll maxWidth="full">
+      <Navbar shouldHideOnScroll maxWidth="full" isBlurred className="bg-blue-500 text-white border-solid border-b-5 border-red-500">
         <NavbarBrand as={Link} className="cursor-pointer" href={"/"}>
           <img alt="Logo" src={YorworLogo.src} />
           <p className="ml-2 AnakotmaiBOLD text-inherit">Yorwor Market</p>

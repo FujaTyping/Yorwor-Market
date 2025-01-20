@@ -3,7 +3,7 @@ import YorworLogo from "@/app/favicon.ico";
 export const Footbar = () => {
   return (
     <>
-      <footer>
+      <footer className="bg-blue-500 text-white border-solid border-t-5 border-red-500">
         <div className="mx-auto w-full px-4 py-5 lg:px-6">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div className="flex justify-center text-teal-600 sm:justify-start">
