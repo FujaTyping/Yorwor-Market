@@ -52,6 +52,49 @@ export default (app: ElysiaApp) =>
                 };
             }
         })
+        .get("/others", async ({ store }) => {
+            const { db } = store;
+            let RealData: { Goods: GGood[] } = { Goods: [] };
+
+            try {
+                const querySnapshot = await getDocs(query(collection(db, "Goods"), orderBy("timestamp", "desc")));
+                RealData.Goods = [];
+
+                for (const docSnap of querySnapshot.docs) {
+                    const good = docSnap.data() as GGood;
+
+                    const authorDocRef = doc(db, "Goods", docSnap.id, "Author", "Details");
+                    const socialDocRef = doc(db, "Goods", docSnap.id, "Author", "Social");
+                    const authorDoc = await getDoc(authorDocRef);
+                    const socialDocSnap = await getDoc(socialDocRef);
+
+                    if (authorDoc.exists()) {
+                        good.author = authorDoc.data();
+                    } else {
+                        good.author = {};
+                    }
+
+                    if (socialDocSnap.exists()) {
+                        good.social = socialDocSnap.data();
+                    } else {
+                        good.social = {};
+                    }
+
+                    RealData.Goods.push(good);
+                }
+
+                RealData.Goods = RealData.Goods.sort(() => Math.random() - 0.5);
+
+                RealData.Goods = RealData.Goods.slice(0, 10);
+
+                return RealData;
+            } catch (error: any) {
+                return {
+                    error: true,
+                    message: error.message || "An error occurred while fetching data",
+                };
+            }
+        })
         .put("/bulk", async ({ body, store }) => {
             const { db } = store;
             let RealData: { Goods: GGood[] } = { Goods: [] };
