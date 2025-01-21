@@ -42,6 +42,7 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
 import marketConfig from "@/market-config.mjs";
+import Loaders from "@/components/loaders";
 
 export default function ProductPage() {
   const [title, setTitle] = useState("Yorwor Market");
@@ -144,14 +145,7 @@ export default function ProductPage() {
         <div className="p-5">
           {pageStatus == "Loading" ? (
             <>
-              <div className="flex flex-col items-center justify-center gap-4 mt-5 h-72">
-                <div className="flex-col gap-4 w-full flex items-center justify-center">
-                  <div className="w-28 h-28 border-4 text-blue-500 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-500 rounded-full">
-                    <img src="/favicon.ico" className="animate-ping" alt="YW-Loading" />
-                  </div>
-                </div>
-                <p className="AnakotmaiBOLD">กำลังโหลด</p>
-              </div>
+              <Loaders />
             </>
           ) : (
             <>
@@ -284,7 +278,7 @@ export default function ProductPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center flex-col h-screen justify-center md:gap-6">
+                  <div className="flex items-center flex-col h-72 justify-center md:gap-6">
                     <BsBagXFill className="w-8 h-8" />
                     <div className="flex flex-col gap-1 justify-center">
                       <h1 className="text-xl mt-3 AnakotmaiBOLD">

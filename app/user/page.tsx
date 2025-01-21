@@ -30,6 +30,7 @@ import { FaLine } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaDiscord } from "react-icons/fa";
+import { GrOrganization } from "react-icons/gr";
 import {
   Table,
   TableHeader,
@@ -44,6 +45,8 @@ import { signInWithGoogle } from "../../lib/firebase-auth";
 import useLocalStorge from "@/lib/localstorage-db";
 import marketConfig from "@/market-config.mjs";
 import firebaseConfig from "@/lib/firebase-config";
+import Loaders from "@/components/loaders";
+import { FaUserLock } from "react-icons/fa";
 
 export default function UserPage() {
   const [title, setTitle] = useState("Yorwor Market");
@@ -416,14 +419,7 @@ export default function UserPage() {
             </div>
             {pageStatus == "Loading" ? (
               <>
-                <div className="flex flex-col items-center justify-center gap-4 mt-5 h-72">
-                  <div className="flex-col gap-4 w-full flex items-center justify-center">
-                    <div className="w-28 h-28 border-4 text-blue-500 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-500 rounded-full">
-                      <img src="/favicon.ico" className="animate-ping" alt="YW-Loading" />
-                    </div>
-                  </div>
-                  <p className="AnakotmaiBOLD">กำลังโหลด</p>
-                </div>
+                <Loaders />
               </>
             ) : (
               <>
@@ -436,7 +432,7 @@ export default function UserPage() {
                             สมัครสมาชิก !
                           </h2>
                           <p className="text-gray-700 mb-4">
-                            ดูเหมือนว่ายังไม่มีบัญชีที่เชื่อมกับอีเมลนี้
+                            ดูเหมือนว่ายังไม่มีบัญชีที่เชื่อมกับอีเมลนี้<br />** ข้อมูลหลังจากกดสมัครไปแล้วจะแก้ไขไม่ได้ หากต้องการแก้ไขกรุณาติดต่อผู้ดูและระบบ
                           </p>
                           <form>
                             <div className="flex flex-col gap-3 mb-4">
@@ -485,7 +481,8 @@ export default function UserPage() {
                   <>
                     {userState == "NoYorwor" ? (
                       <>
-                        <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center gap-4">
+                        <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center items-center gap-4 h-72">
+                          <GrOrganization className="w-8 h-8" />
                           <div>
                             <h1 className="text-xl AnakotmaiBOLD">
                               บุคคลภายนอก @hatyaiwit.ac.th
@@ -497,7 +494,7 @@ export default function UserPage() {
                     ) : (
                       <>
                         <div className="pb-3">
-                          <div className="max-w-lg mx-auto">
+                          <div className="max-w-3xl mx-auto">
                             <div className="flex items-center mb-3 mt-2 gap-2 mx-auto">
                               <h1 className="AnakotmaiBOLD">สินค้าของคุณ</h1>
                               <Tooltip content="เพิ่มสินค้าใหม่">
@@ -575,6 +572,7 @@ export default function UserPage() {
         ) : (
           <>
             <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center items-center h-72 gap-4">
+              <FaUserLock className="w-8 h-8" />
               <div>
                 <h1 className="text-xl AnakotmaiBOLD">
                   คุณยังไม่ได้เข้าสู่ระบบ

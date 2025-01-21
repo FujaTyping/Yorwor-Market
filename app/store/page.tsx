@@ -8,6 +8,7 @@ import { User } from "@nextui-org/user";
 
 import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
+import Loaders from "@/components/loaders";
 
 export default function StorePage() {
   const [title] = useState("Yorwor Market");
@@ -63,14 +64,7 @@ export default function StorePage() {
         <div className="flex flex-col justify-center">
           {pageStatus == "Loading" ? (
             <>
-              <div className="flex flex-col items-center justify-center gap-4 mt-5 h-72">
-                <div className="flex-col gap-4 w-full flex items-center justify-center">
-                  <div className="w-28 h-28 border-4 text-blue-500 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-500 rounded-full">
-                    <img src="/favicon.ico" className="animate-ping" alt="YW-Loading" />
-                  </div>
-                </div>
-                <p className="AnakotmaiBOLD">กำลังโหลด</p>
-              </div>
+              <Loaders />
             </>
           ) : (
             <>
@@ -101,7 +95,7 @@ export default function StorePage() {
                   </section>
                 </>
               ) : (
-                <div className="flex items-center justify-center flex-col h-screen my-3 gap-3 flex-col">
+                <div className="flex items-center justify-center flex-col h-72 my-3 gap-3 flex-col">
                   <BsBagXFill className="h-8 w-8" />
                   <div className="gap-1">
                     <h1 className="text-xl text-center">
