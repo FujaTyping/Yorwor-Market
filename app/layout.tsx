@@ -8,11 +8,11 @@ import { NavbarNX } from "@/components/navbar";
 import { Footbar } from "@/components/footbar";
 
 export const metadata: Metadata = {
-  description: `Yorwor Market - Hatyaiwittayalai School`,
-  keywords: `Yorwor Market`,
+  description: `Yorwor Market คือเว็บไซต์ซื้อขายสินค้าที่ออกแบบมาโดยเฉพาะสำหรับนักเรียนและบุคลากรโรงเรียนหาดใหญ่วิทยาลัย เรามุ่งเน้นการสร้างแพลตฟอร์มที่ใช้งานง่าย ปลอดภัย และสะดวกสบาย เพื่อสนับสนุนการซื้อขายภายในชุมชนโรงเรียน`,
+  keywords: `Yorwor Market,ญว Market,YW Market,yw market,ญ.ว. Market,ญ.ว. มาร์เก็ต`,
   openGraph: {
     url: "https://market.yorwor.siraphop.me/",
-    description: `Yorwor Market - Hatyaiwittayalai School`,
+    description: `Yorwor Market คือเว็บไซต์ซื้อขายสินค้าที่ออกแบบมาโดยเฉพาะสำหรับนักเรียนและบุคลากรโรงเรียนหาดใหญ่วิทยาลัย เรามุ่งเน้นการสร้างแพลตฟอร์มที่ใช้งานง่าย ปลอดภัย และสะดวกสบาย เพื่อสนับสนุนการซื้อขายภายในชุมชนโรงเรียน`,
     type: "website",
   },
 };
@@ -32,7 +32,10 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <head />
       <body>
-        <NextTopLoader showSpinner={false} showAtBottom={true} color="#ef4444" height={4} />
+        <NextTopLoader showSpinner={true} showAtBottom={true} color="#ef4444" height={4}
+          template='<div class="bar" role="bar"><div class="peg"></div></div> 
+          <div class="spinner" role="spinner"><img class="spin" src="/favicon.ico"/></div>'
+        />
         <NavbarNX />
         {children}
         <Footbar />

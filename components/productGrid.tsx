@@ -5,7 +5,7 @@ import { BsBagXFill } from "react-icons/bs";
 interface GoodsItem {
   id: string;
   photoURL: string;
-  availability: boolean;
+  availability: number;
   title: string;
   author: {
     displayName: string;
@@ -38,7 +38,9 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
                   style={{ zIndex: 11 }}
                 >
                   {list.availability ? (
-                    <p className="text-[12px] rounded-full bg-blue-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">ขาย</p>
+                    <>
+                      {list.availability == -1 ? (<><p className="text-[12px] rounded-full bg-blue-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">ไม่จำกัด</p></>) : (<><p className="text-[12px] rounded-full bg-blue-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">ขาย</p></>)}
+                    </>
                   ) : (
                     <p className="text-[12px] rounded-full bg-red-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">หมดแล้ว</p>
                   )}
@@ -61,7 +63,7 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
           ))}
         </div>
       ) : (
-        <div className="flex items-center flex-col h-screen justify-center md:flex-row md:gap-6 mt-5">
+        <div className="flex items-center flex-col h-72 justify-center md:flex-row md:gap-6 mt-5">
           <BsBagXFill className="w-8 h-8" />
           <div className="flex flex-col gap-1">
             <h1 className="text-xl text-center mt-3 AnakotmaiBOLD">

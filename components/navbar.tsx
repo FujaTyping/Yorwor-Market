@@ -12,7 +12,7 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import { Avatar } from "@nextui-org/avatar";
-import { LuPackageSearch } from "react-icons/lu";
+import { FaSearch } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { Tooltip } from "@nextui-org/tooltip";
 import { Input } from "@nextui-org/input";
@@ -68,7 +68,7 @@ export const NavbarNX = () => {
               className="w-full"
               labelPlacement="outside-left"
               placeholder="ค้นหาสินค้า"
-              startContent={<LuPackageSearch />}
+              startContent={<FaSearch />}
               type="text"
               variant="bordered"
               onChange={(e) => setSearchQ(e.target.value)}
