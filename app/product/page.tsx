@@ -4,7 +4,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import axios from "axios";
-import { Spinner } from "@nextui-org/spinner";
 import { User } from "@nextui-org/user";
 import { IoFlag } from "react-icons/io5";
 import { Tooltip } from "@nextui-org/tooltip";
@@ -135,18 +134,23 @@ export default function ProductPage() {
         hideProgressBar={false}
         position="bottom-right"
       />
-      <div className="flex flex-col items-center justify-center gap-5 my-5 mx-10">
+      <div className="flex flex-col items-center justify-center mt-8">
+        <h1 className="text-2xl md:text-3xl mb-2 AnakotmaiBOLD">ข้อมูลสินค้า</h1>
+        <div className="flex">
+          <div className="h-1 w-20 bg-blue-500 rounded-l-lg"></div><div className="h-1 w-20 bg-red-500 rounded-r-lg"></div>
+        </div>
+      </div>
+      <div className="flex flex-col items-center justify-center gap-5 my-5 mt-2 mx-10">
         <div className="p-5">
           {pageStatus == "Loading" ? (
             <>
-              <div className="flex flex-col h-screen items-center justify-center gap-4 mt-5">
-                <Spinner size="lg" />
-                <div className="flex flex-col gap-1">
-                  <h1 className="text-xl AnakotmaiBOLD">
-                    กำลังโหลดข้อมูลสินค้า
-                  </h1>
-                  <p>กรุณารอสักครู่</p>
+              <div className="flex flex-col items-center justify-center gap-4 mt-5 h-72">
+                <div className="flex-col gap-4 w-full flex items-center justify-center">
+                  <div className="w-28 h-28 border-4 text-blue-500 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-500 rounded-full">
+                    <img src="/favicon.ico" className="animate-ping" alt="YW-Loading" />
+                  </div>
                 </div>
+                <p className="AnakotmaiBOLD">กำลังโหลด</p>
               </div>
             </>
           ) : (
@@ -178,12 +182,7 @@ export default function ProductPage() {
                         {goodsList.title}
                         <Dropdown>
                           <DropdownTrigger>
-                            <Button
-                              isIconOnly
-                              className="w-2"
-                              startContent={<IoMdMore />}
-                              variant="bordered"
-                            />
+                            <IoMdMore className="cursor-pointer" />
                           </DropdownTrigger>
                           <DropdownMenu aria-label="Static Actions">
                             <DropdownItem
@@ -223,7 +222,7 @@ export default function ProductPage() {
                           </span>
                           <span className="text-gray-600">
                             {goodsList.availability
-                              ? ` ${goodsList.availability}`
+                              ? (<>{goodsList.availability == -1 ? (<> ไม่จำกัด</>) : (<>{" "}{goodsList.availability}</>)}</>)
                               : ` หมดแล้ว`}
                           </span>
                         </div>
