@@ -5,10 +5,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { BsBagXFill } from "react-icons/bs";
 import { User } from "@nextui-org/user";
+import { Skeleton } from "@nextui-org/skeleton";
+import { Card } from "@nextui-org/card"
 
 import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
-import Loaders from "@/components/loaders";
 
 export default function StorePage() {
   const [title] = useState("Yorwor Market");
@@ -64,7 +65,37 @@ export default function StorePage() {
         <div className="flex flex-col justify-center">
           {pageStatus == "Loading" ? (
             <>
-              <Loaders />
+              <div className="w-full flex items-center justify-center mb-4 mt-2">
+                <div className="max-w-[300px] w-full flex flex-row items-center gap-3">
+                  <div>
+                    <Skeleton className="flex rounded-full w-20 h-20" />
+                  </div>
+                  <div className="w-full flex flex-col items-left gap-2">
+                    <Skeleton className="h-4 w-3/5 rounded-lg" />
+                    <Skeleton className="h-4 w-4/5 rounded-lg" />
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 mb-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+                {[...Array(5)].map((_, index) => (
+                  <Card key={index} className="w-[150px] md:w-[200px] space-y-5 p-4" radius="lg">
+                    <Skeleton className="rounded-lg h-32">
+                      <div className="h-24 rounded-lg bg-default-300" />
+                    </Skeleton>
+                    <div className="space-y-3">
+                      <Skeleton className="w-3/5 rounded-lg">
+                        <div className="h-3 w-3/5 rounded-lg bg-default-200" />
+                      </Skeleton>
+                      <Skeleton className="w-4/5 rounded-lg">
+                        <div className="h-3 w-4/5 rounded-lg bg-default-200" />
+                      </Skeleton>
+                      <Skeleton className="w-2/5 rounded-lg">
+                        <div className="h-3 w-2/5 rounded-lg bg-default-300" />
+                      </Skeleton>
+                    </div>
+                  </Card>
+                ))}
+              </div>
             </>
           ) : (
             <>

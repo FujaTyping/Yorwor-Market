@@ -24,7 +24,7 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
         <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           {goodsList.map((list, index) => (
             <Link key={index} href={`/product?id=${list.id}`}>
-              <article className="relative">
+              <article className="relative shadow-lg rounded-lg border-2 border-slate-200 border-solid">
                 <div className="aspect-square overflow-hidden rounded-lg">
                   <img
                     alt="Product"
@@ -45,7 +45,7 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
                     <p className="text-[12px] rounded-full bg-red-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">หมดแล้ว</p>
                   )}
                 </div>
-                <div className="mt-4 px-3 pb-3 flex flex-col md:flex-row items-start justify-between">
+                <div className="mt-4 px-3 pb-3 flex flex-col items-start justify-between">
                   <div className="flex flex-col">
                     <h3 className="AnakotmaiBOLD leading-tight break-words">
                       {list.title}
@@ -54,7 +54,7 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
                       โดย : {list.author.displayName}
                     </h1>
                   </div>
-                  <div className="text-right mt-2 md:mt-0">
+                  <div className="text-right mt-2">
                     <p>{list.price.toLocaleString()} ฿</p>
                   </div>
                 </div>
