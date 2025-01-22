@@ -11,7 +11,6 @@ import { getAuth, signOut } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import axios from "axios";
 import { FiLogIn } from "react-icons/fi";
-import { IoBagAdd } from "react-icons/io5";
 import {
   Modal,
   ModalContent,
@@ -39,6 +38,13 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/table";
+import { MdLogout } from "react-icons/md";
+import { MdSwitchAccount } from "react-icons/md";
+import { FaCheckToSlot } from "react-icons/fa6";
+import { LuPackage } from "react-icons/lu";
+import { FaMoneyBill } from "react-icons/fa";
+import { MdSell } from "react-icons/md";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 import { signInWithGoogle } from "../../lib/firebase-auth";
 
@@ -47,6 +53,12 @@ import marketConfig from "@/market-config.mjs";
 import firebaseConfig from "@/lib/firebase-config";
 import Loaders from "@/components/loaders";
 import { FaUserLock } from "react-icons/fa";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/dropdown";
 
 export default function UserPage() {
   const [title, setTitle] = useState("Yorwor Market");
@@ -343,80 +355,87 @@ export default function UserPage() {
       <div className="flex flex-col gap-5 my-6 mx-10">
         {FireUser.uid ? (
           <>
-            <User
-              avatarProps={{
-                src: FireUser.photoURL,
-                size: "lg",
-              }}
-              description={realUserBio}
-              name={<p className="AnakotmaiBOLD">{realUserName}</p>}
-            />
-            <div className="flex flex-row items-center justify-center gap-5">
-              <Button
-                style={{ backgroundColor: "white" }}
-                variant="bordered"
-                onPress={() => {
-                  const id = toast.loading("กำลังสลับบัญชี ...");
+            <Dropdown>
+              <DropdownTrigger>
+                <User
+                  avatarProps={{
+                    src: FireUser.photoURL,
+                    size: "lg",
+                  }}
+                  description={"คลิกเพื่อดูเมนูเพิ่มเติม"}
+                  name={<p className="AnakotmaiBOLD text-xl">{realUserName}</p>}
+                  className="cursor-pointer"
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem
+                  key="switch"
+                  startContent={<MdSwitchAccount />}
+                  onPress={() => {
+                    const id = toast.loading("กำลังสลับบัญชี ...");
 
-                  signInWithGoogle()
-                    .then(() => {
-                      toast.update(id, {
-                        render: `สลับบัญชีสำเร็จ`,
-                        type: "success",
-                        isLoading: false,
-                        autoClose: 3000,
+                    signInWithGoogle()
+                      .then(() => {
+                        toast.update(id, {
+                          render: `สลับบัญชีสำเร็จ`,
+                          type: "success",
+                          isLoading: false,
+                          autoClose: 3000,
+                        });
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 1500);
+                      })
+                      .catch((error) => {
+                        toast.update(id, {
+                          render: `สลับบัญชีไม่สำเร็จ ${error.message}`,
+                          closeOnClick: true,
+                          type: "error",
+                          isLoading: false,
+                          autoClose: 10000,
+                        });
                       });
-                      setTimeout(() => {
-                        window.location.reload();
-                      }, 1500);
-                    })
-                    .catch((error) => {
-                      toast.update(id, {
-                        render: `สลับบัญชีไม่สำเร็จ ${error.message}`,
-                        closeOnClick: true,
-                        type: "error",
-                        isLoading: false,
-                        autoClose: 10000,
-                      });
-                    });
-                }}
-              >
-                สลับบัญชี
-              </Button>
-              <Button
-                color="danger"
-                variant="bordered"
-                onPress={() => {
-                  const id = toast.loading("กำลังออกจากระบบ ...");
-                  const auth = getAuth(app);
+                  }}
+                >
+                  สลับบัญชี
+                </DropdownItem>
+                <DropdownItem
+                  key="report"
+                  className="text-danger"
+                  color="danger"
+                  startContent={<MdLogout />}
+                  onPress={() => {
+                    const id = toast.loading("กำลังออกจากระบบ ...");
+                    const auth = getAuth(app);
 
-                  signOut(auth)
-                    .then(() => {
-                      toast.update(id, {
-                        render: `ออกจากระบบสำเร็จ`,
-                        type: "success",
-                        isLoading: false,
-                        autoClose: 3000,
+                    signOut(auth)
+                      .then(() => {
+                        toast.update(id, {
+                          render: `ออกจากระบบสำเร็จ`,
+                          type: "success",
+                          isLoading: false,
+                          autoClose: 3000,
+                        });
+                        setTimeout(() => {
+                          router.push("/");
+                          window.location.reload();
+                        }, 1500);
+                      })
+                      .catch((error) => {
+                        toast.update(id, {
+                          render: `ไม่สามารถออกจากระบบได้ ${error.message}`,
+                          closeOnClick: true,
+                          type: "error",
+                          isLoading: false,
+                          autoClose: 10000,
+                        });
                       });
-                      setTimeout(() => {
-                        router.push("/");
-                        window.location.reload();
-                      }, 1500);
-                    })
-                    .catch((error) => {
-                      toast.update(id, {
-                        render: `ไม่สามารถออกจากระบบได้ ${error.message}`,
-                        closeOnClick: true,
-                        type: "error",
-                        isLoading: false,
-                        autoClose: 10000,
-                      });
-                    });
-                }}
-              >
-                ออกจากระบบ
-              </Button>
-            </div>
+                  }}
+                >
+                  ออกจากระบบ
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
             {pageStatus == "Loading" ? (
               <>
                 <Loaders />
@@ -493,19 +512,35 @@ export default function UserPage() {
                       </>
                     ) : (
                       <>
-                        <div className="pb-3">
+                        <div>
+                          <div className="max-w-3xl mx-auto mt-1">
+                            <h1 className="AnakotmaiBOLD mb-2">สถิติผู้ขาย</h1>
+                            <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-3">
+                              <div className="bg-white rounded-xl border px-7 py-6">
+                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center"><LuPackage /> จำนวนสินค้า</p>
+                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">{Object.keys(userDetails.goods).length}</h3>
+                              </div>
+                              <div className="bg-white rounded-xl border px-7 py-6">
+                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center"><FaCheckToSlot /> จำนวนออร์เดอร์</p>
+                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">0</h3>
+                              </div>
+                              <div className="bg-white rounded-xl border px-7 py-6">
+                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center"><FaMoneyBill /> รายได้</p>
+                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">0</h3>
+                              </div>
+                              <div className="bg-white rounded-xl border px-7 py-6">
+                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center"><MdSell /> ขายไปทั้งหมด</p>
+                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">0</h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="pb-5">
                           <div className="max-w-3xl mx-auto">
                             <div className="flex items-center mb-3 mt-2 gap-2 mx-auto">
                               <h1 className="AnakotmaiBOLD">สินค้าของคุณ</h1>
                               <Tooltip content="เพิ่มสินค้าใหม่">
-                                <Button
-                                  isIconOnly
-                                  style={{ backgroundColor: "white" }}
-                                  variant="bordered"
-                                  onPress={modalProduct.onOpen}
-                                >
-                                  <IoBagAdd />
-                                </Button>
+                                <IoMdAddCircleOutline className="w-6 h-6 cursor-pointer" onClick={modalProduct.onOpen} />
                               </Tooltip>
                             </div>
                             <Table aria-label="Goods table">

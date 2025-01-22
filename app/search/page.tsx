@@ -95,7 +95,7 @@ export default function SearchPage() {
             <>
               {goodsList.length > 0 ? (
                 <>
-                  <section className="max-w-6xl">
+                  <section className="max-w-6xl mb-5">
                     <p className="w-full text-xl">
                       เจอสินค้าสำหรับ{" "}
                       <span className="AnakotmaiBOLD">{gSearch}</span> :{" "}

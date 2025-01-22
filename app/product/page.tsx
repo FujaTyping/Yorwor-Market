@@ -43,11 +43,16 @@ import "react-photo-view/dist/react-photo-view.css";
 
 import marketConfig from "@/market-config.mjs";
 import { Skeleton } from "@nextui-org/skeleton";
+import { Card } from "@nextui-org/card"
+import GoodsGrid from "@/components/productGrid";
+import { useSearchParams } from "next/navigation";
 
 export default function ProductPage() {
   const [title, setTitle] = useState("Yorwor Market");
   const [goodsList, setGoodsList] = useState({});
+  const [recGoodsList, setRecGoodsList] = useState({});
   const [pageStatus, setPageStatus] = useState("Loading");
+  const [goodPageStatus, setGoodPageStatus] = useState("Loading");
   const modalReport = useDisclosure();
   const modalShare = useDisclosure();
   const [Gid, setGid] = useState("");
@@ -55,6 +60,42 @@ export default function ProductPage() {
   const [oneReport, setOneReport] = useState(false);
   const [thisURL, setThisUrl] = useState("");
   const [thisDecs, setThisDecs] = useState("เช็กเลย! <NAME> บน Yorwor Market!");
+
+  const searchParams = useSearchParams();
+  const productId = searchParams.get("id");
+
+  useEffect(() => {
+    if (!productId) return;
+
+    setPageStatus("Loading");
+    setGid(productId);
+    setThisUrl(`https://market.yorwor.siraphop.me/product?id=${productId}`);
+
+    axios
+      .put(`${marketConfig.apiServer}good/item`, { goodId: productId })
+      .then((response) => {
+        setPageStatus("Finish");
+        setGoodsList(response.data);
+        setTitle(`Yorwor Market - ${response.data.title}`);
+        setThisDecs(`🛒 เช็กเลย! ${response.data.title} บน Yorwor Market!`);
+      })
+      .catch(() => {
+        setPageStatus("Error");
+        setGoodsList({});
+      });
+
+    setGoodPageStatus("Loading");
+    axios
+      .get(`${marketConfig.apiServer}good/others`)
+      .then((response) => {
+        setRecGoodsList(response.data.Goods);
+        setGoodPageStatus("Finish");
+      })
+      .catch(() => {
+        setRecGoodsList([]);
+        setGoodPageStatus("Error");
+      });
+  }, [productId]);
 
   function submitNewReport() {
     const id = toast.loading("กำลังรายงานสินค้า ...");
@@ -103,27 +144,6 @@ export default function ProductPage() {
       return false;
     }
   };
-
-  useEffect(() => {
-    setPageStatus("Loading");
-    const queryParams = new URLSearchParams(window.location.search);
-    const productId = queryParams.get("id");
-
-    setGid(productId);
-    setThisUrl(`https://market.yorwor.siraphop.me/product?id=${productId}`);
-    axios
-      .put(`${marketConfig.apiServer}good/item`, { goodId: productId })
-      .then((response) => {
-        setPageStatus("Finish");
-        setGoodsList(response.data);
-        setTitle(`Yorwor Market - ${response.data.title}`);
-        setThisDecs(`🛒 เช็กเลย! ${response.data.title} บน Yorwor Market!`);
-      })
-      .catch(() => {
-        setPageStatus("Error");
-        setGoodsList({});
-      });
-  }, []);
 
   return (
     <>
@@ -190,7 +210,7 @@ export default function ProductPage() {
                             <PhotoView src={goodsList.photoURL}>
                               <img
                                 alt="Product"
-                                className="h-full w-full object-cover max-w-full sm:max-w-md rounded-lg cursor-pointer"
+                                className="h-full w-full object-cover max-w-72 sm:max-w-md rounded-lg cursor-pointer"
                                 loading="lazy"
                                 src={goodsList.photoURL}
                               />
@@ -231,7 +251,7 @@ export default function ProductPage() {
                       </p>
                       <div className="flex flex-col md:flex-row mb-4 gap-2 md:gap-4">
                         <div>
-                          <span className="AnakotmaiBOLD text-gray-700">
+                          <span className="AnakotmaiBOLD">
                             ราคา :
                           </span>
                           <span className="text-gray-600">
@@ -239,7 +259,7 @@ export default function ProductPage() {
                           </span>
                         </div>
                         <div>
-                          <span className="font-bold text-gray-700">
+                          <span className="AnakotmaiBOLD">
                             จำนวนสินค้า :
                           </span>
                           <span className="text-gray-600">
@@ -323,6 +343,40 @@ export default function ProductPage() {
             </>
           )}
         </div>
+        {goodPageStatus == "Loading" ? (
+          <>
+            <div className="mt-4 mb-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+              {[...Array(5)].map((_, index) => (
+                <Card key={index} className="w-[150px] md:w-[200px] space-y-5 p-4" radius="lg">
+                  <Skeleton className="rounded-lg h-32">
+                    <div className="h-24 rounded-lg bg-default-300" />
+                  </Skeleton>
+                  <div className="space-y-3">
+                    <Skeleton className="w-3/5 rounded-lg">
+                      <div className="h-3 w-3/5 rounded-lg bg-default-200" />
+                    </Skeleton>
+                    <Skeleton className="w-4/5 rounded-lg">
+                      <div className="h-3 w-4/5 rounded-lg bg-default-200" />
+                    </Skeleton>
+                    <Skeleton className="w-2/5 rounded-lg">
+                      <div className="h-3 w-2/5 rounded-lg bg-default-300" />
+                    </Skeleton>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="max-w-6xl mb-8">
+              <h1 className="text-xl my-2">
+                สินค้าอื่นๆใน{" "}
+                <span className="AnakotmaiBOLD">Yorwor Market</span>
+              </h1>
+              <div ><GoodsGrid goodsList={recGoodsList} /></div>
+            </div>
+          </>
+        )}
       </div>
       <Modal
         isOpen={modalReport.isOpen}
