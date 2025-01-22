@@ -42,7 +42,7 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
 import marketConfig from "@/market-config.mjs";
-import Loaders from "@/components/loaders";
+import { Skeleton } from "@nextui-org/skeleton";
 
 export default function ProductPage() {
   const [title, setTitle] = useState("Yorwor Market");
@@ -145,7 +145,35 @@ export default function ProductPage() {
         <div className="p-5">
           {pageStatus == "Loading" ? (
             <>
-              <Loaders />
+              <div className="w-full flex items-center justify-center mb-4 mt-2">
+                <div className="max-w-6xl w-full flex flex-col md:flex-row items-center gap-8">
+                  <div>
+                    <Skeleton className="flex rounded-lg w-72 h-72" />
+                  </div>
+                  <div className="w-[300px] flex flex-col items-left gap-2">
+                    <Skeleton className="h-4 w-3/5 rounded-lg" />
+                    <Skeleton className="h-4 w-4/5 rounded-lg" />
+                    <Skeleton className="h-4 w-3/5 rounded-lg" />
+                    <Skeleton className="h-4 w-3/5 rounded-lg" />
+                    <div className="flex gap-6 mt-2">
+                      <Skeleton className="h-4 w-2/5 rounded-lg" />
+                      <Skeleton className="h-4 w-2/5 rounded-lg" />
+                    </div>
+                    <div className="w-full flex mb-4 mt-2">
+                      <div className="max-w-[300px] w-full flex flex-row items-center gap-3">
+                        <div>
+                          <Skeleton className="flex rounded-full w-12 h-12" />
+                        </div>
+                        <div className="w-full flex flex-col items-left gap-2">
+                          <Skeleton className="h-3 w-3/5 rounded-lg" />
+                          <Skeleton className="h-3 w-4/5 rounded-lg" />
+                        </div>
+                      </div>
+                    </div>
+                    <Skeleton className="h-10 w-2/5 rounded-lg" />
+                  </div>
+                </div>
+              </div>
             </>
           ) : (
             <>
