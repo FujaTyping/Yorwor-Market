@@ -68,7 +68,7 @@ export default function StorePage() {
               <div className="w-full flex items-center justify-center mb-4 mt-2">
                 <div className="max-w-[300px] w-full flex flex-row items-center gap-3">
                   <div>
-                    <Skeleton className="flex rounded-full w-20 h-20" />
+                    <Skeleton className="flex rounded-full w-16 h-16" />
                   </div>
                   <div className="w-full flex flex-col items-left gap-2">
                     <Skeleton className="h-4 w-3/5 rounded-lg" />
