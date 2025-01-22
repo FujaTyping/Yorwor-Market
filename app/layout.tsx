@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     url: "https://market.yorwor.siraphop.me/",
     description: `Yorwor Market คือเว็บไซต์ซื้อขายสินค้าที่ออกแบบมาโดยเฉพาะสำหรับนักเรียนและบุคลากรโรงเรียนหาดใหญ่วิทยาลัย เรามุ่งเน้นการสร้างแพลตฟอร์มที่ใช้งานง่าย ปลอดภัย และสะดวกสบาย เพื่อสนับสนุนการซื้อขายภายในชุมชนโรงเรียน`,
     type: "website",
+    images: 'https://market.yorwor.siraphop.me/assets/o.png',
+    locale: 'th_TH',
   },
 };
 
