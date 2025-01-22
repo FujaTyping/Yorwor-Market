@@ -97,8 +97,7 @@ export const NavbarNX = () => {
             ) : (
               <>
                 <Button
-                  color="primary"
-                  variant="bordered"
+                  color="danger"
                   onPress={() => {
                     const id = toast.loading("กำลังล็อกอิน ...");
 
