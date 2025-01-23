@@ -7,6 +7,7 @@ interface GoodsItem {
   photoURL: string;
   availability: number;
   title: string;
+  decs: string;
   author: {
     displayName: string;
   };
@@ -24,17 +25,9 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
         <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           {goodsList.map((list, index) => (
             <Link key={index} href={`/product?id=${list.id}`}>
-              <article className="relative shadow-lg rounded-lg border-2 border-slate-200 border-solid">
-                <div className="aspect-square overflow-hidden rounded-lg">
-                  <img
-                    alt="Product"
-                    className="hover:scale-110 h-full w-full object-cover transition-all duration-200 rounded-lg"
-                    loading="lazy"
-                    src={list.photoURL}
-                  />
-                </div>
+              <div className="relative bg-white rounded p-3 cursor-pointer hover:-translate-y-1 transition-all relative border-solid border-inherit border-2">
                 <div
-                  className="absolute top-0 m-1 rounded-full bg-white backdrop-blur-sm bg-opacity-50"
+                  className="absolute top-0 mt-2 -ml-1 rounded-full bg-white backdrop-blur-sm bg-opacity-50"
                   style={{ zIndex: 11 }}
                 >
                   {list.availability ? (
@@ -45,20 +38,18 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
                     <p className="text-[12px] rounded-full bg-red-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">หมดแล้ว</p>
                   )}
                 </div>
-                <div className="mt-4 px-3 pb-3 flex flex-col items-start justify-between">
-                  <div className="flex flex-col">
-                    <h3 className="AnakotmaiBOLD leading-tight break-words">
-                      {list.title}
-                    </h3>
-                    <h1 className="leading-tight break-words">
-                      โดย : {list.author.displayName}
-                    </h1>
-                  </div>
-                  <div className="text-right mt-2">
-                    <p>{list.price.toLocaleString()} ฿</p>
-                  </div>
+
+                <div className="mb-4 rounded">
+                  <img src={list.photoURL} alt="Product 2"
+                    className="aspect-square w-full object-cover rounded-md" />
                 </div>
-              </article>
+
+                <div>
+                  <h5 className="text-base AnakotmaiBOLD">{list.title}</h5>
+                  <p className="text-[13px] mt-2">{list.decs.length > 40 ? list.decs.slice(0, 40) + '...' : list.decs}</p>
+                  <h6 className="text-base AnakotmaiBOLD ml-auto mt-2">{list.price.toLocaleString()} ฿</h6>
+                </div>
+              </div>
             </Link>
           ))}
         </div>
