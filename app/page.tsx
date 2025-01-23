@@ -3,11 +3,13 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Skeleton } from "@nextui-org/skeleton";
-import { Card } from "@nextui-org/card"
 
 import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
+import ProductLoaders from "@/components/productLoaders";
+import { SiFusionauth } from "react-icons/si";
+import { AiOutlineProduct } from "react-icons/ai";
+import { TbMessageReport } from "react-icons/tb";
 
 export default function Home() {
   const [title] = useState("Yorwor Market");
@@ -53,26 +55,7 @@ export default function Home() {
         <div>
           {pageStatus == "Loading" ? (
             <>
-              <div className="mt-4 mb-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-                {[...Array(5)].map((_, index) => (
-                  <Card key={index} className="w-[150px] md:w-[200px] space-y-5 p-4" radius="lg">
-                    <Skeleton className="rounded-lg h-32">
-                      <div className="h-24 rounded-lg bg-default-300" />
-                    </Skeleton>
-                    <div className="space-y-3">
-                      <Skeleton className="w-3/5 rounded-lg">
-                        <div className="h-3 w-3/5 rounded-lg bg-default-200" />
-                      </Skeleton>
-                      <Skeleton className="w-4/5 rounded-lg">
-                        <div className="h-3 w-4/5 rounded-lg bg-default-200" />
-                      </Skeleton>
-                      <Skeleton className="w-2/5 rounded-lg">
-                        <div className="h-3 w-2/5 rounded-lg bg-default-300" />
-                      </Skeleton>
-                    </div>
-                  </Card>
-                ))}
-              </div>
+              <ProductLoaders />
             </>
           ) : (
             <>
@@ -87,6 +70,30 @@ export default function Home() {
               </section>
             </>
           )}
+        </div>
+        <div>
+          <div className="max-w-6xl mx-auto mb-5 mt-1">
+            <h2 className="sm:text-4xl text-2xl AnakotmaiBOLD text-center">ฟีเจอร์เด่นของ Yorwor Market</h2>
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-12 max-md:max-w-lg mx-auto mt-5">
+              <div className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300">
+                <SiFusionauth className="w-10 h-10 mb-6 inline-block" />
+                <h3 className="text-xl AnakotmaiBOLD mb-3">ระบบยืนยันตัวตน</h3>
+                <p className="group-hover:text-white text-sm">ระบบยืนยันตัวตนเฉพาะสำหรับบุคลากรและนักเรียนในโรงเรียนหาดใหญ่วิทยาลัย เพื่อความปลอดภัยและป้องกันการเข้าถึงจากบุคคลภายนอก</p>
+              </div>
+
+              <div className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300">
+                <AiOutlineProduct className="w-10 h-10 mb-6 inline-block" />
+                <h3 className="text-xl AnakotmaiBOLD mb-3">การจัดการสินค้าส่วนตัว</h3>
+                <p className="group-hover:text-white text-sm">ผู้ใช้งานสามารถเพิ่ม แก้ไข และจัดการสินค้าในร้านค้าของตัวเองได้อย่างสะดวก พร้อมแสดงรูปภาพและรายละเอียดที่ครบถ้วน</p>
+              </div>
+
+              <div className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300">
+                <TbMessageReport className="w-10 h-10 mb-6 inline-block" />
+                <h3 className="text-xl AnakotmaiBOLD mb-3">รายงานปัญหา</h3>
+                <p className="group-hover:text-white text-sm">ระบบแจ้งปัญหาหรือรายงานพฤติกรรมที่ไม่เหมาะสม เช่น สินค้าที่ไม่ตรงตามเงื่อนไข เพื่อให้ทีมงาน Yorwor Market สามารถตรวจสอบและดำเนินการได้อย่างรวดเร็ว</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
