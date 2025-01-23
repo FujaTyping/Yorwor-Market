@@ -10,8 +10,10 @@ import { Button } from "@nextui-org/button";
 import { IoSend } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import Link from "next/link";
 import marketConfig from "@/market-config.mjs";
 import useLocalStorge from "@/lib/localstorage-db";
+import { FaWpforms } from "react-icons/fa6";
 
 function ContactPage() {
     const { FireUser } = useLocalStorge();
@@ -80,11 +82,16 @@ function ContactPage() {
             />
             <div className="max-w-6xl mx-auto px-10 py-10">
                 <div className="text-center px-6">
-                    <h2 className="text-gray-800 text-4xl AnakotmaiBOLD">ติดต่อเรา</h2>
-                    <p className="text-sm mt-2">หากคุณมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ สามารถติดต่อเราได้ผ่านช่องทางต่อไปนี้</p>
+                    <div className="flex flex-col items-center justify-center">
+                        <h1 className="text-3xl md:text-4xl mb-2 AnakotmaiBOLD">ติดต่อเรา</h1>
+                        <div className="flex">
+                            <div className="h-1 w-20 bg-blue-500 rounded-l-lg"></div><div className="h-1 w-20 bg-red-500 rounded-r-lg"></div>
+                        </div>
+                    </div>
+                    <p className="text-sm mt-3">หากคุณมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ สามารถติดต่อเราได้ผ่านช่องทางต่อไปนี้</p>
                 </div>
 
-                <div className="grid lg:grid-cols-3 items-start gap-4 rounded-lg mt-8 shadow-lg mb-4">
+                <div className="grid lg:grid-cols-3 items-start gap-4 rounded-lg mt-6 shadow-lg mb-4">
 
                     <div className="bg-blue-500 rounded-lg p-6 h-full max-lg:order-1 text-white">
                         <h2 className="text-xl text-white AnakotmaiBOLD">ข้อมูลการติดต่อ</h2>
@@ -190,6 +197,26 @@ function ContactPage() {
                                 ส่งคำขอ
                             </Button>
                         </div>
+                    </div>
+                </div>
+                <div className="mx-auto lg:flex lg:items-center justify-between mt-12 mb-2">
+                    <h2 className="text-3xl">
+                        <span className="block AnakotmaiBOLD tracking-tight">ร่วมประเมิน Yorwor Market เพื่อการพัฒนาที่ดียิ่งขึ้น</span>
+                        <span className="block pt-4 text-sm mt-2 max-w-lg">
+                            แบบสอบถามนี้จัดทำขึ้นเพื่อเก็บความคิดเห็นของคุณเกี่ยวกับการใช้งาน Yorwor Market ช่วยให้เราสามารถปรับปรุงและพัฒนาบริการให้เหมาะสมกับความต้องการของผู้ใช้งานมากยิ่งขึ้น ขอบคุณสำหรับความร่วมมือ!
+                        </span>
+                    </h2>
+                    <div className="mt-1 flex lg:flex-shrink-0 lg lg:mt-0">
+                        <Button
+                            className="mt-8 flex bg-red-500 text-white items-center justify-center text-sm lg:ml-auto max-lg:w-full rounded-lg px-4 py-3"
+                            startContent={<FaWpforms />}
+                            size="lg"
+                            as={Link}
+                            href="https://tally.so/r/nGXN0e"
+                        >
+                            ทำแบบประเมิณ
+                        </Button>
+
                     </div>
                 </div>
             </div>

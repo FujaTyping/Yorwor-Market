@@ -41,7 +41,7 @@ export default function Home() {
                 ยินดีต้อนรับเข้าสู่
               </span>
               <p
-                className="mt-1 text-4xl AnakotmaiBOLD sm:text-5xl sm:tracking-tight lg:text-6xl">
+                className="mt-1 text-4xl AnakotmaiBOLD sm:tracking-tight lg:text-5xl">
                 แพลตฟอร์มซื้อขายออนไลน์ของชาว <span className="bg-gradient-to-r from-blue-500 to-red-500 bg-clip-text text-transparent AnakotmaiBOLD">ฟ้า-แดง</span>
               </p>
               <p className="mt-5 mx-auto text-xl">
