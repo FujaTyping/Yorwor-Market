@@ -25,12 +25,12 @@ export const Footbar = () => {
 
         <div className="flex max-md:flex-col gap-4">
           <ul className="flex flex-wrap gap-4">
-            <Link href={"#"}>
+            <Link href={"/terms"}>
               <li className="text-sm">
                 <p className='text-white'>ข้อตกลงและเงื่อนไขการใช้บริการ</p>
               </li>
             </Link>
-            <Link href={"#"}>
+            <Link href={"/privacy"}>
               <li className="text-sm">
                 <p className='text-white'>นโยบายความเป็นส่วนตัว</p>
               </li>

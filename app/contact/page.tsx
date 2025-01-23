@@ -10,6 +10,7 @@ import { Button } from "@nextui-org/button";
 import { IoSend } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import Link from "next/link";
 import marketConfig from "@/market-config.mjs";
 import useLocalStorge from "@/lib/localstorage-db";
 import { FaWpforms } from "react-icons/fa6";
@@ -210,6 +211,8 @@ function ContactPage() {
                             className="mt-8 flex bg-red-500 text-white items-center justify-center text-sm lg:ml-auto max-lg:w-full rounded-lg px-4 py-3"
                             startContent={<FaWpforms />}
                             size="lg"
+                            as={Link}
+                            href="https://tally.so/r/nGXN0e"
                         >
                             ทำแบบประเมิณ
                         </Button>
