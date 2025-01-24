@@ -30,6 +30,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaDiscord } from "react-icons/fa";
 import { GrOrganization } from "react-icons/gr";
+import Turnstile, { useTurnstile } from "react-turnstile";
 import {
   Table,
   TableHeader,
@@ -82,16 +83,17 @@ export default function UserPage() {
   const [platformD, setPlatformD] = useState("");
   const [platformNameD, setPlatformNameD] = useState("");
   const [goodsQuan, setGoodsQuan] = useState(0);
+  const turnstile = useTurnstile();
 
   const [Gprice, setGPrice] = useState(0);
   const [Gtitle, setGTitle] = useState("");
   const [Gdecs, setGDecs] = useState("");
   const [GphotoURL, setGPhotoURL] = useState("");
+  const [verifyStats, setVerifyStats] = useState(false);
 
   function createNewUser() {
-    if (!inputForm == "") {
-      const id = toast.loading("Registering ...");
-
+    const id = toast.loading("Registering ...");
+    if (verifyStats) {
       axios
         .post(`${marketConfig.apiServer}user/new`, {
           displayNAME: `${inputForm}`,
@@ -109,15 +111,26 @@ export default function UserPage() {
               autoClose: 10000,
             });
           } else {
-            toast.update(id, {
-              render: `สมัครสมาชิกสำเร็จ`,
-              type: "success",
-              isLoading: false,
-              autoClose: 3000,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 1500);
+            if (response.data == "You already have an account") {
+              toast.update(id, {
+                render: `อีเมลนี้เป็นสมาชิกอยู่แล้ว`,
+                closeOnClick: true,
+                type: "error",
+                isLoading: false,
+                autoClose: 10000,
+              });
+            } else {
+              turnstile.reset();
+              toast.update(id, {
+                render: `สมัครสมาชิกสำเร็จ`,
+                type: "success",
+                isLoading: false,
+                autoClose: 3000,
+              });
+              setTimeout(() => {
+                window.location.reload();
+              }, 1500);
+            }
           }
         })
         .catch(() => {
@@ -129,6 +142,14 @@ export default function UserPage() {
             autoClose: 10000,
           });
         });
+    } else {
+      toast.update(id, {
+        render: `กรุณายืนยันตัวตน`,
+        closeOnClick: true,
+        type: "error",
+        isLoading: false,
+        autoClose: 10000,
+      });
     }
   }
 
@@ -444,7 +465,7 @@ export default function UserPage() {
               <>
                 {userState == "NoMember" ? (
                   <>
-                    <div className="max-w-lg mx-auto">
+                    <div className="max-w-lg mx-auto mb-5">
                       <div className="bg-white rounded-lg shadow-lg">
                         <div className="p-6">
                           <h2 className="text-2xl AnakotmaiBOLD text-gray-800 mb-2">
@@ -480,12 +501,20 @@ export default function UserPage() {
                                   setInputBioForm(e.target.value)
                                 }
                               />
+                              <Turnstile
+                                sitekey="0x4AAAAAAA6IXUSqb0JMvGBQ"
+                                theme="light"
+                                language={"th"}
+                                onVerify={() => {
+                                  setVerifyStats(true);
+                                }}
+                              />
                             </div>
                             <div className="flex items-center justify-between">
                               <Button
+                                className={`${verifyStats ? "bg-blue-500" : "bg-red-500"}`}
                                 startContent={<FiLogIn />}
-                                style={{ backgroundColor: "white" }}
-                                variant="bordered"
+                                color="primary"
                                 onPress={createNewUser}
                               >
                                 สมัครสมาชิก
@@ -515,14 +544,10 @@ export default function UserPage() {
                         <div>
                           <div className="max-w-3xl mx-auto mt-1">
                             <h1 className="AnakotmaiBOLD mb-2">สถิติผู้ขาย</h1>
-                            <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-3">
+                            <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-3">
                               <div className="bg-white rounded-xl border px-7 py-6">
                                 <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center"><LuPackage /> จำนวนสินค้า</p>
                                 <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">{Object.keys(userDetails.goods).length}</h3>
-                              </div>
-                              <div className="bg-white rounded-xl border px-7 py-6">
-                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center"><FaCheckToSlot /> จำนวนออร์เดอร์</p>
-                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">0</h3>
                               </div>
                               <div className="bg-white rounded-xl border px-7 py-6">
                                 <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center"><FaMoneyBill /> รายได้</p>

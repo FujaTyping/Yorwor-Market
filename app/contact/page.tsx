@@ -14,14 +14,17 @@ import Link from "next/link";
 import marketConfig from "@/market-config.mjs";
 import useLocalStorge from "@/lib/localstorage-db";
 import { FaWpforms } from "react-icons/fa6";
+import Turnstile, { useTurnstile } from "react-turnstile";
 
 function ContactPage() {
-    const { FireUser } = useLocalStorge();
     const [title] = useState("Yorwor Market - ติดต่อ รายงานปัญหา");
+    const { FireUser } = useLocalStorge();
+    const turnstile = useTurnstile();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [ux, setUX] = useState("");
     const [topic, setTopic] = useState("");
+    const [verifyStats, setVerifyStats] = useState(false);
     const [text, setText] = useState("");
 
     useEffect(() => {
@@ -32,42 +35,52 @@ function ContactPage() {
 
     function sendRequest() {
         const id = toast.loading("กำลังส่งข้อมูล ...");
-
-        axios
-            .post(`${marketConfig.apiServer}contact`, {
-                email: `${email}`,
-                name: `${name}`,
-                ux: `${ux}`,
-                topic: `${topic}`,
-                text: `${text}`
-            })
-            .then((response) => {
-                if (response.data.error) {
+        if (verifyStats) {
+            axios
+                .post(`${marketConfig.apiServer}contact`, {
+                    email: `${email}`,
+                    name: `${name}`,
+                    ux: `${ux}`,
+                    topic: `${topic}`,
+                    text: `${text}`
+                })
+                .then((response) => {
+                    if (response.data.error) {
+                        toast.update(id, {
+                            render: `ไม่สามารถส่งข้อมูลได้ กรุณากรอกข้อมูลให้ครบถ้วน`,
+                            closeOnClick: true,
+                            type: "error",
+                            isLoading: false,
+                            autoClose: 10000,
+                        });
+                    } else {
+                        turnstile.reset();
+                        toast.update(id, {
+                            render: `ส่งข้อมูลเรียบร้อยแล้ว`,
+                            type: "success",
+                            isLoading: false,
+                            autoClose: 3000,
+                        });
+                    }
+                })
+                .catch((error) => {
                     toast.update(id, {
-                        render: `ไม่สามารถส่งข้อมูลได้ กรุณากรอกข้อมูลให้ครบถ้วน`,
+                        render: `ไม่สามารถส่งข้อมูลได้ ${error.message}`,
                         closeOnClick: true,
                         type: "error",
                         isLoading: false,
                         autoClose: 10000,
                     });
-                } else {
-                    toast.update(id, {
-                        render: `ส่งข้อมูลเรียบร้อยแล้ว`,
-                        type: "success",
-                        isLoading: false,
-                        autoClose: 3000,
-                    });
-                }
-            })
-            .catch((error) => {
-                toast.update(id, {
-                    render: `ไม่สามารถส่งข้อมูลได้ ${error.message}`,
-                    closeOnClick: true,
-                    type: "error",
-                    isLoading: false,
-                    autoClose: 10000,
                 });
+        } else {
+            toast.update(id, {
+                render: `กรุณายืนยันตัวตน`,
+                closeOnClick: true,
+                type: "error",
+                isLoading: false,
+                autoClose: 10000,
             });
+        }
     }
 
     return (
@@ -188,9 +201,19 @@ function ContactPage() {
                                 </div>
                             </div>
 
+                            <div className="flex justify-center sm:justify-end items-center w-full mt-6">
+                                <Turnstile
+                                    sitekey="0x4AAAAAAA6IXUSqb0JMvGBQ"
+                                    theme="light"
+                                    language={"th"}
+                                    onVerify={() => {
+                                        setVerifyStats(true);
+                                    }}
+                                />
+                            </div>
+
                             <Button
-                                color="primary"
-                                className="mt-8 flex items-center justify-center text-sm lg:ml-auto max-lg:w-full rounded-lg px-4 py-3"
+                                className={`mt-4 flex items-center justify-center text-white text-sm lg:ml-auto max-lg:w-full rounded-lg px-4 py-3 ${verifyStats ? "bg-blue-500" : "bg-red-500"}`}
                                 startContent={<IoSend />}
                                 onPress={sendRequest}
                             >

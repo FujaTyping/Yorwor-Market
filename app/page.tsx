@@ -39,7 +39,7 @@ export default function Home() {
         </section>
         <div className="relative mx-auto -mt-3">
           <div className="lg:max-w-4xl lg:mx-auto">
-            <img className="rounded-lg md:mpx-8" src="/assets/o.png" />
+            <img className="rounded-lg md:mpx-8" src="/assets/o.png" alt="Banner" />
           </div>
         </div>
         <div className="mt-3">
