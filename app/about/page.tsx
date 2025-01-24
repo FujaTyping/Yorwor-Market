@@ -1,13 +1,20 @@
+// @ts-nocheck
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import KF from "@/assets/media/KF.jpg";
 import AUM from "@/assets/media/AUM.jpg";
 import PT from "@/assets/media/PT.jpg";
 
 function AboutPage() {
   const [title] = useState("Yorwor Market - เกี่ยวกับโครงงาน");
+
+  useEffect(() => {
+    AOS.init({ once: true });
+  }, [])
 
   return (
     <>
@@ -34,7 +41,7 @@ function AboutPage() {
             </div>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto mt-4 px-10">
+        <div data-aos="fade-up" className="max-w-6xl mx-auto mt-4 px-10">
           <div>
             <h2 className="text-3xl inline-block AnakotmaiBOLD">
               จุดเริ่มต้นของเรา
@@ -49,7 +56,7 @@ function AboutPage() {
             </p>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto mt-6 px-10 mb-6">
+        <div data-aos="fade-up" className="max-w-6xl mx-auto mt-6 px-10 mb-6">
           <div>
             <h2 className="text-3xl inline-block AnakotmaiBOLD">สมาชิกโครงงาน</h2>
             <p>Yorwor Market</p>
@@ -132,7 +139,7 @@ function AboutPage() {
             </div>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto mt-10 px-10 mb-6">
+        <div data-aos="fade-up" className="max-w-6xl mx-auto mt-10 px-10 mb-6">
           <div>
             <h2 className="text-3xl inline-block AnakotmaiBOLD">
               เทคโนโลยีที่ใช้

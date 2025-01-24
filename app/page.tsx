@@ -1,7 +1,10 @@
+// @ts-nocheck
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { SiFusionauth } from "react-icons/si";
@@ -10,6 +13,10 @@ import { TbMessageReport } from "react-icons/tb";
 
 export default function Home() {
   const [title] = useState("Yorwor Market");
+
+  useEffect(() => {
+    AOS.init({ once: true });
+  }, [])
 
   return (
     <>
@@ -37,12 +44,12 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <div className="relative mx-auto -mt-3">
+        <div data-aos="fade-up" className="relative mx-auto -mt-3">
           <div className="lg:max-w-4xl lg:mx-auto">
             <img className="rounded-lg md:mpx-8" src="/assets/o.png" alt="Banner" />
           </div>
         </div>
-        <div className="mt-3">
+        <div data-aos="fade-up" className="mt-3">
           <div className="max-w-6xl mx-auto mb-5 mt-2">
             <h2 className="sm:text-4xl text-2xl AnakotmaiBOLD text-center">ฟีเจอร์เด่นของ Yorwor Market</h2>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 max-md:max-w-lg mx-auto mt-5">
