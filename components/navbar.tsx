@@ -52,6 +52,11 @@ export const NavbarNX = () => {
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
+            <Link color="foreground" href="/goods">
+              สินค้าทั้งหมด
+            </Link>
+          </NavbarItem>
+          <NavbarItem>
             <Link color="foreground" href="/about">
               เกี่ยวกับโครงงาน
             </Link>
