@@ -39,13 +39,14 @@ import {
 } from "react-share";
 import { IoBagHandle } from "react-icons/io5";
 import { PhotoProvider, PhotoView } from "react-photo-view";
-import "react-photo-view/dist/react-photo-view.css";
-import ProductLoaders from "@/components/productLoaders";
 
-import marketConfig from "@/market-config.mjs";
+import "react-photo-view/dist/react-photo-view.css";
 import { Skeleton } from "@nextui-org/skeleton";
-import GoodsGrid from "@/components/productGrid";
 import { useSearchParams } from "next/navigation";
+
+import ProductLoaders from "@/components/productLoaders";
+import marketConfig from "@/market-config.mjs";
+import GoodsGrid from "@/components/productGrid";
 
 export default function ProductPage() {
   const [title, setTitle] = useState("Yorwor Market");
@@ -156,9 +157,12 @@ export default function ProductPage() {
         position="bottom-right"
       />
       <div className="flex flex-col items-center justify-center mt-8">
-        <h1 className="text-3xl md:text-4xl mb-2 AnakotmaiBOLD">ข้อมูลสินค้า</h1>
+        <h1 className="text-3xl md:text-4xl mb-2 AnakotmaiBOLD">
+          ข้อมูลสินค้า
+        </h1>
         <div className="flex">
-          <div className="h-1 w-20 bg-blue-500 rounded-l-lg"></div><div className="h-1 w-20 bg-red-500 rounded-r-lg"></div>
+          <div className="h-1 w-20 bg-blue-500 rounded-l-lg" />
+          <div className="h-1 w-20 bg-red-500 rounded-r-lg" />
         </div>
       </div>
       <div className="flex flex-col items-center justify-center gap-5 my-5 mt-2 mx-10">
@@ -251,21 +255,25 @@ export default function ProductPage() {
                       </p>
                       <div className="flex flex-col md:flex-row mb-4 gap-2 md:gap-4">
                         <div>
-                          <span className="AnakotmaiBOLD">
-                            ราคา :
-                          </span>
+                          <span className="AnakotmaiBOLD">ราคา :</span>
                           <span className="text-gray-600">
                             {` ${goodsList.price.toLocaleString()} ฿`}
                           </span>
                         </div>
                         <div>
-                          <span className="AnakotmaiBOLD">
-                            จำนวนสินค้า :
-                          </span>
+                          <span className="AnakotmaiBOLD">จำนวนสินค้า :</span>
                           <span className="text-gray-600">
-                            {goodsList.availability
-                              ? (<>{goodsList.availability == -1 ? (<> ไม่จำกัด</>) : (<>{" "}{goodsList.availability}</>)}</>)
-                              : ` หมดแล้ว`}
+                            {goodsList.availability ? (
+                              <>
+                                {goodsList.availability == -1 ? (
+                                  <> ไม่จำกัด</>
+                                ) : (
+                                  <> {goodsList.availability}</>
+                                )}
+                              </>
+                            ) : (
+                              ` หมดแล้ว`
+                            )}
                           </span>
                         </div>
                       </div>
@@ -297,11 +305,11 @@ export default function ProductPage() {
                                 startContent={<IoBagHandle />}
                                 {...(isValidUrl(goodsList.social.platformName)
                                   ? {
-                                    as: "a",
-                                    href: goodsList.social.platformName,
-                                    target: "_blank",
-                                    rel: "noopener noreferrer",
-                                  }
+                                      as: "a",
+                                      href: goodsList.social.platformName,
+                                      target: "_blank",
+                                      rel: "noopener noreferrer",
+                                    }
                                   : {})}
                               >
                                 ติดต่อผู้ขายผ่าน {goodsList.social.platform}{" "}
@@ -314,10 +322,7 @@ export default function ProductPage() {
                       ) : (
                         <>
                           <div className="flex flex-col sm:flex-row mt-5 gap-3">
-                            <Button
-                              isDisabled
-                              startContent={<IoBagHandle />}
-                            >
+                            <Button isDisabled startContent={<IoBagHandle />}>
                               ผู้ขายไม่ได้ให้ช่องทางติดต่อไว้
                             </Button>
                           </div>
@@ -354,7 +359,9 @@ export default function ProductPage() {
                 สินค้าอื่นๆใน{" "}
                 <span className="AnakotmaiBOLD">Yorwor Market</span>
               </h1>
-              <div ><GoodsGrid goodsList={recGoodsList} /></div>
+              <div>
+                <GoodsGrid goodsList={recGoodsList} />
+              </div>
             </div>
           </>
         )}

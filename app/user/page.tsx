@@ -41,18 +41,10 @@ import {
 } from "@nextui-org/table";
 import { MdLogout } from "react-icons/md";
 import { MdSwitchAccount } from "react-icons/md";
-import { FaCheckToSlot } from "react-icons/fa6";
 import { LuPackage } from "react-icons/lu";
 import { FaMoneyBill } from "react-icons/fa";
 import { MdSell } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
-
-import { signInWithGoogle } from "../../lib/firebase-auth";
-
-import useLocalStorge from "@/lib/localstorage-db";
-import marketConfig from "@/market-config.mjs";
-import firebaseConfig from "@/lib/firebase-config";
-import Loaders from "@/components/loaders";
 import { FaUserLock } from "react-icons/fa";
 import {
   Dropdown,
@@ -60,6 +52,13 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@nextui-org/dropdown";
+
+import { signInWithGoogle } from "../../lib/firebase-auth";
+
+import useLocalStorge from "@/lib/localstorage-db";
+import marketConfig from "@/market-config.mjs";
+import firebaseConfig from "@/lib/firebase-config";
+import Loaders from "@/components/loaders";
 
 export default function UserPage() {
   const [title, setTitle] = useState("Yorwor Market");
@@ -93,6 +92,7 @@ export default function UserPage() {
 
   function createNewUser() {
     const id = toast.loading("Registering ...");
+
     if (verifyStats) {
       axios
         .post(`${marketConfig.apiServer}user/new`, {
@@ -156,7 +156,15 @@ export default function UserPage() {
   function submitNewGoods() {
     const id = toast.loading("กำลังเพิ่มสินค้า ...");
 
-    if (!Gtitle || !Gdecs || !Gprice || !file || !goodsQuan || !platformD || !platformNameD) {
+    if (
+      !Gtitle ||
+      !Gdecs ||
+      !Gprice ||
+      !file ||
+      !goodsQuan ||
+      !platformD ||
+      !platformNameD
+    ) {
       toast.update(id, {
         render: `กรุณากรอกข้อมูลให้ครบถ้วน`,
         closeOnClick: true,
@@ -368,9 +376,12 @@ export default function UserPage() {
         position="bottom-right"
       />
       <div className="flex flex-col items-center justify-center mt-8 mb-1">
-        <h1 className="text-3xl md:text-4xl mb-2 AnakotmaiBOLD">ข้อมูลผู้ใช้</h1>
+        <h1 className="text-3xl md:text-4xl mb-2 AnakotmaiBOLD">
+          ข้อมูลผู้ใช้
+        </h1>
         <div className="flex">
-          <div className="h-1 w-20 bg-blue-500 rounded-l-lg"></div><div className="h-1 w-20 bg-red-500 rounded-r-lg"></div>
+          <div className="h-1 w-20 bg-blue-500 rounded-l-lg" />
+          <div className="h-1 w-20 bg-red-500 rounded-r-lg" />
         </div>
       </div>
       <div className="flex flex-col gap-5 my-6 mx-10">
@@ -383,9 +394,9 @@ export default function UserPage() {
                     src: FireUser.photoURL,
                     size: "lg",
                   }}
+                  className="cursor-pointer"
                   description={"คลิกเพื่อดูเมนูเพิ่มเติม"}
                   name={<p className="AnakotmaiBOLD text-xl">{realUserName}</p>}
-                  className="cursor-pointer"
                 />
               </DropdownTrigger>
               <DropdownMenu aria-label="Static Actions">
@@ -472,7 +483,10 @@ export default function UserPage() {
                             สมัครสมาชิก !
                           </h2>
                           <p className="text-gray-700 mb-4">
-                            ดูเหมือนว่ายังไม่มีบัญชีที่เชื่อมกับอีเมลนี้<br />** ข้อมูลหลังจากกดสมัครไปแล้วจะแก้ไขไม่ได้ หากต้องการแก้ไขกรุณาติดต่อผู้ดูและระบบ
+                            ดูเหมือนว่ายังไม่มีบัญชีที่เชื่อมกับอีเมลนี้
+                            <br />
+                            ** ข้อมูลหลังจากกดสมัครไปแล้วจะแก้ไขไม่ได้
+                            หากต้องการแก้ไขกรุณาติดต่อผู้ดูและระบบ
                           </p>
                           <form>
                             <div className="flex flex-col gap-3 mb-4">
@@ -502,9 +516,9 @@ export default function UserPage() {
                                 }
                               />
                               <Turnstile
+                                language={"th"}
                                 sitekey="0x4AAAAAAA6IXUSqb0JMvGBQ"
                                 theme="light"
-                                language={"th"}
                                 onVerify={() => {
                                   setVerifyStats(true);
                                 }}
@@ -513,8 +527,8 @@ export default function UserPage() {
                             <div className="flex items-center justify-between">
                               <Button
                                 className={`${verifyStats ? "bg-blue-500" : "bg-red-500"}`}
-                                startContent={<FiLogIn />}
                                 color="primary"
+                                startContent={<FiLogIn />}
                                 onPress={createNewUser}
                               >
                                 สมัครสมาชิก
@@ -546,16 +560,28 @@ export default function UserPage() {
                             <h1 className="AnakotmaiBOLD mb-2">สถิติผู้ขาย</h1>
                             <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-3">
                               <div className="bg-white rounded-xl border px-7 py-6">
-                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center"><LuPackage /> จำนวนสินค้า</p>
-                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">{Object.keys(userDetails.goods).length}</h3>
+                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center">
+                                  <LuPackage /> จำนวนสินค้า
+                                </p>
+                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">
+                                  {Object.keys(userDetails.goods).length}
+                                </h3>
                               </div>
                               <div className="bg-white rounded-xl border px-7 py-6">
-                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center"><FaMoneyBill /> รายได้</p>
-                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">0</h3>
+                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center">
+                                  <FaMoneyBill /> รายได้
+                                </p>
+                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">
+                                  0
+                                </h3>
                               </div>
                               <div className="bg-white rounded-xl border px-7 py-6">
-                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center"><MdSell /> ขายไปทั้งหมด</p>
-                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">0</h3>
+                                <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center">
+                                  <MdSell /> ขายไปทั้งหมด
+                                </p>
+                                <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">
+                                  0
+                                </h3>
                               </div>
                             </div>
                           </div>
@@ -565,7 +591,10 @@ export default function UserPage() {
                             <div className="flex items-center mb-3 mt-2 gap-2 mx-auto">
                               <h1 className="AnakotmaiBOLD">สินค้าของคุณ</h1>
                               <Tooltip content="เพิ่มสินค้าใหม่">
-                                <IoMdAddCircleOutline className="w-6 h-6 cursor-pointer" onClick={modalProduct.onOpen} />
+                                <IoMdAddCircleOutline
+                                  className="w-6 h-6 cursor-pointer"
+                                  onClick={modalProduct.onOpen}
+                                />
                               </Tooltip>
                             </div>
                             <Table aria-label="Goods table">
@@ -578,7 +607,7 @@ export default function UserPage() {
                                 </TableColumn>
                               </TableHeader>
                               {userDetails.goods &&
-                                Object.keys(userDetails.goods).length > 0 ? (
+                              Object.keys(userDetails.goods).length > 0 ? (
                                 <TableBody>
                                   {Object.entries(userDetails.goods).map(
                                     ([id, { title, availability }], index) => (

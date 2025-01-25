@@ -32,9 +32,12 @@ function GoodPage() {
       <meta content={title} property="og:title" />
       <div>
         <div className="flex flex-col items-center justify-center mt-8">
-          <h1 className="text-3xl md:text-4xl mb-2 AnakotmaiBOLD">สินค้าทั้งหมด</h1>
+          <h1 className="text-3xl md:text-4xl mb-2 AnakotmaiBOLD">
+            สินค้าทั้งหมด
+          </h1>
           <div className="flex">
-            <div className="h-1 w-20 bg-blue-500 rounded-l-lg"></div><div className="h-1 w-20 bg-red-500 rounded-r-lg"></div>
+            <div className="h-1 w-20 bg-blue-500 rounded-l-lg" />
+            <div className="h-1 w-20 bg-red-500 rounded-r-lg" />
           </div>
         </div>
         <div className="flex flex-col items-center justify-center gap-5 my-5 mx-10">
@@ -60,7 +63,7 @@ function GoodPage() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default GoodPage
+export default GoodPage;

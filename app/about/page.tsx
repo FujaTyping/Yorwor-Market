@@ -2,9 +2,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import AOS from "aos";
 
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import "aos/dist/aos.css";
 import KF from "@/assets/media/KF.jpg";
 import AUM from "@/assets/media/AUM.jpg";
 import PT from "@/assets/media/PT.jpg";
@@ -14,7 +14,7 @@ function AboutPage() {
 
   useEffect(() => {
     AOS.init({ once: true });
-  }, [])
+  }, []);
 
   return (
     <>
@@ -26,9 +26,12 @@ function AboutPage() {
             <div>
               <div>
                 <div className="flex flex-col items-center justify-center">
-                  <h1 className="text-3xl md:text-4xl mb-3 AnakotmaiBOLD">โครงงาน ญ.ว. มาร์เก็ต</h1>
+                  <h1 className="text-3xl md:text-4xl mb-3 AnakotmaiBOLD">
+                    โครงงาน ญ.ว. มาร์เก็ต
+                  </h1>
                   <div className="flex">
-                    <div className="h-1 w-20 bg-blue-500 rounded-l-lg"></div><div className="h-1 w-20 bg-red-500 rounded-r-lg"></div>
+                    <div className="h-1 w-20 bg-blue-500 rounded-l-lg" />
+                    <div className="h-1 w-20 bg-red-500 rounded-r-lg" />
                   </div>
                 </div>
                 <p className="mt-3 text-sm">
@@ -41,7 +44,7 @@ function AboutPage() {
             </div>
           </div>
         </div>
-        <div data-aos="fade-up" className="max-w-6xl mx-auto mt-4 px-10">
+        <div className="max-w-6xl mx-auto mt-4 px-10" data-aos="fade-up">
           <div>
             <h2 className="text-3xl inline-block AnakotmaiBOLD">
               จุดเริ่มต้นของเรา
@@ -56,17 +59,19 @@ function AboutPage() {
             </p>
           </div>
         </div>
-        <div data-aos="fade-up" className="max-w-6xl mx-auto mt-6 px-10 mb-6">
+        <div className="max-w-6xl mx-auto mt-6 px-10 mb-6" data-aos="fade-up">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">สมาชิกโครงงาน</h2>
+            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+              สมาชิกโครงงาน
+            </h2>
             <p>Yorwor Market</p>
           </div>
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-6 max-md:justify-center mt-6">
             <div className="grid grid-cols-3 items-center bg-blue-500 p-4 rounded-lg relative">
               <div className="aspect-square col-span-2 min-h-[190px]">
                 <img
-                  className="rounded-lg h-full w-full object-cover"
                   alt="Profile"
+                  className="rounded-lg h-full w-full object-cover"
                   src={KF.src}
                 />
               </div>
@@ -80,8 +85,8 @@ function AboutPage() {
             <div className="grid grid-cols-3 items-center bg-blue-500 p-4 rounded-lg relative">
               <div className="aspect-square col-span-2 min-h-[190px]">
                 <img
-                  className="rounded-lg h-full w-full object-cover"
                   alt="Profile"
+                  className="rounded-lg h-full w-full object-cover"
                   src={AUM.src}
                 />
               </div>
@@ -95,8 +100,8 @@ function AboutPage() {
             <div className="grid grid-cols-3 items-center bg-blue-500 p-4 rounded-lg relative">
               <div className="aspect-square col-span-2 min-h-[190px]">
                 <img
-                  className="rounded-lg h-full w-full object-cover"
                   alt="Profile"
+                  className="rounded-lg h-full w-full object-cover"
                   src={PT.src}
                 />
               </div>
@@ -110,8 +115,8 @@ function AboutPage() {
             <div className="grid grid-cols-3 items-center bg-blue-500 p-4 rounded-lg relative">
               <div className="col-span-2 min-h-[190px]">
                 <img
-                  className="rounded-lg"
                   alt="Profile"
+                  className="rounded-lg"
                   src="https://lh3.googleusercontent.com/a-/ALV-UjWMr9Yd1To-C-HBYVYppoM_Su532mA2SFd2kWtJ1mdVebM0VfqRvw=s512-c"
                 />
               </div>
@@ -125,8 +130,8 @@ function AboutPage() {
             <div className="grid grid-cols-3 items-center bg-blue-500 p-4 rounded-lg relative">
               <div className="col-span-2 min-h-[190px]">
                 <img
-                  className="rounded-lg"
                   alt="Profile"
+                  className="rounded-lg"
                   src="https://lh3.googleusercontent.com/a-/ALV-UjXyzgj6_V--gUsGL5qwdQGESGl2imfnJD4z3DGTsAmLEhjh-9KyMg=s512-c"
                 />
               </div>
@@ -139,7 +144,7 @@ function AboutPage() {
             </div>
           </div>
         </div>
-        <div data-aos="fade-up" className="max-w-6xl mx-auto mt-10 px-10 mb-6">
+        <div className="max-w-6xl mx-auto mt-10 px-10 mb-6" data-aos="fade-up">
           <div>
             <h2 className="text-3xl inline-block AnakotmaiBOLD">
               เทคโนโลยีที่ใช้
@@ -147,16 +152,42 @@ function AboutPage() {
           </div>
           <div>
             <p className="mt-2 text-lg leading-8">
-              เราใช้เทคโนโลยีที่ทันสมัยและเหมาะสม เพื่อสร้างแพลตฟอร์มที่มีประสิทธิภาพ ใช้งานง่าย และปลอดภัยสำหรับผู้ใช้ทุกคน
+              เราใช้เทคโนโลยีที่ทันสมัยและเหมาะสม
+              เพื่อสร้างแพลตฟอร์มที่มีประสิทธิภาพ ใช้งานง่าย
+              และปลอดภัยสำหรับผู้ใช้ทุกคน
             </p>
             <div className="max-w-6xl mx-auto">
               <div className="flex flex-wrap items-center justify-center mt-2 gap-5 md:gap-0 md:justify-around">
-                <img src="https://logos-world.net/wp-content/uploads/2023/08/React-Symbol-500x281.png" className="h-20" alt="React Logo" />
-                <img src="https://devtop.io/wp-content/uploads/2022/11/Next-JS.png" className="h-16" alt="NextJS Logo" />
-                <img src="https://miro.medium.com/v2/resize:fit:800/1*mbTzC0Ovq8TVoKxnTGb3Rw.jpeg" className="h-14" alt="Elysia Logo" />
-                <img src="https://www.4xtreme.com/wp-content/uploads/2020/11/logo-standard.png" className="h-14" alt="Firebase Logo" />
-                <img src="https://raw.githubusercontent.com/heroui-inc/heroui/main/apps/docs/public/isotipo.png" className="h-14" alt="NextUI Logo" />
-                <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*qmXv0xChExVfkhbWVj9XLg.png" className="h-16" alt="Bun Logo" />
+                <img
+                  alt="React Logo"
+                  className="h-20"
+                  src="https://logos-world.net/wp-content/uploads/2023/08/React-Symbol-500x281.png"
+                />
+                <img
+                  alt="NextJS Logo"
+                  className="h-16"
+                  src="https://devtop.io/wp-content/uploads/2022/11/Next-JS.png"
+                />
+                <img
+                  alt="Elysia Logo"
+                  className="h-14"
+                  src="https://miro.medium.com/v2/resize:fit:800/1*mbTzC0Ovq8TVoKxnTGb3Rw.jpeg"
+                />
+                <img
+                  alt="Firebase Logo"
+                  className="h-14"
+                  src="https://www.4xtreme.com/wp-content/uploads/2020/11/logo-standard.png"
+                />
+                <img
+                  alt="NextUI Logo"
+                  className="h-14"
+                  src="https://raw.githubusercontent.com/heroui-inc/heroui/main/apps/docs/public/isotipo.png"
+                />
+                <img
+                  alt="Bun Logo"
+                  className="h-16"
+                  src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*qmXv0xChExVfkhbWVj9XLg.png"
+                />
               </div>
             </div>
           </div>

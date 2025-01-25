@@ -63,9 +63,9 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
 
                   <div className="mb-4 rounded">
                     <img
-                      src={list.photoURL}
                       alt="Product"
                       className="aspect-square w-full object-cover rounded-md"
+                      src={list.photoURL}
                     />
                   </div>
 
@@ -87,7 +87,11 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
 
           {visibleItems < goodsList.length && (
             <div className="mt-4 text-center">
-              <Button color="primary" onPress={handleLoadMore} startContent={<BiLoader />}>
+              <Button
+                color="primary"
+                startContent={<BiLoader />}
+                onPress={handleLoadMore}
+              >
                 โหลดสินค้าเพิ่มเติม
               </Button>
             </div>

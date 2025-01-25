@@ -45,7 +45,12 @@ export const NavbarNX = () => {
         hideProgressBar={false}
         position="bottom-right"
       />
-      <Navbar shouldHideOnScroll maxWidth="full" isBlurred className="bg-gradient-to-r from-blue-600 to-blue-500 text-white border-solid border-b-5 border-red-500">
+      <Navbar
+        isBlurred
+        shouldHideOnScroll
+        className="bg-gradient-to-r from-blue-600 to-blue-500 text-white border-solid border-b-5 border-red-500"
+        maxWidth="full"
+      >
         <NavbarBrand as={Link} className="cursor-pointer" href={"/"}>
           <img alt="Logo" src={YorworLogo.src} />
           <p className="ml-2 AnakotmaiBOLD text-inherit">Yorwor Market</p>
@@ -70,8 +75,10 @@ export const NavbarNX = () => {
         <NavbarContent justify="end">
           <NavbarItem>
             <Input
-              className="w-full"
-              labelPlacement="outside-left"
+              isClearable
+              classNames={{
+                input: ["placeholder:text-white"],
+              }}
               placeholder="ค้นหาสินค้า"
               startContent={<FaSearch />}
               type="text"
