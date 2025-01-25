@@ -230,9 +230,9 @@ export default (app: ElysiaApp) =>
         })
         .post("/new", async ({ body, store }) => {
             const { db } = store;
-            const { email, decs, photoURL, price, title, displayName, AuthorphotoURL, quantity, platform, platfomName } = body;
+            const { email, decs, photoURL, price, title, displayName, AuthorphotoURL, quantity, platform, platfomName, category } = body;
 
-            if (!email || !decs || !photoURL || !price || !title || !displayName || !AuthorphotoURL || !quantity || !platform || !platfomName) {
+            if (!email || !decs || !photoURL || !price || !title || !displayName || !AuthorphotoURL || !quantity || !platform || !platfomName || !category) {
                 return { error: true, message: "Missing good details" };
             }
 
@@ -252,6 +252,7 @@ export default (app: ElysiaApp) =>
                     price: price,
                     addDate: `${TThaiDate}`,
                     availability: quantity,
+                    category: `${category}`,
                     timestamp: serverTimestamp(),
                 });
                 await setDoc(doc(db, "Goods", UID, "Author", "Details"), {
