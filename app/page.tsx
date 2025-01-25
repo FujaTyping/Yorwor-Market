@@ -12,6 +12,7 @@ import { TbMessageReport } from "react-icons/tb";
 import { FaSearch } from "react-icons/fa";
 import { FaSortAmountDown } from "react-icons/fa";
 import { FaShopLock } from "react-icons/fa6";
+import { MdMoreVert } from "react-icons/md";
 
 import LineOC from "@/assets/media/openchat.webp";
 import BannerImg from "@/assets/media/o.webp";
@@ -198,6 +199,18 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <div data-aos="zoom-in" className="max-w-4xl mx-auto flex flex-col-reverse md:flex-row md:items-center bg-blue-500 px-8 min-h-[100px] mb-3 py-6 rounded-xl shadow-xl gap-3 items-center justify-center">
+          <p className="text-white text-base flex-1 items-center">
+            <span className="AnakotmaiBOLD">เพิ่ม Yorwor Market ไว้ในหน้าจอหลักของคุณเพื่อการใช้งานที่สะดวกและรวดเร็ว</span> เพียงคลิก
+            <span className="inline-flex items-center">
+              <MdMoreVert className="items-center w-5 h-5 translate-y-1" />
+            </span>
+            {"(บนเบราว์เซอร์ของคุณ)"} เลือก {"เพิ่มไปยังหน้าจอหลัก"} แล้วกด {"เพิ่ม"} เท่านี้ก็พร้อมใช้งานทันที !
+          </p>
+          <div>
+            <img height={512} width={512} className="h-16 w-16" src="/icon-512x512.png" alt="YW Market" />
+          </div>
+        </div>
       </div>
     </>
   );

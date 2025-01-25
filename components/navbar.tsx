@@ -53,7 +53,8 @@ export const NavbarNX = () => {
       >
         <NavbarBrand as={Link} className="cursor-pointer" href={"/"}>
           <img alt="Logo" src={YorworLogo.src} />
-          <p className="ml-2 AnakotmaiBOLD text-inherit">Yorwor Market</p>
+          <p className="ml-2 text-inherit AnakotmaiBOLD sm:block hidden">Yorwor Market</p>
+          <p className="ml-2 text-inherit AnakotmaiBOLD sm:hidden block">YW Market</p>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
@@ -109,7 +110,7 @@ export const NavbarNX = () => {
             ) : (
               <>
                 <Button
-                  color="danger"
+                  className="bg-red-500 text-white"
                   onPress={() => {
                     const id = toast.loading("กำลังล็อกอิน ...");
 
