@@ -52,22 +52,26 @@ function GoodPage() {
             </>
           ) : (
             <>
-              <div className="max-w-6xl w-full -mt-2">
-                <h1 className="text-xl my-2 mb-3 flex items-center gap-2">
-                  หมวดหมู่สินค้า
-                  <Tooltip
-                    content={
-                      <div className="px-1 py-2">
-                        <p className="AnakotmaiBOLD">เลื่อน ซ้าย-ขวา เพื่อดูหมวดหมู่ทั้งหมด</p>
-                        <p>ไอคอนโดย : Flaticon {"(@justicon)"}</p>
-                      </div>
-                    }
-                  >
-                    <MdInfoOutline className="w-6 h-6 cursor-help" />
-                  </Tooltip>
-                </h1>
-                <CategoryGrid />
-              </div>
+              {goodsList.length > 0 ? (
+                <>
+                  <div className="max-w-6xl w-full -mt-2 mb-1">
+                    <h1 className="text-xl my-2 mb-3 flex items-center gap-2">
+                      หมวดหมู่สินค้า
+                      <Tooltip
+                        content={
+                          <div className="px-1 py-2">
+                            <p className="AnakotmaiBOLD">เลื่อน ซ้าย-ขวา เพื่อดูหมวดหมู่ทั้งหมด</p>
+                            <p>ไอคอนโดย : Flaticon {"(@justicon)"}</p>
+                          </div>
+                        }
+                      >
+                        <MdInfoOutline className="w-6 h-6 cursor-help" />
+                      </Tooltip>
+                    </h1>
+                    <CategoryGrid />
+                  </div>
+                </>
+              ) : (<></>)}
               <section className="max-w-6xl pb-7 -mt-2">
                 <h1 className="text-xl my-2">
                   สินค้าทั้งหมดของ{" "}
