@@ -51,7 +51,8 @@
 		"react-scroll-up": "^1.4.0",
 		"react-share": "^5.1.2",
 		"react-toastify": "^11.0.2",
-		"react-turnstile": "^1.1.4"
+		"react-turnstile": "^1.1.4",
+		"swiper": "^11.2.1"
 	},
 	"devDependencies": {
 		"@next/eslint-plugin-next": "15.0.4",
