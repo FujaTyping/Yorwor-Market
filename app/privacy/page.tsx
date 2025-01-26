@@ -38,7 +38,7 @@ function PrivacyPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               1. ข้อมูลที่เราเก็บรวบรวม
             </h2>
           </div>
@@ -61,7 +61,7 @@ function PrivacyPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               2. วัตถุประสงค์ในการใช้ข้อมูล
             </h2>
           </div>
@@ -82,7 +82,7 @@ function PrivacyPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               3. การเปิดเผยข้อมูลส่วนบุคคล
             </h2>
           </div>
@@ -104,7 +104,7 @@ function PrivacyPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               4. การปกป้องข้อมูล
             </h2>
           </div>
@@ -119,7 +119,7 @@ function PrivacyPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               5. สิทธิของผู้ใช้งาน
             </h2>
           </div>
@@ -140,7 +140,7 @@ function PrivacyPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               6. การยอมรับข้อตกลงและเงื่อนไข
             </h2>
           </div>
@@ -155,7 +155,7 @@ function PrivacyPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               7. การติดต่อทีมงาน Yorwor Market
             </h2>
           </div>
