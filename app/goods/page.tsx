@@ -3,18 +3,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import Link from "next/link";
+import { Tooltip } from "@nextui-org/tooltip";
 import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
 import ProductLoaders from "@/components/productLoaders";
-
-import EduCar from "@/assets/media/icon/Edu.webp"
-import FoodCar from "@/assets/media/icon/Food.webp"
-import DrinkCar from "@/assets/media/icon/Drink.webp"
-import FasionCar from "@/assets/media/icon/Fashion.webp"
-import HandCar from "@/assets/media/icon/Hand.webp"
-//import GoodCar from "@/assets/media/icon/Good.webp"
-import DecoCar from "@/assets/media/icon/Decorate.webp"
+import CategoryGrid from "@/components/categoryGrid";
+import { MdInfoOutline } from "react-icons/md";
 
 function GoodPage() {
   const [title] = useState("Yorwor Market - สินค้าทั้งหมด");
@@ -58,47 +52,26 @@ function GoodPage() {
             </>
           ) : (
             <>
-              <div className="max-w-6xl w-full -mt-2">
-                <h1 className="text-xl my-2 mb-3">
-                  หมวดหมู่สินค้า
-                </h1>
-                <section className="bg-white w-full flex justify-center items-center">
-                  <div className="max-w-6xl mx-auto w-full">
-                    <div className="grid grid-cols-3 gap-6 md:grid-cols-6">
-                      <Link href={"/goods/category?type=อุปกรณ์การเรียน"} className="flex flex-col items-center justify-center gap-2">
-                        <img src={EduCar.src} alt="Edu" className="h-16 md:h-20" />
-                        <p className="AnakotmaiBOLD">อุปกรณ์การเรียน</p>
-                      </Link>
-                      <Link href={"/goods/category?type=อาหาร"} className="flex flex-col items-center justify-center gap-2">
-                        <img src={FoodCar.src} alt="Food" className="h-16 md:h-20" />
-                        <p className="AnakotmaiBOLD">อาหาร</p>
-                      </Link>
-                      <Link href={"/goods/category?type=เครื่องดื่ม"} className="flex flex-col items-center justify-center gap-2">
-                        <img src={DrinkCar.src} alt="Drink" className="h-16 md:h-20" />
-                        <p className="AnakotmaiBOLD">เครื่องดื่ม</p>
-                      </Link>
-                      <Link href={"/goods/category?type=สินค้าแฟชั่น"} className="flex flex-col items-center justify-center gap-2">
-                        <img src={FasionCar.src} alt="Fashion" className="h-16 md:h-20" />
-                        <p className="AnakotmaiBOLD">สินค้าแฟชั่น</p>
-                      </Link>
-                      <Link href={"/goods/category?type=ของตกแต่ง"} className="flex flex-col items-center justify-center gap-2">
-                        <img src={DecoCar.src} alt="Deco" className="h-16 md:h-20" />
-                        <p className="AnakotmaiBOLD">ของตกแต่ง</p>
-                      </Link>
-                      <Link href={"/goods/category?type=สินค้ามือ 2"} className="flex flex-col items-center justify-center gap-2">
-                        <img src={HandCar.src} alt="Hand" className="h-16 md:h-20" />
-                        <p className="AnakotmaiBOLD">สินค้ามือ 2</p>
-                      </Link>
-                      {/*
-                      <Link href={"/goods/category?type=อื่นๆ"} className="flex flex-col items-center justify-center gap-2">
-                        <img src={GoodCar.src} alt="Good" className="h-16 md:h-20" />
-                        <p className="AnakotmaiBOLD">อื่นๆ</p>
-                      </Link>
-                      */}
-                    </div>
+              {goodsList.length > 0 ? (
+                <>
+                  <div className="max-w-6xl w-full -mt-2 mb-1">
+                    <h1 className="text-xl my-2 mb-3 flex items-center gap-2">
+                      หมวดหมู่สินค้า
+                      <Tooltip
+                        content={
+                          <div className="px-1 py-2">
+                            <p className="AnakotmaiBOLD">เลื่อน ซ้าย-ขวา เพื่อดูหมวดหมู่ทั้งหมด</p>
+                            <p>ไอคอนโดย : Flaticon {"(@justicon)"}</p>
+                          </div>
+                        }
+                      >
+                        <MdInfoOutline className="w-6 h-6 cursor-help" />
+                      </Tooltip>
+                    </h1>
+                    <CategoryGrid />
                   </div>
-                </section>
-              </div>
+                </>
+              ) : (<></>)}
               <section className="max-w-6xl pb-7 -mt-2">
                 <h1 className="text-xl my-2">
                   สินค้าทั้งหมดของ{" "}

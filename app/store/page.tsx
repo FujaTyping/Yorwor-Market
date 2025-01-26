@@ -92,7 +92,7 @@ export default function StorePage() {
                     }}
                     className="my-2"
                     description={<p>{uList.bio}</p>}
-                    name={<p className="text-xl">{uList.displayName}</p>}
+                    name={<p className="text-xl AnakotmaiBOLD">{uList.displayName}</p>}
                   />
                   <section className="max-w-6xl mb-2">
                     <div>
