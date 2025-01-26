@@ -253,6 +253,12 @@ export default function ProductPage() {
                       <p className="text-gray-600 text-sm mb-4 whitespace-pre-line">
                         {goodsList.decs}
                       </p>
+                      <div className="mb-1">
+                        <span className="AnakotmaiBOLD">ประเภท : </span>
+                        <span className="text-gray-600">
+                          {goodsList.category ? (<><Link href={`/goods/category?type=${goodsList.category}`}>{goodsList.category}</Link></>) : ("ไม่มี")}
+                        </span>
+                      </div>
                       <div className="flex flex-col md:flex-row mb-4 gap-2 md:gap-4">
                         <div>
                           <span className="AnakotmaiBOLD">ราคา :</span>
@@ -305,11 +311,11 @@ export default function ProductPage() {
                                 startContent={<IoBagHandle />}
                                 {...(isValidUrl(goodsList.social.platformName)
                                   ? {
-                                      as: "a",
-                                      href: goodsList.social.platformName,
-                                      target: "_blank",
-                                      rel: "noopener noreferrer",
-                                    }
+                                    as: "a",
+                                    href: goodsList.social.platformName,
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                  }
                                   : {})}
                               >
                                 ติดต่อผู้ขายผ่าน {goodsList.social.platform}{" "}

@@ -86,6 +86,7 @@ export default function UserPage() {
 
   const [Gprice, setGPrice] = useState(0);
   const [Gtitle, setGTitle] = useState("");
+  const [carG, setCarG] = useState("ไม่มี");
   const [Gdecs, setGDecs] = useState("");
   const [GphotoURL, setGPhotoURL] = useState("");
   const [verifyStats, setVerifyStats] = useState(false);
@@ -198,6 +199,7 @@ export default function UserPage() {
               quantity: goodsQuan,
               platform: `${platformD}`,
               platfomName: `${platformNameD}`,
+              category: `${carG}`
             })
             .then((response) => {
               if (response.data.error) {
@@ -607,7 +609,7 @@ export default function UserPage() {
                                 </TableColumn>
                               </TableHeader>
                               {userDetails.goods &&
-                              Object.keys(userDetails.goods).length > 0 ? (
+                                Object.keys(userDetails.goods).length > 0 ? (
                                 <TableBody>
                                   {Object.entries(userDetails.goods).map(
                                     ([id, { title, availability }], index) => (
@@ -689,6 +691,7 @@ export default function UserPage() {
                     <div>
                       <form className="flex flex-col gap-4">
                         <Input
+                          isRequired
                           label="ชื่อสินค้า"
                           placeholder="eg. Cookie"
                           type="text"
@@ -697,14 +700,48 @@ export default function UserPage() {
                           onChange={(e) => setGTitle(e.target.value)}
                         />
                         <Textarea
+                          isRequired
                           label="คำอธิบายสินค้า"
                           placeholder="eg. Lorem Ipsum is simply dummy text of the printing and typesetting industry"
                           value={Gdecs}
                           variant="bordered"
                           onChange={(e) => setGDecs(e.target.value)}
                         />
+                        <Select
+                          label="หมวดหมู่สินค้า"
+                          placeholder="กรุณาเลือก 1 หมวดหมู่"
+                          variant="bordered"
+                          onChange={(e) => setCarG(e.target.value)}
+                        >
+                          <SelectItem
+                            key="อุปกรณ์การเรียน"
+                          >
+                            อุปกรณ์การเรียน
+                          </SelectItem>
+                          <SelectItem key="อาหาร">
+                            อาหาร
+                          </SelectItem>
+                          <SelectItem key="เครื่องดื่ม">
+                            เครื่องดื่ม
+                          </SelectItem>
+                          <SelectItem key="ของมือ 2">
+                            ของมือ 2
+                          </SelectItem>
+                          <SelectItem key="สินค้าแฟชั่น">
+                            สินค้าแฟชั่น
+                          </SelectItem>
+                          <SelectItem key="ของตกแต่ง">
+                            ของตกแต่ง
+                          </SelectItem>
+                          <SelectItem
+                            key="อื่นๆ"
+                          >
+                            อื่นๆ
+                          </SelectItem>
+                        </Select>
                         <div className="flex gap-3">
                           <Input
+                            isRequired
                             label="ราคา"
                             placeholder="0"
                             type="number"
@@ -715,6 +752,7 @@ export default function UserPage() {
                             }
                           />
                           <Input
+                            isRequired
                             label="จำนวนสินค้า"
                             placeholder="0"
                             type="number"
@@ -785,6 +823,7 @@ export default function UserPage() {
                         </div>
                         <div className="flex flex-col md:flex-row gap-3">
                           <Select
+                            isRequired
                             label="ข้อมูลติดต่อ"
                             placeholder="กรุณาเลือกแพลตฟอร์ม"
                             variant="bordered"
@@ -810,6 +849,7 @@ export default function UserPage() {
                             </SelectItem>
                           </Select>
                           <Input
+                            isRequired
                             label="ชื่อผู้ใช้ หรือ ลิงค์"
                             placeholder="eg. @Yorwor"
                             type="text"
