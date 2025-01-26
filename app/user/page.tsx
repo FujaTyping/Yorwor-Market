@@ -724,14 +724,26 @@ export default function UserPage() {
                           <SelectItem key="เครื่องดื่ม">
                             เครื่องดื่ม
                           </SelectItem>
-                          <SelectItem key="ของมือ 2">
-                            ของมือ 2
-                          </SelectItem>
                           <SelectItem key="สินค้าแฟชั่น">
                             สินค้าแฟชั่น
                           </SelectItem>
+                          {FireUser.email && /\d/.test(FireUser.email) ? (
+                            <></>
+                          ) : (
+                            <>
+                              <SelectItem key="สินค้าจาก คุณครู">
+                                สินค้าจาก คุณครู
+                              </SelectItem>
+                            </>
+                          )}
                           <SelectItem key="ของตกแต่ง">
                             ของตกแต่ง
+                          </SelectItem>
+                          <SelectItem key="แกดเจ็ต">
+                            แกดเจ็ต
+                          </SelectItem>
+                          <SelectItem key="ของมือ 2">
+                            ของมือ 2
                           </SelectItem>
                           <SelectItem
                             key="อื่นๆ"
@@ -787,7 +799,7 @@ export default function UserPage() {
                                 <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
                                   <span>
                                     {file == null
-                                      ? "อัพโหลดรูปภาพสินค้า"
+                                      ? (<>อัพโหลดรูปภาพสินค้า <span className="text-red-500">*</span></>)
                                       : `${file.name}`}
                                   </span>
                                 </p>
