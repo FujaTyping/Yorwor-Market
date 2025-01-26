@@ -1,6 +1,6 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Grid } from 'swiper/modules';
+import { Grid, Mousewheel } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/grid';
@@ -13,6 +13,8 @@ import FasionCar from "@/assets/media/icon/Fashion.webp"
 import HandCar from "@/assets/media/icon/Hand.webp"
 import GoodCar from "@/assets/media/icon/Good.webp"
 import DecoCar from "@/assets/media/icon/Decorate.webp"
+import GadCar from "@/assets/media/icon/Gadget.webp"
+import TeacherCar from "@/assets/media/icon/Teacher.webp"
 
 function CategoryGrid() {
     return (
@@ -20,6 +22,7 @@ function CategoryGrid() {
             <Swiper
                 spaceBetween={30}
                 slidesPerView={3}
+                mousewheel={true}
                 grid={{
                     rows: 2,
                     fill: "row"
@@ -34,7 +37,7 @@ function CategoryGrid() {
                         }
                     }
                 }}
-                modules={[Grid]}
+                modules={[Grid, Mousewheel]}
             >
                 <SwiperSlide>
                     <Link
@@ -68,15 +71,27 @@ function CategoryGrid() {
                     </Link>
                 </SwiperSlide>
                 <SwiperSlide>
+                    <Link href={"/goods/category?type=สินค้าจาก คุณครู"} className="flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all">
+                        <img src={TeacherCar.src} alt="Teacher" className="h-16 md:h-20" />
+                        <p className="AnakotmaiBOLD">สินค้าจาก คุณครู</p>
+                    </Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <Link href={"/goods/category?type=แกดเจ็ต"} className="flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all">
+                        <img src={GadCar.src} alt="Gadget" className="h-16 md:h-20" />
+                        <p className="AnakotmaiBOLD">แกดเจ็ต</p>
+                    </Link>
+                </SwiperSlide>
+                <SwiperSlide>
                     <Link href={"/goods/category?type=ของตกแต่ง"} className="flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all">
                         <img src={DecoCar.src} alt="Deco" className="h-16 md:h-20" />
                         <p className="AnakotmaiBOLD">ของตกแต่ง</p>
                     </Link>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <Link href={"/goods/category?type=สินค้ามือ 2"} className="flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all">
+                    <Link href={"/goods/category?type=ของมือ 2"} className="flex flex-col items-center justify-center gap-2 hover:scale-105 transition-all">
                         <img src={HandCar.src} alt="Hand" className="h-16 md:h-20" />
-                        <p className="AnakotmaiBOLD">สินค้ามือ 2</p>
+                        <p className="AnakotmaiBOLD">ของมือ 2</p>
                     </Link>
                 </SwiperSlide>
                 <SwiperSlide>
