@@ -8,13 +8,13 @@ import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
 import ProductLoaders from "@/components/productLoaders";
 
-import EduCar from "@/assets/media/icon/Edu.png"
-import FoodCar from "@/assets/media/icon/Food.png"
-import DrinkCar from "@/assets/media/icon/Drink.png"
-import FasionCar from "@/assets/media/icon/Fashion.png"
-import HandCar from "@/assets/media/icon/Hand.png"
-//import GoodCar from "@/assets/media/icon/Good.png"
-import DecoCar from "@/assets/media/icon/Decorate.png"
+import EduCar from "@/assets/media/icon/Edu.webp"
+import FoodCar from "@/assets/media/icon/Food.webp"
+import DrinkCar from "@/assets/media/icon/Drink.webp"
+import FasionCar from "@/assets/media/icon/Fashion.webp"
+import HandCar from "@/assets/media/icon/Hand.webp"
+//import GoodCar from "@/assets/media/icon/Good.webp"
+import DecoCar from "@/assets/media/icon/Decorate.webp"
 
 function GoodPage() {
   const [title] = useState("Yorwor Market - สินค้าทั้งหมด");

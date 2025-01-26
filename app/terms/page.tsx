@@ -35,7 +35,7 @@ function TermsPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               1. วัตถุประสงค์ของเว็บไซต์
             </h2>
           </div>
@@ -50,7 +50,7 @@ function TermsPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               2. ความรับผิดชอบของผู้ใช้งาน
             </h2>
           </div>
@@ -70,7 +70,7 @@ function TermsPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               3. การจัดการเนื้อหาและการใช้งานเว็บไซต์
             </h2>
           </div>
@@ -87,7 +87,7 @@ function TermsPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               4. ความเป็นส่วนตัว
             </h2>
           </div>
@@ -103,7 +103,7 @@ function TermsPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               5. การปรับปรุงข้อตกลงและเงื่อนไข
             </h2>
           </div>
@@ -117,7 +117,7 @@ function TermsPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               6. การยอมรับข้อตกลงและเงื่อนไข
             </h2>
           </div>
@@ -135,7 +135,7 @@ function TermsPage() {
         </div>
         <div className="max-w-6xl mx-auto mt-4 px-10">
           <div>
-            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            <h2 className="text-2xl inline-block AnakotmaiBOLD">
               7. การติดต่อทีมงาน Yorwor Market
             </h2>
           </div>
