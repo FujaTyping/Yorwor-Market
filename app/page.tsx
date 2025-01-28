@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import Link from "next/link";
 import { SiFusionauth } from "react-icons/si";
 import { AiOutlineProduct } from "react-icons/ai";

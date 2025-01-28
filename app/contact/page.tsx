@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import { MdContactMail } from "react-icons/md";
 import { FaMapPin } from "react-icons/fa6";
-import { Input, Textarea } from "@nextui-org/input";
-import { Select, SelectItem } from "@nextui-org/select";
-import { RadioGroup, Radio } from "@nextui-org/radio";
-import { Button } from "@nextui-org/button";
+import { Input, Textarea } from "@heroui/input";
+import { Select, SelectItem } from "@heroui/select";
+import { RadioGroup, Radio } from "@heroui/radio";
+import { Button } from "@heroui/button";
 import { IoSend } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";

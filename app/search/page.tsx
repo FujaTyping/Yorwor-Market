@@ -6,8 +6,8 @@ import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { BsBagXFill } from "react-icons/bs";
-import { Tooltip } from "@nextui-org/tooltip";
-import { Select, SelectItem } from "@nextui-org/select";
+import { Tooltip } from "@heroui/tooltip";
+import { Select, SelectItem } from "@heroui/select";
 import {
   Modal,
   ModalContent,
@@ -15,9 +15,9 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-} from "@nextui-org/modal";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
+} from "@heroui/modal";
+import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
 import { TbSortAscendingShapes } from "react-icons/tb";
 
 import GoodsGrid from "@/components/productGrid";

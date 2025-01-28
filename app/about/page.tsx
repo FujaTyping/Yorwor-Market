@@ -179,7 +179,7 @@ function AboutPage() {
                   src="https://www.4xtreme.com/wp-content/uploads/2020/11/logo-standard.png"
                 />
                 <img
-                  alt="NextUI Logo"
+                  alt="HeroUI Logo"
                   className="h-14"
                   src="https://raw.githubusercontent.com/heroui-inc/heroui/main/apps/docs/public/isotipo.png"
                 />

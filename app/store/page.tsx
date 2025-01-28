@@ -4,8 +4,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BsBagXFill } from "react-icons/bs";
-import { User } from "@nextui-org/user";
-import { Skeleton } from "@nextui-org/skeleton";
+import { User } from "@heroui/user";
+import { Skeleton } from "@heroui/skeleton";
 
 import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";

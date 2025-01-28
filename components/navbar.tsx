@@ -7,15 +7,15 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-} from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
+} from "@heroui/navbar";
+import { Button } from "@heroui/button";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
-import { Avatar } from "@nextui-org/avatar";
+import { Avatar } from "@heroui/avatar";
 import { FaSearch } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { Tooltip } from "@nextui-org/tooltip";
-import { Input } from "@nextui-org/input";
+import { Tooltip } from "@heroui/tooltip";
+import { Input } from "@heroui/input";
 
 import { signInWithGoogle } from "../lib/firebase-auth";
 

@@ -2,11 +2,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import axios from "axios";
-import { User } from "@nextui-org/user";
+import { User } from "@heroui/user";
 import { IoFlag } from "react-icons/io5";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Tooltip } from "@heroui/tooltip";
 import {
   Modal,
   ModalContent,
@@ -14,14 +14,14 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-} from "@nextui-org/modal";
+} from "@heroui/modal";
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-} from "@nextui-org/dropdown";
-import { RadioGroup, Radio } from "@nextui-org/radio";
+} from "@heroui/dropdown";
+import { RadioGroup, Radio } from "@heroui/radio";
 import { ToastContainer, toast } from "react-toastify";
 import { BsBagXFill } from "react-icons/bs";
 import { IoMdMore } from "react-icons/io";
@@ -41,7 +41,7 @@ import { IoBagHandle } from "react-icons/io5";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 
 import "react-photo-view/dist/react-photo-view.css";
-import { Skeleton } from "@nextui-org/skeleton";
+import { Skeleton } from "@heroui/skeleton";
 import { useSearchParams } from "next/navigation";
 
 import ProductLoaders from "@/components/productLoaders";
