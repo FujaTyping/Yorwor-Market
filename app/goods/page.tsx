@@ -9,6 +9,7 @@ import marketConfig from "@/market-config.mjs";
 import ProductLoaders from "@/components/productLoaders";
 import CategoryGrid from "@/components/categoryGrid";
 import { MdInfoOutline } from "react-icons/md";
+import { Skeleton } from "@heroui/skeleton";
 
 function GoodPage() {
   const [title] = useState("Yorwor Market - สินค้าทั้งหมด");
@@ -46,6 +47,22 @@ function GoodPage() {
         <div className="flex flex-col items-center justify-center gap-5 my-5 mx-10">
           {pageStatus == "Loading" ? (
             <>
+              <section className="bg-white w-full flex justify-center items-center mt-3">
+                <div className="max-w-5xl mx-auto w-full">
+                  <div className="grid grid-cols-3 gap-6 md:grid-cols-6">
+                    {[...Array(6)].map((_, index) => (
+                      <div key={index} className="max-w-[300px] w-full flex flex-col items-center justify-center gap-3">
+                        <div>
+                          <Skeleton className="flex rounded-lg w-16 h-16" />
+                        </div>
+                        <div className="w-full mx-auto items-center justify-center flex">
+                          <Skeleton className="h-4 w-3/5 rounded-lg" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
               <div>
                 <ProductLoaders />
               </div>

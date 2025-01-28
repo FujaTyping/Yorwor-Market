@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BsBagXFill } from "react-icons/bs";
 import { Button } from "@heroui/button";
 import { BiLoader } from "react-icons/bi";
+import { Chip } from "@heroui/chip";
 
 interface GoodsItem {
   id: string;
@@ -45,19 +46,15 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
                     {list.availability ? (
                       <>
                         {list.availability === -1 ? (
-                          <p className="text-[12px] rounded-full bg-blue-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">
-                            ไม่จำกัด
-                          </p>
+                          <Chip color="primary">ไม่จำกัด</Chip>
                         ) : (
-                          <p className="text-[12px] rounded-full bg-blue-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">
-                            ขาย
-                          </p>
+                          <>
+                            <Chip color="primary">ขาย</Chip>
+                          </>
                         )}
                       </>
                     ) : (
-                      <p className="text-[12px] rounded-full bg-red-400 p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">
-                        หมดแล้ว
-                      </p>
+                      <Chip color="danger">หมดแล้ว</Chip>
                     )}
                   </div>
 

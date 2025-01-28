@@ -52,6 +52,8 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@heroui/dropdown";
+import { Chip } from "@heroui/chip";
+import { GrTest } from "react-icons/gr";
 
 import { signInWithGoogle } from "../../lib/firebase-auth";
 
@@ -558,7 +560,7 @@ export default function UserPage() {
                     <>
                       <div>
                         <div className="max-w-3xl mx-auto mt-1">
-                          <h1 className="AnakotmaiBOLD mb-2">สถิติผู้ขาย</h1>
+                          <h1 className="AnakotmaiBOLD mb-2">สถิติผู้ขาย <Chip size="sm" color="warning" startContent={<GrTest />}>อยู่ระหว่างการทดลอง</Chip></h1>
                           <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-3">
                             <div className="bg-white rounded-xl border px-7 py-6">
                               <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center">
