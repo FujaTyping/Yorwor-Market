@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { BsBagXFill } from "react-icons/bs";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { BiLoader } from "react-icons/bi";
 
 interface GoodsItem {

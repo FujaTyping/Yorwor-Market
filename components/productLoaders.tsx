@@ -1,6 +1,6 @@
 import React from "react";
-import { Skeleton } from "@nextui-org/skeleton";
-import { Card } from "@nextui-org/card";
+import { Skeleton } from "@heroui/skeleton";
+import { Card } from "@heroui/card";
 
 function ProductLoaders() {
   return (
