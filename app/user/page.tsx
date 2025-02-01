@@ -94,7 +94,7 @@ export default function UserPage() {
   const [verifyStats, setVerifyStats] = useState(false);
 
   function createNewUser() {
-    const id = toast.loading("Registering ...");
+    const id = toast.loading("กำลังสมัครสมาชิก ...");
 
     if (verifyStats) {
       axios
@@ -494,6 +494,7 @@ export default function UserPage() {
                         <form>
                           <div className="flex flex-col gap-3 mb-4">
                             <Input
+                              isRequired
                               label="ชื่อผู้ใช้"
                               placeholder="eg. John Doe"
                               type="text"
@@ -502,6 +503,7 @@ export default function UserPage() {
                               onChange={(e) => setInputForm(e.target.value)}
                             />
                             <Input
+                              isRequired
                               isDisabled
                               label="อีเมล"
                               type="text"
@@ -510,6 +512,7 @@ export default function UserPage() {
                               onChange={(e) => setInputForm(e.target.value)}
                             />
                             <Textarea
+                              isRequired
                               label="Bio"
                               placeholder="eg. about you"
                               value={inputBioForm}

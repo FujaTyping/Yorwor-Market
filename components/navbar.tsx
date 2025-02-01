@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -16,6 +16,7 @@ import { FaSearch } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { Tooltip } from "@heroui/tooltip";
 import { Input } from "@heroui/input";
+import { Kbd } from "@heroui/kbd";
 
 import { signInWithGoogle } from "../lib/firebase-auth";
 
@@ -26,6 +27,21 @@ export const NavbarNX = () => {
   const { FireUser } = useLocalStorge();
   const [searchQ, setSearchQ] = useState("");
   const router = useRouter();
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const handleShortcut = (event) => {
+      if ((event.ctrlKey || event.metaKey) && (event.key === "k" || event.key === "K")) {
+        event.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleShortcut);
+    return () => {
+      document.removeEventListener("keydown", handleShortcut);
+    };
+  }, []);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -76,12 +92,14 @@ export const NavbarNX = () => {
         <NavbarContent justify="end">
           <NavbarItem>
             <Input
-              isClearable
               classNames={{
                 input: ["placeholder:text-white"],
               }}
+              style={{ width: "100%" }}
               placeholder="ค้นหาสินค้า"
+              ref={inputRef}
               startContent={<FaSearch />}
+              endContent={<><Kbd className="hidden md:block" keys={["command"]}>K</Kbd></>}
               type="text"
               variant="bordered"
               onChange={(e) => setSearchQ(e.target.value)}
