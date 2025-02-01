@@ -179,6 +179,11 @@ function AboutPage() {
                   src="https://www.4xtreme.com/wp-content/uploads/2020/11/logo-standard.png"
                 />
                 <img
+                  alt="PWA Logo"
+                  className="h-8"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlnahGOk3k-sKkX6w39fyZa81dC0VHENpmLw&s"
+                />
+                <img
                   alt="HeroUI Logo"
                   className="h-14"
                   src="https://raw.githubusercontent.com/heroui-inc/heroui/main/apps/docs/public/isotipo.png"
@@ -189,6 +194,102 @@ function AboutPage() {
                   src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*qmXv0xChExVfkhbWVj9XLg.png"
                 />
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="max-w-6xl mx-auto mt-10 px-10 mb-6" data-aos="fade-up">
+          <div>
+            <h2 className="text-3xl inline-block AnakotmaiBOLD">
+              หลักการ {"(วิธีการ)"}
+            </h2>
+          </div>
+          <div>
+            <p className="mt-2 text-lg leading-8">
+              Yorwor Market <span className="AnakotmaiBOLD">MVP</span> คือการสร้างเว็บแพลตฟอร์มที่รวมฟีเจอร์สำคัญที่สุดสำหรับการซื้อขายสินค้าในโรงเรียน เป็นแพลตฟอร์มที่รวมฟีเจอร์สำคัญที่สุด เว็ปไม่จำเป็นต้องสวย เพราะถ้าฟีเจอร์ดี ยังไงก็มีคนใช้
+            </p>
+            <section className="mt-5 mb-5">
+              <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <li>
+                  <div className="block h-full transition-all duration-200 bg-white border border-gray-200 rounded-lg group hover:shadow-lg hover:border-blue-500 hover:ring-1 hover:ring-blue-500/20">
+                    <div className="flex items-center p-6">
+                      <div
+                        className="flex items-center justify-center flex-shrink-0 w-16 h-16 transition-colors duration-200 rounded bg-blue-50 group-hover:bg-blue-100">
+                        <span className="text-4xl AnakotmaiBOLD">M</span>
+                      </div>
+
+                      <div className="flex-grow ml-6">
+                        <h3
+                          className="text-lg AnakotmaiBOLD transition-colors duration-200 line-clamp-1 group-hover:text-blue-600">
+                          Minimum
+                        </h3>
+                        <div className="inline-flex items-center mt-1">
+                          <span className="rounded">
+                            ขั้นต่ำ
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div className="block h-full transition-all duration-200 bg-white border border-gray-200 rounded-lg group hover:shadow-lg hover:border-blue-500 hover:ring-1 hover:ring-blue-500/20">
+                    <div className="flex items-center p-6">
+                      <div
+                        className="flex items-center justify-center flex-shrink-0 w-16 h-16 transition-colors duration-200 rounded bg-blue-50 group-hover:bg-blue-100">
+                        <span className="text-4xl AnakotmaiBOLD">V</span>
+                      </div>
+
+                      <div className="flex-grow ml-6">
+                        <h3
+                          className="text-lg AnakotmaiBOLD transition-colors duration-200 line-clamp-1 group-hover:text-blue-600">
+                          Viable
+                        </h3>
+                        <div className="inline-flex items-center mt-1">
+                          <span className="rounded">
+                            มีความสามารถ
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div className="block h-full transition-all duration-200 bg-white border border-gray-200 rounded-lg group hover:shadow-lg hover:border-blue-500 hover:ring-1 hover:ring-blue-500/20">
+                    <div className="flex items-center p-6">
+                      <div
+                        className="flex items-center justify-center flex-shrink-0 w-16 h-16 transition-colors duration-200 rounded bg-blue-50 group-hover:bg-blue-100">
+                        <span className="text-4xl AnakotmaiBOLD">P</span>
+                      </div>
+
+                      <div className="flex-grow ml-6">
+                        <h3
+                          className="text-lg AnakotmaiBOLD transition-colors duration-200 line-clamp-1 group-hover:text-blue-600">
+                          Product
+                        </h3>
+                        <div className="inline-flex items-center mt-1">
+                          <span className="rounded">
+                            ผลิตภัณฑ์
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <div>
+              <p className="mt-2 text-lg leading-8">
+                เป้าหมาย MVP
+                <br />
+                <span className="text-2xl">•</span>{" "}
+                ทดสอบว่าผู้ใช้งานสะดวกและพึงพอใจในระบบ
+                <br />
+                <span className="text-2xl">•</span>{" "}
+                วัดความต้องการและการตอบรับจากกลุ่มเป้าหมาย
+                <br />
+                <span className="text-2xl">•</span>{" "}
+                รับฟีดแบ็กเพื่อนำไปพัฒนาเวอร์ชันต่อไป
+              </p>
             </div>
           </div>
         </div>

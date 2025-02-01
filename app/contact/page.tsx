@@ -113,7 +113,7 @@ function ContactPage() {
         </div>
 
         <div className="grid lg:grid-cols-3 items-start gap-4 rounded-lg mt-6 shadow-lg mb-4">
-          <div className="bg-blue-500 rounded-lg p-6 h-full max-lg:order-1 text-white">
+          <div className="bg-blue-500 rounded-lg p-6 h-full max-lg:order-1 text-white hidden md:block">
             <h2 className="text-xl text-white AnakotmaiBOLD">
               ข้อมูลการติดต่อ
             </h2>
@@ -141,6 +141,7 @@ function ContactPage() {
               <div className="grid sm:grid-cols-2 gap-8">
                 <Input
                   label="ชื่อ"
+                  isRequired
                   placeholder="eg. Ellen Joe"
                   type="text"
                   value={name}
@@ -149,6 +150,7 @@ function ContactPage() {
                 />
                 <Input
                   label="อีเมล"
+                  isRequired
                   placeholder="eg. 52647@hatyaiwit.ac.th"
                   type="text"
                   value={email}
@@ -158,6 +160,7 @@ function ContactPage() {
 
                 <div className="relative flex items-center sm:col-span-2">
                   <Select
+                    isRequired
                     label="ประสบการณ์ในการใช้ Yorwor Market"
                     placeholder="กรุณาเลือกตัวเลือก"
                     value={ux}
@@ -174,6 +177,7 @@ function ContactPage() {
 
                 <div className="col-span-full">
                   <RadioGroup
+                    isRequired
                     label="หัวข้อในการติดต่อ"
                     orientation="horizontal"
                     value={topic}
@@ -188,6 +192,7 @@ function ContactPage() {
 
                 <div className="relative flex items-center sm:col-span-2">
                   <Textarea
+                    isRequired
                     label="ข้อความที่จะติดต่อ"
                     placeholder="eg. Lorem Ipsum is simply dummy text of the printing and typesetting industry"
                     value={text}
