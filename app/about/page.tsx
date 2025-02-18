@@ -3,11 +3,14 @@
 
 import { useState, useEffect } from "react";
 import AOS from "aos";
+import "./about.css";
 
 import "aos/dist/aos.css";
-import KF from "@/assets/media/KF.jpg";
-import AUM from "@/assets/media/AUM.jpg";
-import PT from "@/assets/media/PT.jpg";
+import KF from "@/assets/media/KF.webp";
+import AUM from "@/assets/media/AUM.webp";
+import PT from "@/assets/media/PT.webp";
+import Cover from "@/assets/media/Cover.webp"
+import Draft from "@/assets/media/CoverDraft.webp"
 
 function AboutPage() {
   const [title] = useState("Yorwor Market - เกี่ยวกับโครงงาน");
@@ -44,7 +47,7 @@ function AboutPage() {
             </div>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto mt-4 px-10" data-aos="fade-up">
+        <div className="max-w-6xl mx-auto mt-6 px-10" data-aos="fade-up">
           <div>
             <h2 className="text-3xl inline-block AnakotmaiBOLD">
               จุดเริ่มต้นของเรา
@@ -197,7 +200,7 @@ function AboutPage() {
             </div>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto mt-10 px-10 mb-6" data-aos="fade-up">
+        <div className="max-w-6xl mx-auto mt-10 px-10" data-aos="fade-up">
           <div>
             <h2 className="text-3xl inline-block AnakotmaiBOLD">
               หลักการ {"(วิธีการ)"}
@@ -291,6 +294,52 @@ function AboutPage() {
                 รับฟีดแบ็กเพื่อนำไปพัฒนาเวอร์ชันต่อไป
               </p>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="max-w-6xl mx-auto mt-5 px-10 mb-10" data-aos="fade-up">
+        <div>
+          <h2 className="text-3xl inline-block AnakotmaiBOLD">
+            เอกสาร
+          </h2>
+        </div>
+        <div>
+          <p className="mt-2 text-lg leading-8">
+            รายงานผลการดำเนินโครงงาน
+          </p>
+        </div>
+        <div className="flex flex-col md:flex-row gap-14 items-center mt-10 md:mt-8">
+          <div>
+            <a
+              className="book-container"
+              href="https://padlet.com/kru_an/2-67-4-5-creative-integration-project-sharing-notes-y95td5qkktywb9ku/wish/lkROZP5Jj8kXWjMg"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <div className="book">
+                <img
+                  alt="Draft"
+                  src={Draft.src}
+                />
+              </div>
+            </a>
+            <p className="text-center mt-5">โครงร่างโครงงาน</p>
+          </div>
+          <div>
+            <a
+              className="book-container"
+              href="/media/รายงานโครงงาน.pdf"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <div className="book">
+                <img
+                  alt="Cover"
+                  src={Cover.src}
+                />
+              </div>
+            </a>
+            <p className="text-center mt-5">รายงานโครงงาน 5 บท</p>
           </div>
         </div>
       </div>

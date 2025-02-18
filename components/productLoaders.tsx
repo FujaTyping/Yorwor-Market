@@ -6,7 +6,7 @@ function ProductLoaders() {
   return (
     <>
       <div className="mt-4 mb-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-        {[...Array(5)].map((_, index) => (
+        {[...Array(10)].map((_, index) => (
           <Card
             key={index}
             className="w-[150px] md:w-[200px] space-y-5 p-4"

@@ -10,6 +10,7 @@ import { Skeleton } from "@heroui/skeleton";
 import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
 import ProductLoaders from "@/components/productLoaders";
+import { PhotoProvider, PhotoView } from "react-photo-view";
 
 export default function StorePage() {
   const [title] = useState("Yorwor Market");
@@ -85,15 +86,22 @@ export default function StorePage() {
             <>
               {duckList.length > 0 ? (
                 <>
-                  <User
-                    avatarProps={{
-                      src: uList.photoURL,
-                      size: "lg",
-                    }}
-                    className="my-2"
-                    description={<p>{uList.bio}</p>}
-                    name={<p className="text-xl AnakotmaiBOLD">{uList.displayName}</p>}
-                  />
+                  <PhotoProvider
+                    bannerVisible={false}
+                    maskOpacity={0.5}
+                  >
+                    <PhotoView src={uList.photoURL}>
+                      <User
+                        avatarProps={{
+                          src: uList.photoURL,
+                          size: "lg",
+                        }}
+                        className="my-2 cursor-pointer"
+                        description={<p>{uList.bio}</p>}
+                        name={<p className="text-xl AnakotmaiBOLD">{uList.displayName}</p>}
+                      />
+                    </PhotoView>
+                  </PhotoProvider>
                   <section className="max-w-6xl mb-2">
                     <div>
                       <h1 className="text-xl my-2">
