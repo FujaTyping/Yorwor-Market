@@ -13,6 +13,7 @@ import { FaSearch } from "react-icons/fa";
 import { FaSortAmountDown } from "react-icons/fa";
 import { FaShopLock } from "react-icons/fa6";
 import { MdMoreVert } from "react-icons/md";
+import YorworLogo from "@/assets/media/Icon.webp";
 
 import LineOC from "@/assets/media/openchat.webp";
 import BannerImg from "@/assets/media/o.webp";
@@ -31,10 +32,11 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center gap-5 my-5 mx-10">
         <section className="w-full flex py-5">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center space-y-5">
+            <div className="text-center space-y-5 flex flex-col items-center justify-center">
               <span className="rounded-full uppercase bg-blue-500 px-3 py-0.5 text-sm font-semibold leading-5 text-white">
                 ยินดีต้อนรับเข้าสู่
               </span>
+              <img src={YorworLogo.src} width={192} height={192} alt="Yorwor Logo" className="h-20 w-20" />
               <p className="mt-1 text-4xl AnakotmaiBOLD sm:tracking-tight lg:text-5xl">
                 แพลตฟอร์มซื้อขายออนไลน์ของชาว{" "}
                 <span className="bg-gradient-to-r from-blue-500 to-red-500 bg-clip-text text-transparent AnakotmaiBOLD">
@@ -82,13 +84,13 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="mt-3" data-aos="fade-up">
+        <div className="mt-6" data-aos="fade-up">
           <div className="max-w-6xl mx-auto mt-2">
             <h2 className="sm:text-4xl text-2xl AnakotmaiBOLD text-center">
               ฟีเจอร์เด่นของ Yorwor Market
             </h2>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 max-md:max-w-lg mx-auto mt-5">
-              <div className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border">
+              <div data-aos="flip-left" data-aos-delay="300" className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border">
                 <SiFusionauth className="w-10 h-10 mb-6 inline-block" />
                 <h3 className="text-xl AnakotmaiBOLD mb-3">ระบบยืนยันตัวตน</h3>
                 <p className="text-sm">
@@ -97,7 +99,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border">
+              <div data-aos="flip-left" data-aos-delay="400" className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border">
                 <AiOutlineProduct className="w-10 h-10 mb-6 inline-block" />
                 <h3 className="text-xl AnakotmaiBOLD mb-3">
                   การจัดการสินค้าส่วนตัว
@@ -109,7 +111,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border">
+              <div data-aos="flip-left" data-aos-delay="500" className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border">
                 <TbMessageReport className="w-10 h-10 mb-6 inline-block" />
                 <h3 className="text-xl AnakotmaiBOLD mb-3">รายงานปัญหา</h3>
                 <p className="text-sm">
@@ -121,7 +123,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <section className="mt-3 mb-7" data-aos="fade-up">
+        <section className="mt-6 mb-7" data-aos="fade-up">
           <div className="max-w-6xl mx-auto">
             <div>
               <h2 className="sm:text-4xl text-2xl AnakotmaiBOLD text-center">
@@ -199,7 +201,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <div data-aos="zoom-in" className="max-w-4xl mx-auto flex flex-col-reverse md:flex-row md:items-center bg-blue-500 px-8 min-h-[100px] mb-3 py-6 rounded-xl shadow-xl gap-3 items-center justify-center">
+        <div data-aos="zoom-in" className="mt- max-w-4xl mx-auto flex flex-col-reverse md:flex-row md:items-center bg-blue-500 px-8 min-h-[100px] mb-3 py-6 rounded-xl shadow-xl gap-3 items-center justify-center">
           <p className="text-white text-base flex-1 items-center">
             <span className="AnakotmaiBOLD">เพิ่ม Yorwor Market ไว้ในหน้าจอหลักของคุณเพื่อการใช้งานที่สะดวกและรวดเร็ว</span> เพียงคลิก
             <span className="inline-flex items-center">
