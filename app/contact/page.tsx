@@ -1,8 +1,10 @@
+// @ts-nocheck
 "use client";
 
 import { useState, useEffect } from "react";
 import { MdContactMail } from "react-icons/md";
 import { FaMapPin } from "react-icons/fa6";
+import AOS from "aos";
 import { Input, Textarea } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
 import { RadioGroup, Radio } from "@heroui/radio";
@@ -27,6 +29,10 @@ function ContactPage() {
   const [topic, setTopic] = useState("");
   const [verifyStats, setVerifyStats] = useState(false);
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    AOS.init({ once: true });
+  }, []);
 
   useEffect(() => {
     if (FireUser?.uid) {
@@ -112,7 +118,7 @@ function ContactPage() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 items-start gap-4 rounded-lg mt-6 shadow-lg mb-4">
+        <div data-aos="fade-up" className="grid lg:grid-cols-3 items-start gap-4 rounded-lg mt-6 shadow-lg mb-4">
           <div className="bg-blue-500 rounded-lg p-6 h-full max-lg:order-1 text-white hidden md:block">
             <h2 className="text-xl text-white AnakotmaiBOLD">
               ข้อมูลการติดต่อ
@@ -223,7 +229,7 @@ function ContactPage() {
             </div>
           </div>
         </div>
-        <div className="mx-auto lg:flex lg:items-center justify-between mt-12 mb-2">
+        <div data-aos="fade-up" className="mx-auto lg:flex lg:items-center justify-between mt-12 mb-2">
           <h2 className="text-3xl">
             <span className="block AnakotmaiBOLD tracking-tight">
               ร่วมประเมิน Yorwor Market เพื่อการพัฒนาที่ดียิ่งขึ้น
