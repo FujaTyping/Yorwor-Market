@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
   },
   "dependencies": {
+    "@heroui/accordion": "^2.2.11",
     "@heroui/avatar": "^2.2.7",
     "@heroui/badge": "^2.2.6",
     "@heroui/button": "2.2.10",
@@ -41,7 +42,6 @@
     "clsx": "2.1.1",
     "dotenv": "^16.4.7",
     "firebase": "^11.1.0",
-    "framer-motion": "11.13.1",
     "idb": "^8.0.1",
     "intl-messageformat": "^10.5.0",
     "next": "15.0.4",

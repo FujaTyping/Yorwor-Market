@@ -86,22 +86,20 @@ export default function StorePage() {
             <>
               {duckList.length > 0 ? (
                 <>
-                  <PhotoProvider
-                    bannerVisible={false}
-                    maskOpacity={0.5}
-                  >
-                    <PhotoView src={uList.photoURL}>
-                      <User
-                        avatarProps={{
-                          src: uList.photoURL,
-                          size: "lg",
-                        }}
-                        className="my-2 cursor-pointer"
-                        description={<p>{uList.bio}</p>}
-                        name={<p className="text-xl AnakotmaiBOLD">{uList.displayName}</p>}
-                      />
-                    </PhotoView>
-                  </PhotoProvider>
+                  <div className="flex items-center justify-center gap-4 mb-3">
+                    <PhotoProvider
+                      bannerVisible={false}
+                      maskOpacity={0.5}
+                    >
+                      <PhotoView src={uList.photoURL}>
+                        <img src={uList.photoURL} alt="Profile" className="w-16 h-16 rounded-full cursor-pointer" />
+                      </PhotoView>
+                    </PhotoProvider>
+                    <div>
+                      <h1 className="AnakotmaiBOLD text-xl">{uList.displayName}</h1>
+                      <p className="text-tiny text-foreground-400">{uList.bio}</p>
+                    </div>
+                  </div>
                   <section className="max-w-6xl mb-2">
                     <div>
                       <h1 className="text-xl my-2">

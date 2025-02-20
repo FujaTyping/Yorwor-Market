@@ -6,6 +6,7 @@ import axios from "axios";
 import { BsBagXFill } from "react-icons/bs";
 import { User } from "@heroui/user";
 import { Skeleton } from "@heroui/skeleton";
+import NoG from "@/assets/media/icon/Animated/NoGoods.gif";
 
 import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
@@ -80,7 +81,7 @@ export default function CategoryPage() {
                                 </>
                             ) : (
                                 <div className="flex items-center justify-center flex-col h-72 my-3 gap-3 flex-col">
-                                    <BsBagXFill className="h-8 w-8" />
+                                    <img src={NoG.src} alt="AnimatedIcon" className="w-24 h-24" />
                                     <div className="gap-1">
                                         <h1 className="text-xl text-center">
                                             สินค้าประเภท <span className="AnakotmaiBOLD">{typeQ}</span>{" "}

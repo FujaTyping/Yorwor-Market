@@ -7,6 +7,7 @@ import axios from "axios";
 import { User } from "@heroui/user";
 import { IoFlag } from "react-icons/io5";
 import { Tooltip } from "@heroui/tooltip";
+import NoG from "@/assets/media/icon/Animated/NoGoods.gif";
 import {
   Modal,
   ModalContent,
@@ -338,7 +339,7 @@ export default function ProductPage() {
                   </div>
                 ) : (
                   <div className="flex items-center flex-col h-72 justify-center md:gap-6">
-                    <BsBagXFill className="w-8 h-8" />
+                    <img src={NoG.src} alt="AnimatedIcon" className="w-24 h-24" />
                     <div className="flex flex-col gap-1 justify-center">
                       <h1 className="text-xl mt-3 AnakotmaiBOLD">
                         ไม่มีสินค้านี้
