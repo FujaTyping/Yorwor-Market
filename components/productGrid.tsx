@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { BsBagXFill } from "react-icons/bs";
+//import { BsBagXFill } from "react-icons/bs";
 import { Button } from "@heroui/button";
 import { BiLoader } from "react-icons/bi";
 import { Chip } from "@heroui/chip";
+
+import NoG from "@/assets/media/icon/Animated/NoGoods.gif";
 
 interface GoodsItem {
   id: string;
@@ -96,7 +98,7 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
         </>
       ) : (
         <div className="flex items-center flex-col h-72 justify-center md:flex-row md:gap-6 mt-5">
-          <BsBagXFill className="w-8 h-8" />
+          <img src={NoG.src} alt="AnimatedIcon" className="w-24 h-24" />
           <div className="flex flex-col gap-1">
             <h1 className="text-xl text-center mt-3 AnakotmaiBOLD">
               ยังไม่มีสินค้า ณ ตอนนี้

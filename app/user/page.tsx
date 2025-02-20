@@ -11,6 +11,8 @@ import { getAuth, signOut } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import axios from "axios";
 import { FiLogIn } from "react-icons/fi";
+import NoAcc from "@/assets/media/icon/Animated/Key.gif";
+import NoLogin from "@/assets/media/icon/Animated/User.gif"
 import {
   Modal,
   ModalContent,
@@ -39,6 +41,9 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/table";
+import { Accordion, AccordionItem } from "@heroui/accordion";
+import { FaShop } from "react-icons/fa6";
+import { FaShoppingCart } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { MdSwitchAccount } from "react-icons/md";
 import { LuPackage } from "react-icons/lu";
@@ -550,7 +555,7 @@ export default function UserPage() {
                   {userState == "NoYorwor" ? (
                     <>
                       <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center items-center gap-4 h-72">
-                        <GrOrganization className="w-8 h-8" />
+                        <img src={NoAcc.src} alt="AnimatedIcon" className="w-24 h-24" />
                         <div>
                           <h1 className="text-xl AnakotmaiBOLD">
                             บุคคลภายนอก @hatyaiwit.ac.th
@@ -561,101 +566,133 @@ export default function UserPage() {
                     </>
                   ) : (
                     <>
-                      <div>
-                        <div className="max-w-3xl mx-auto mt-1">
-                          <h1 className="AnakotmaiBOLD mb-2">สถิติผู้ขาย <Chip size="sm" color="warning" startContent={<GrTest />}>อยู่ระหว่างการทดลอง</Chip></h1>
-                          <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-3">
-                            <div className="bg-white rounded-xl border px-7 py-6">
-                              <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center">
-                                <LuPackage /> จำนวนสินค้า
-                              </p>
-                              <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">
-                                {Object.keys(userDetails.goods).length}
-                              </h3>
+                      <div className="max-w-4xl w-full mx-auto mt-1 mb-6">
+                        <Accordion variant="splitted" defaultExpandedKeys={["2"]}>
+                          <AccordionItem
+                            startContent={
+                              <FaShoppingCart />
+                            }
+                            key="1" title="สำหรับผู้ชื้อสินค้า">
+                            <div className="pb-5">
+                              <div className="max-w-3xl mx-auto">
+                                <div className="mb-3 mt-2 mx-auto">
+                                  <h1 className="AnakotmaiBOLD">การสั่งชื้อสินค้า <Chip size="sm" color="warning" startContent={<GrTest />}>อยู่ระหว่างการทดลอง</Chip></h1>
+                                </div>
+                                <Table aria-label="Goods table">
+                                  <TableHeader>
+                                    <TableColumn>{"<:ชื่อ>"}</TableColumn>
+                                    <TableColumn>{"<:ไอดี>"}</TableColumn>
+                                    <TableColumn>{"<:สถานะสินค้า>"}</TableColumn>
+                                    <TableColumn>{"<:รูปสินค้า>"}</TableColumn>
+                                  </TableHeader>
+                                  <TableBody
+                                    emptyContent={"คุณยังไม่มีคำสั่งชื้อที่ดำเนินการอยู่!"}
+                                  >
+                                    {[]}
+                                  </TableBody>
+                                </Table>
+                              </div>
                             </div>
-                            <div className="bg-white rounded-xl border px-7 py-6">
-                              <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center">
-                                <FaMoneyBill /> รายได้
-                              </p>
-                              <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">
-                                0
-                              </h3>
+                          </AccordionItem>
+                          <AccordionItem startContent={<FaShop />} key="2" title="สำหรับผู้ขาย (ร้านค้า)">
+                            <div>
+                              <div className="max-w-3xl mx-auto mt-1">
+                                <h1 className="AnakotmaiBOLD mb-2">สถิติผู้ขาย <Chip size="sm" color="warning" startContent={<GrTest />}>อยู่ระหว่างการทดลอง</Chip></h1>
+                                <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-3">
+                                  <div className="bg-white rounded-xl border px-7 py-6">
+                                    <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center">
+                                      <LuPackage /> จำนวนสินค้า
+                                    </p>
+                                    <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">
+                                      {Object.keys(userDetails.goods).length}
+                                    </h3>
+                                  </div>
+                                  <div className="bg-white rounded-xl border px-7 py-6">
+                                    <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center">
+                                      <FaMoneyBill /> รายได้
+                                    </p>
+                                    <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">
+                                      0
+                                    </h3>
+                                  </div>
+                                  <div className="bg-white rounded-xl border px-7 py-6">
+                                    <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center">
+                                      <MdSell /> ขายไปทั้งหมด
+                                    </p>
+                                    <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">
+                                      0
+                                    </h3>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <div className="bg-white rounded-xl border px-7 py-6">
-                              <p className="text-base AnakotmaiBOLD mb-1 flex gap-2 items-center">
-                                <MdSell /> ขายไปทั้งหมด
-                              </p>
-                              <h3 className="text-blue-600 text-3xl AnakotmaiBOLD">
-                                0
-                              </h3>
+                            <div className="pb-5 pt-3">
+                              <div className="max-w-3xl mx-auto">
+                                <div className="flex items-center mb-3 mt-2 gap-2 mx-auto">
+                                  <h1 className="AnakotmaiBOLD">สินค้าของคุณ</h1>
+                                  <Tooltip content="เพิ่มสินค้าใหม่">
+                                    <IoMdAddCircleOutline
+                                      className="w-6 h-6 cursor-pointer"
+                                      onClick={modalProduct.onOpen}
+                                    />
+                                  </Tooltip>
+                                </div>
+                                <Table aria-label="Goods table">
+                                  <TableHeader>
+                                    <TableColumn>{"<:ไอดี>"}</TableColumn>
+                                    <TableColumn>{"<:ชื่อ>"}</TableColumn>
+                                    <TableColumn>{"<:จำนวนสินค้า>"}</TableColumn>
+                                    <TableColumn className="text-red-500 text-center">
+                                      ลบ
+                                    </TableColumn>
+                                  </TableHeader>
+                                  {userDetails.goods &&
+                                    Object.keys(userDetails.goods).length > 0 ? (
+                                    <TableBody>
+                                      {Object.entries(userDetails.goods).map(
+                                        ([id, { title, availability }], index) => (
+                                          <TableRow key={index}>
+                                            <TableCell>
+                                              <Link href={`/product?id=${id}`}>
+                                                <p className="AnakotmaiBOLD cursor-pointer">
+                                                  {id}
+                                                </p>
+                                              </Link>
+                                            </TableCell>
+                                            <TableCell>{title}</TableCell>
+                                            <TableCell>
+                                              <div className="flex items-center gap-2">
+                                                {availability}{" "}
+                                                <MdOutlineEdit
+                                                  className="cursor-pointer"
+                                                  onClick={() =>
+                                                    updateQuantity(id, availability)
+                                                  }
+                                                />
+                                              </div>
+                                            </TableCell>
+                                            <TableCell
+                                              className="cursor-pointer flex justify-center text-red-500"
+                                              onClick={() => confirmDelete(id)}
+                                            >
+                                              <MdDeleteForever />
+                                            </TableCell>
+                                          </TableRow>
+                                        ),
+                                      )}
+                                    </TableBody>
+                                  ) : (
+                                    <TableBody
+                                      emptyContent={"คุณยังไม่มีสินค้าที่ขายอยู่!"}
+                                    >
+                                      {[]}
+                                    </TableBody>
+                                  )}
+                                </Table>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="pb-5">
-                        <div className="max-w-3xl mx-auto">
-                          <div className="flex items-center mb-3 mt-2 gap-2 mx-auto">
-                            <h1 className="AnakotmaiBOLD">สินค้าของคุณ</h1>
-                            <Tooltip content="เพิ่มสินค้าใหม่">
-                              <IoMdAddCircleOutline
-                                className="w-6 h-6 cursor-pointer"
-                                onClick={modalProduct.onOpen}
-                              />
-                            </Tooltip>
-                          </div>
-                          <Table aria-label="Goods table">
-                            <TableHeader>
-                              <TableColumn>{"<:ไอดี>"}</TableColumn>
-                              <TableColumn>{"<:ชื่อ>"}</TableColumn>
-                              <TableColumn>{"<:จำนวนสินค้า>"}</TableColumn>
-                              <TableColumn className="text-red-500 text-center">
-                                ลบ
-                              </TableColumn>
-                            </TableHeader>
-                            {userDetails.goods &&
-                              Object.keys(userDetails.goods).length > 0 ? (
-                              <TableBody>
-                                {Object.entries(userDetails.goods).map(
-                                  ([id, { title, availability }], index) => (
-                                    <TableRow key={index}>
-                                      <TableCell>
-                                        <Link href={`/product?id=${id}`}>
-                                          <p className="AnakotmaiBOLD cursor-pointer">
-                                            {id}
-                                          </p>
-                                        </Link>
-                                      </TableCell>
-                                      <TableCell>{title}</TableCell>
-                                      <TableCell>
-                                        <div className="flex items-center gap-2">
-                                          {availability}{" "}
-                                          <MdOutlineEdit
-                                            className="cursor-pointer"
-                                            onClick={() =>
-                                              updateQuantity(id, availability)
-                                            }
-                                          />
-                                        </div>
-                                      </TableCell>
-                                      <TableCell
-                                        className="cursor-pointer flex justify-center text-red-500"
-                                        onClick={() => confirmDelete(id)}
-                                      >
-                                        <MdDeleteForever />
-                                      </TableCell>
-                                    </TableRow>
-                                  ),
-                                )}
-                              </TableBody>
-                            ) : (
-                              <TableBody
-                                emptyContent={"คุณยังไม่มีสินค้าที่ขายอยู่!"}
-                              >
-                                {[]}
-                              </TableBody>
-                            )}
-                          </Table>
-                        </div>
+                          </AccordionItem>
+                        </Accordion>
                       </div>
                     </>
                   )}
@@ -667,7 +704,7 @@ export default function UserPage() {
       ) : (
         <>
           <div className="max-w-lg mx-auto mt-5 flex flex-col justify-center items-center h-72 gap-4">
-            <FaUserLock className="w-8 h-8" />
+            <img src={NoLogin.src} alt="AnimatedIcon" className="w-24 h-24" />
             <div>
               <h1 className="text-xl AnakotmaiBOLD">
                 คุณยังไม่ได้เข้าสู่ระบบ

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { BsBagXFill } from "react-icons/bs";
 import { Tooltip } from "@heroui/tooltip";
 import { Select, SelectItem } from "@heroui/select";
+import NoG from "@/assets/media/icon/Animated/NoGoods.gif";
 import {
   Modal,
   ModalContent,
@@ -152,7 +153,7 @@ export default function SearchPage() {
                 </>
               ) : (
                 <div className="flex flex-col h-72 items-center justify-center mt-4 gap-3 flex-col">
-                  <BsBagXFill className="h-8 w-8" />
+                  <img src={NoG.src} alt="AnimatedIcon" className="w-24 h-24" />
                   <div className="gap-1">
                     <h1 className="text-xl text-center">
                       ไม่เจอสินค้าสำหรับการค้นหา :{" "}
