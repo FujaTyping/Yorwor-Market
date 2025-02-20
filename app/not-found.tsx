@@ -1,13 +1,12 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-
+import { useRouter } from "next/navigation";
 import React from "react";
 import { Button } from "@heroui/button";
 import { IoIosArrowBack } from "react-icons/io";
 
-function notfound() {
-  const router = useRouter()
+function Notfound() {
+  const router = useRouter();
 
   return (
     <>
@@ -19,7 +18,13 @@ function notfound() {
             <p className="mt-2 mb-4">
               หน้าที่คุณกำลังค้นหาไม่มีอยู่หรือถูกย้ายแล้วไปที่อื่นแล้ว
             </p>
-            <Button startContent={<IoIosArrowBack />} color='primary' onPress={() => { router.back() }}>
+            <Button
+              color="primary"
+              startContent={<IoIosArrowBack />}
+              onPress={() => {
+                router.back();
+              }}
+            >
               กลับไปหน้าก่อนหน้านี้
             </Button>
           </div>
@@ -29,4 +34,4 @@ function notfound() {
   );
 }
 
-export default notfound;
+export default Notfound;

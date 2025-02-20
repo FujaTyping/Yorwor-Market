@@ -5,10 +5,8 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { BsBagXFill } from "react-icons/bs";
 import { Tooltip } from "@heroui/tooltip";
 import { Select, SelectItem } from "@heroui/select";
-import NoG from "@/assets/media/icon/Animated/NoGoods.gif";
 import {
   Modal,
   ModalContent,
@@ -21,6 +19,7 @@ import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { TbSortAscendingShapes } from "react-icons/tb";
 
+import NoG from "@/assets/media/icon/Animated/NoGoods.gif";
 import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
 import ProductLoaders from "@/components/productLoaders";
@@ -153,7 +152,7 @@ export default function SearchPage() {
                 </>
               ) : (
                 <div className="flex flex-col h-72 items-center justify-center mt-4 gap-3 flex-col">
-                  <img src={NoG.src} alt="AnimatedIcon" className="w-24 h-24" />
+                  <img alt="AnimatedIcon" className="w-24 h-24" src={NoG.src} />
                   <div className="gap-1">
                     <h1 className="text-xl text-center">
                       ไม่เจอสินค้าสำหรับการค้นหา :{" "}

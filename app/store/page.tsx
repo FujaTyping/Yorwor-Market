@@ -4,13 +4,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BsBagXFill } from "react-icons/bs";
-import { User } from "@heroui/user";
 import { Skeleton } from "@heroui/skeleton";
+import { PhotoProvider, PhotoView } from "react-photo-view";
 
 import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
 import ProductLoaders from "@/components/productLoaders";
-import { PhotoProvider, PhotoView } from "react-photo-view";
 
 export default function StorePage() {
   const [title] = useState("Yorwor Market");
@@ -87,17 +86,22 @@ export default function StorePage() {
               {duckList.length > 0 ? (
                 <>
                   <div className="flex items-center justify-center gap-4 mb-3">
-                    <PhotoProvider
-                      bannerVisible={false}
-                      maskOpacity={0.5}
-                    >
+                    <PhotoProvider bannerVisible={false} maskOpacity={0.5}>
                       <PhotoView src={uList.photoURL}>
-                        <img src={uList.photoURL} alt="Profile" className="w-16 h-16 rounded-full cursor-pointer" />
+                        <img
+                          alt="Profile"
+                          className="w-16 h-16 rounded-full cursor-pointer"
+                          src={uList.photoURL}
+                        />
                       </PhotoView>
                     </PhotoProvider>
                     <div>
-                      <h1 className="AnakotmaiBOLD text-xl">{uList.displayName}</h1>
-                      <p className="text-tiny text-foreground-400">{uList.bio}</p>
+                      <h1 className="AnakotmaiBOLD text-xl">
+                        {uList.displayName}
+                      </h1>
+                      <p className="text-tiny text-foreground-400">
+                        {uList.bio}
+                      </p>
                     </div>
                   </div>
                   <section className="max-w-6xl mb-2">
