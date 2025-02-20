@@ -18,7 +18,7 @@
     "@heroui/code": "2.2.7",
     "@heroui/dropdown": "2.3.10",
     "@heroui/image": "2.2.6",
-    "@heroui/input": "2.4.10",
+    "@heroui/input": "2.4.13",
     "@heroui/kbd": "2.2.7",
     "@heroui/link": "2.2.8",
     "@heroui/listbox": "2.3.10",
@@ -33,7 +33,7 @@
     "@heroui/system": "2.4.7",
     "@heroui/table": "2.2.9",
     "@heroui/theme": "2.4.6",
-    "@heroui/tooltip": "2.2.8",
+    "@heroui/tooltip": "2.2.11",
     "@heroui/user": "2.2.7",
     "@react-aria/ssr": "3.9.7",
     "@react-aria/visually-hidden": "3.8.18",
@@ -58,7 +58,7 @@
     "swiper": "^11.2.1"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "15.0.4",
+    "@next/eslint-plugin-next": "15.1.7",
     "@react-types/shared": "3.25.0",
     "@types/node": "20.5.7",
     "@types/react": "18.3.3",
@@ -73,12 +73,12 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "5.2.1",
-    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-unused-imports": "4.1.4",
     "postcss": "8.4.49",
     "prettier": "3.3.3",
-    "tailwind-variants": "0.1.20",
+    "tailwind-variants": "0.3.1",
     "tailwindcss": "3.4.16",
     "typescript": "5.6.3"
   }

@@ -118,7 +118,10 @@ function ContactPage() {
           </p>
         </div>
 
-        <div data-aos="fade-up" className="grid lg:grid-cols-3 items-start gap-4 rounded-lg mt-6 shadow-lg mb-4">
+        <div
+          className="grid lg:grid-cols-3 items-start gap-4 rounded-lg mt-6 shadow-lg mb-4"
+          data-aos="fade-up"
+        >
           <div className="bg-blue-500 rounded-lg p-6 h-full max-lg:order-1 text-white hidden md:block">
             <h2 className="text-xl text-white AnakotmaiBOLD">
               ข้อมูลการติดต่อ
@@ -146,8 +149,8 @@ function ContactPage() {
             <div>
               <div className="grid sm:grid-cols-2 gap-8">
                 <Input
-                  label="ชื่อ"
                   isRequired
+                  label="ชื่อ"
                   placeholder="eg. Ellen Joe"
                   type="text"
                   value={name}
@@ -155,8 +158,8 @@ function ContactPage() {
                   onChange={(e) => setName(e.target.value)}
                 />
                 <Input
-                  label="อีเมล"
                   isRequired
+                  label="อีเมล"
                   placeholder="eg. 52647@hatyaiwit.ac.th"
                   type="text"
                   value={email}
@@ -229,7 +232,10 @@ function ContactPage() {
             </div>
           </div>
         </div>
-        <div data-aos="fade-up" className="mx-auto lg:flex lg:items-center justify-between mt-12 mb-2">
+        <div
+          className="mx-auto lg:flex lg:items-center justify-between mt-12 mb-2"
+          data-aos="fade-up"
+        >
           <h2 className="text-3xl">
             <span className="block AnakotmaiBOLD tracking-tight">
               ร่วมประเมิน Yorwor Market เพื่อการพัฒนาที่ดียิ่งขึ้น

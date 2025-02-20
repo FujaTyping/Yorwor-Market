@@ -2,12 +2,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from "@heroui/navbar";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
 import { Button } from "@heroui/button";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
@@ -31,13 +26,17 @@ export const NavbarNX = () => {
 
   useEffect(() => {
     const handleShortcut = (event) => {
-      if ((event.ctrlKey || event.metaKey) && (event.key === "k" || event.key === "K")) {
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        (event.key === "k" || event.key === "K")
+      ) {
         event.preventDefault();
         inputRef.current?.focus();
       }
     };
 
     document.addEventListener("keydown", handleShortcut);
+
     return () => {
       document.removeEventListener("keydown", handleShortcut);
     };
@@ -69,8 +68,12 @@ export const NavbarNX = () => {
       >
         <NavbarBrand as={Link} className="cursor-pointer" href={"/"}>
           <img alt="Logo" src={YorworLogo.src} />
-          <p className="ml-2 text-inherit AnakotmaiBOLD sm:block hidden">Yorwor Market</p>
-          <p className="ml-2 text-inherit AnakotmaiBOLD sm:hidden block">YW Market</p>
+          <p className="ml-2 text-inherit AnakotmaiBOLD sm:block hidden">
+            Yorwor Market
+          </p>
+          <p className="ml-2 text-inherit AnakotmaiBOLD sm:hidden block">
+            YW Market
+          </p>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
@@ -92,14 +95,20 @@ export const NavbarNX = () => {
         <NavbarContent justify="end">
           <NavbarItem>
             <Input
+              ref={inputRef}
               classNames={{
                 input: ["placeholder:text-white"],
               }}
-              style={{ width: "100%" }}
+              endContent={
+                <>
+                  <Kbd className="hidden md:block" keys={["command"]}>
+                    K
+                  </Kbd>
+                </>
+              }
               placeholder="ค้นหาสินค้า"
-              ref={inputRef}
               startContent={<FaSearch />}
-              endContent={<><Kbd className="hidden md:block" keys={["command"]}>K</Kbd></>}
+              style={{ width: "100%" }}
               type="text"
               variant="bordered"
               onChange={(e) => setSearchQ(e.target.value)}

@@ -98,7 +98,7 @@ const GoodsGrid: React.FC<GoodsListProps> = ({ goodsList }) => {
         </>
       ) : (
         <div className="flex items-center flex-col h-72 justify-center md:flex-row md:gap-6 mt-5">
-          <img src={NoG.src} alt="AnimatedIcon" className="w-24 h-24" />
+          <img alt="AnimatedIcon" className="w-24 h-24" src={NoG.src} />
           <div className="flex flex-col gap-1">
             <h1 className="text-xl text-center mt-3 AnakotmaiBOLD">
               ยังไม่มีสินค้า ณ ตอนนี้

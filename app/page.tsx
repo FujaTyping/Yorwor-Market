@@ -13,8 +13,8 @@ import { FaSearch } from "react-icons/fa";
 import { FaSortAmountDown } from "react-icons/fa";
 import { FaShopLock } from "react-icons/fa6";
 import { MdMoreVert } from "react-icons/md";
-import YorworLogo from "@/assets/media/Icon.webp";
 
+import YorworLogo from "@/assets/media/Icon.webp";
 import LineOC from "@/assets/media/openchat.webp";
 import BannerImg from "@/assets/media/o.webp";
 
@@ -36,7 +36,13 @@ export default function Home() {
               <span className="rounded-full uppercase bg-blue-500 px-3 py-0.5 text-sm font-semibold leading-5 text-white">
                 ยินดีต้อนรับเข้าสู่
               </span>
-              <img src={YorworLogo.src} width={192} height={192} alt="Yorwor Logo" className="h-20 w-20" />
+              <img
+                alt="Yorwor Logo"
+                className="h-20 w-20"
+                height={192}
+                src={YorworLogo.src}
+                width={192}
+              />
               <p className="mt-1 text-4xl AnakotmaiBOLD sm:tracking-tight lg:text-5xl">
                 แพลตฟอร์มซื้อขายออนไลน์ของชาว{" "}
                 <span className="bg-gradient-to-r from-blue-500 to-red-500 bg-clip-text text-transparent AnakotmaiBOLD">
@@ -90,7 +96,11 @@ export default function Home() {
               ฟีเจอร์เด่นของ Yorwor Market
             </h2>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 max-md:max-w-lg mx-auto mt-5">
-              <div data-aos="flip-left" data-aos-delay="300" className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border">
+              <div
+                className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border"
+                data-aos="flip-left"
+                data-aos-delay="300"
+              >
                 <SiFusionauth className="w-10 h-10 mb-6 inline-block" />
                 <h3 className="text-xl AnakotmaiBOLD mb-3">ระบบยืนยันตัวตน</h3>
                 <p className="text-sm">
@@ -99,7 +109,11 @@ export default function Home() {
                 </p>
               </div>
 
-              <div data-aos="flip-left" data-aos-delay="400" className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border">
+              <div
+                className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border"
+                data-aos="flip-left"
+                data-aos-delay="400"
+              >
                 <AiOutlineProduct className="w-10 h-10 mb-6 inline-block" />
                 <h3 className="text-xl AnakotmaiBOLD mb-3">
                   การจัดการสินค้าส่วนตัว
@@ -111,7 +125,11 @@ export default function Home() {
                 </p>
               </div>
 
-              <div data-aos="flip-left" data-aos-delay="500" className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border">
+              <div
+                className="rounded-xl group p-8 text-center hover:bg-blue-500 hover:text-white hover:shadow-xl transition duration-300 border"
+                data-aos="flip-left"
+                data-aos-delay="500"
+              >
                 <TbMessageReport className="w-10 h-10 mb-6 inline-block" />
                 <h3 className="text-xl AnakotmaiBOLD mb-3">รายงานปัญหา</h3>
                 <p className="text-sm">
@@ -201,16 +219,30 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <div data-aos="zoom-in" className="mt- max-w-4xl mx-auto flex flex-col-reverse md:flex-row md:items-center bg-blue-500 px-8 min-h-[100px] mb-3 py-6 rounded-xl shadow-xl gap-3 items-center justify-center">
+        <div
+          className="mt- max-w-4xl mx-auto flex flex-col-reverse md:flex-row md:items-center bg-blue-500 px-8 min-h-[100px] mb-3 py-6 rounded-xl shadow-xl gap-3 items-center justify-center"
+          data-aos="zoom-in"
+        >
           <p className="text-white text-base flex-1 items-center">
-            <span className="AnakotmaiBOLD">เพิ่ม Yorwor Market ไว้ในหน้าจอหลักของคุณเพื่อการใช้งานที่สะดวกและรวดเร็ว</span> เพียงคลิก
+            <span className="AnakotmaiBOLD">
+              เพิ่ม Yorwor Market
+              ไว้ในหน้าจอหลักของคุณเพื่อการใช้งานที่สะดวกและรวดเร็ว
+            </span>{" "}
+            เพียงคลิก
             <span className="inline-flex items-center">
               <MdMoreVert className="items-center w-5 h-5 translate-y-1" />
             </span>
-            {"(บนเบราว์เซอร์ของคุณ)"} เลือก {"เพิ่มไปยังหน้าจอหลัก"} แล้วกด {"เพิ่ม"} เท่านี้ก็พร้อมใช้งานทันที !
+            {"(บนเบราว์เซอร์ของคุณ)"} เลือก {"เพิ่มไปยังหน้าจอหลัก"} แล้วกด{" "}
+            {"เพิ่ม"} เท่านี้ก็พร้อมใช้งานทันที !
           </p>
           <div>
-            <img height={512} width={512} className="h-16 w-16" src="/icon-512x512.png" alt="YW Market" />
+            <img
+              alt="YW Market"
+              className="h-16 w-16"
+              height={512}
+              src="/icon-512x512.png"
+              width={512}
+            />
           </div>
         </div>
       </div>

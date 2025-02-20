@@ -7,7 +7,6 @@ import axios from "axios";
 import { User } from "@heroui/user";
 import { IoFlag } from "react-icons/io5";
 import { Tooltip } from "@heroui/tooltip";
-import NoG from "@/assets/media/icon/Animated/NoGoods.gif";
 import {
   Modal,
   ModalContent,
@@ -24,7 +23,6 @@ import {
 } from "@heroui/dropdown";
 import { RadioGroup, Radio } from "@heroui/radio";
 import { ToastContainer, toast } from "react-toastify";
-import { BsBagXFill } from "react-icons/bs";
 import { IoMdMore } from "react-icons/io";
 import { IoMdShare } from "react-icons/io";
 import Link from "next/link";
@@ -45,6 +43,7 @@ import "react-photo-view/dist/react-photo-view.css";
 import { Skeleton } from "@heroui/skeleton";
 import { useSearchParams } from "next/navigation";
 
+import NoG from "@/assets/media/icon/Animated/NoGoods.gif";
 import ProductLoaders from "@/components/productLoaders";
 import marketConfig from "@/market-config.mjs";
 import GoodsGrid from "@/components/productGrid";
@@ -257,7 +256,17 @@ export default function ProductPage() {
                       <div className="mb-1">
                         <span className="AnakotmaiBOLD">ประเภท : </span>
                         <span className="text-gray-600">
-                          {goodsList.category ? (<><Link href={`/goods/category?type=${goodsList.category}`}>{goodsList.category}</Link></>) : ("ไม่มี")}
+                          {goodsList.category ? (
+                            <>
+                              <Link
+                                href={`/goods/category?type=${goodsList.category}`}
+                              >
+                                {goodsList.category}
+                              </Link>
+                            </>
+                          ) : (
+                            "ไม่มี"
+                          )}
                         </span>
                       </div>
                       <div className="flex flex-col md:flex-row mb-4 gap-2 md:gap-4">
@@ -312,11 +321,11 @@ export default function ProductPage() {
                                 startContent={<IoBagHandle />}
                                 {...(isValidUrl(goodsList.social.platformName)
                                   ? {
-                                    as: "a",
-                                    href: goodsList.social.platformName,
-                                    target: "_blank",
-                                    rel: "noopener noreferrer",
-                                  }
+                                      as: "a",
+                                      href: goodsList.social.platformName,
+                                      target: "_blank",
+                                      rel: "noopener noreferrer",
+                                    }
                                   : {})}
                               >
                                 ติดต่อผู้ขายผ่าน {goodsList.social.platform}{" "}
@@ -339,7 +348,11 @@ export default function ProductPage() {
                   </div>
                 ) : (
                   <div className="flex items-center flex-col h-72 justify-center md:gap-6">
-                    <img src={NoG.src} alt="AnimatedIcon" className="w-24 h-24" />
+                    <img
+                      alt="AnimatedIcon"
+                      className="w-24 h-24"
+                      src={NoG.src}
+                    />
                     <div className="flex flex-col gap-1 justify-center">
                       <h1 className="text-xl mt-3 AnakotmaiBOLD">
                         ไม่มีสินค้านี้

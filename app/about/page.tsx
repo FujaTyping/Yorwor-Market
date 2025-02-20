@@ -9,8 +9,8 @@ import "aos/dist/aos.css";
 import KF from "@/assets/media/KF.webp";
 import AUM from "@/assets/media/AUM.webp";
 import PT from "@/assets/media/PT.webp";
-import Cover from "@/assets/media/Cover.webp"
-import Draft from "@/assets/media/CoverDraft.webp"
+import Cover from "@/assets/media/Cover.webp";
+import Draft from "@/assets/media/CoverDraft.webp";
 
 function AboutPage() {
   const [title] = useState("Yorwor Market - เกี่ยวกับโครงงาน");
@@ -208,27 +208,26 @@ function AboutPage() {
           </div>
           <div>
             <p className="mt-2 text-lg leading-8">
-              Yorwor Market <span className="AnakotmaiBOLD">MVP</span> คือการสร้างเว็บแพลตฟอร์มที่รวมฟีเจอร์สำคัญที่สุดสำหรับการซื้อขายสินค้าในโรงเรียน เป็นแพลตฟอร์มที่รวมฟีเจอร์สำคัญที่สุด เว็ปไม่จำเป็นต้องสวย เพราะถ้าฟีเจอร์ดี ยังไงก็มีคนใช้
+              Yorwor Market <span className="AnakotmaiBOLD">MVP</span>{" "}
+              คือการสร้างเว็บแพลตฟอร์มที่รวมฟีเจอร์สำคัญที่สุดสำหรับการซื้อขายสินค้าในโรงเรียน
+              เป็นแพลตฟอร์มที่รวมฟีเจอร์สำคัญที่สุด เว็ปไม่จำเป็นต้องสวย
+              เพราะถ้าฟีเจอร์ดี ยังไงก็มีคนใช้
             </p>
             <section className="mt-5 mb-5">
               <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 <li>
                   <div className="block h-full transition-all duration-200 bg-white border border-gray-200 rounded-lg group hover:shadow-lg hover:border-blue-500 hover:ring-1 hover:ring-blue-500/20">
                     <div className="flex items-center p-6">
-                      <div
-                        className="flex items-center justify-center flex-shrink-0 w-16 h-16 transition-colors duration-200 rounded bg-blue-50 group-hover:bg-blue-100">
+                      <div className="flex items-center justify-center flex-shrink-0 w-16 h-16 transition-colors duration-200 rounded bg-blue-50 group-hover:bg-blue-100">
                         <span className="text-4xl AnakotmaiBOLD">M</span>
                       </div>
 
                       <div className="flex-grow ml-6">
-                        <h3
-                          className="text-lg AnakotmaiBOLD transition-colors duration-200 line-clamp-1 group-hover:text-blue-600">
+                        <h3 className="text-lg AnakotmaiBOLD transition-colors duration-200 line-clamp-1 group-hover:text-blue-600">
                           Minimum
                         </h3>
                         <div className="inline-flex items-center mt-1">
-                          <span className="rounded">
-                            ขั้นต่ำ
-                          </span>
+                          <span className="rounded">ขั้นต่ำ</span>
                         </div>
                       </div>
                     </div>
@@ -237,20 +236,16 @@ function AboutPage() {
                 <li>
                   <div className="block h-full transition-all duration-200 bg-white border border-gray-200 rounded-lg group hover:shadow-lg hover:border-blue-500 hover:ring-1 hover:ring-blue-500/20">
                     <div className="flex items-center p-6">
-                      <div
-                        className="flex items-center justify-center flex-shrink-0 w-16 h-16 transition-colors duration-200 rounded bg-blue-50 group-hover:bg-blue-100">
+                      <div className="flex items-center justify-center flex-shrink-0 w-16 h-16 transition-colors duration-200 rounded bg-blue-50 group-hover:bg-blue-100">
                         <span className="text-4xl AnakotmaiBOLD">V</span>
                       </div>
 
                       <div className="flex-grow ml-6">
-                        <h3
-                          className="text-lg AnakotmaiBOLD transition-colors duration-200 line-clamp-1 group-hover:text-blue-600">
+                        <h3 className="text-lg AnakotmaiBOLD transition-colors duration-200 line-clamp-1 group-hover:text-blue-600">
                           Viable
                         </h3>
                         <div className="inline-flex items-center mt-1">
-                          <span className="rounded">
-                            มีความสามารถ
-                          </span>
+                          <span className="rounded">มีความสามารถ</span>
                         </div>
                       </div>
                     </div>
@@ -259,20 +254,16 @@ function AboutPage() {
                 <li>
                   <div className="block h-full transition-all duration-200 bg-white border border-gray-200 rounded-lg group hover:shadow-lg hover:border-blue-500 hover:ring-1 hover:ring-blue-500/20">
                     <div className="flex items-center p-6">
-                      <div
-                        className="flex items-center justify-center flex-shrink-0 w-16 h-16 transition-colors duration-200 rounded bg-blue-50 group-hover:bg-blue-100">
+                      <div className="flex items-center justify-center flex-shrink-0 w-16 h-16 transition-colors duration-200 rounded bg-blue-50 group-hover:bg-blue-100">
                         <span className="text-4xl AnakotmaiBOLD">P</span>
                       </div>
 
                       <div className="flex-grow ml-6">
-                        <h3
-                          className="text-lg AnakotmaiBOLD transition-colors duration-200 line-clamp-1 group-hover:text-blue-600">
+                        <h3 className="text-lg AnakotmaiBOLD transition-colors duration-200 line-clamp-1 group-hover:text-blue-600">
                           Product
                         </h3>
                         <div className="inline-flex items-center mt-1">
-                          <span className="rounded">
-                            ผลิตภัณฑ์
-                          </span>
+                          <span className="rounded">ผลิตภัณฑ์</span>
                         </div>
                       </div>
                     </div>
@@ -299,28 +290,21 @@ function AboutPage() {
       </div>
       <div className="max-w-6xl mx-auto mt-5 px-10 mb-10" data-aos="fade-up">
         <div>
-          <h2 className="text-3xl inline-block AnakotmaiBOLD">
-            เอกสาร
-          </h2>
+          <h2 className="text-3xl inline-block AnakotmaiBOLD">เอกสาร</h2>
         </div>
         <div>
-          <p className="mt-2 text-lg leading-8">
-            รายงานผลการดำเนินโครงงาน
-          </p>
+          <p className="mt-2 text-lg leading-8">รายงานผลการดำเนินโครงงาน</p>
         </div>
         <div className="flex flex-col md:flex-row gap-14 items-center mt-10 md:mt-8">
           <div>
             <a
               className="book-container"
               href="https://padlet.com/kru_an/2-67-4-5-creative-integration-project-sharing-notes-y95td5qkktywb9ku/wish/lkROZP5Jj8kXWjMg"
-              target="_blank"
               rel="noreferrer noopener"
+              target="_blank"
             >
               <div className="book">
-                <img
-                  alt="Draft"
-                  src={Draft.src}
-                />
+                <img alt="Draft" src={Draft.src} />
               </div>
             </a>
             <p className="text-center mt-5">โครงร่างโครงงาน</p>
@@ -329,14 +313,11 @@ function AboutPage() {
             <a
               className="book-container"
               href="/media/รายงานโครงงาน.pdf"
-              target="_blank"
               rel="noreferrer noopener"
+              target="_blank"
             >
               <div className="book">
-                <img
-                  alt="Cover"
-                  src={Cover.src}
-                />
+                <img alt="Cover" src={Cover.src} />
               </div>
             </a>
             <p className="text-center mt-5">รายงานโครงงาน 5 บท</p>

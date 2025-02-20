@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 import { Tooltip } from "@heroui/tooltip";
+import { MdInfoOutline } from "react-icons/md";
+import { Skeleton } from "@heroui/skeleton";
+
 import GoodsGrid from "@/components/productGrid";
 import marketConfig from "@/market-config.mjs";
 import ProductLoaders from "@/components/productLoaders";
 import CategoryGrid from "@/components/categoryGrid";
-import { MdInfoOutline } from "react-icons/md";
-import { Skeleton } from "@heroui/skeleton";
 
 function GoodPage() {
   const [title] = useState("Yorwor Market - สินค้าทั้งหมด");
@@ -51,7 +51,10 @@ function GoodPage() {
                 <div className="max-w-5xl mx-auto w-full">
                   <div className="grid grid-cols-3 gap-6 md:grid-cols-6">
                     {[...Array(6)].map((_, index) => (
-                      <div key={index} className="max-w-[300px] w-full flex flex-col items-center justify-center gap-3">
+                      <div
+                        key={index}
+                        className="max-w-[300px] w-full flex flex-col items-center justify-center gap-3"
+                      >
                         <div>
                           <Skeleton className="flex rounded-lg w-16 h-16" />
                         </div>
@@ -77,7 +80,9 @@ function GoodPage() {
                       <Tooltip
                         content={
                           <div className="px-1 py-2">
-                            <p className="AnakotmaiBOLD">เลื่อน ซ้าย-ขวา เพื่อดูหมวดหมู่ทั้งหมด</p>
+                            <p className="AnakotmaiBOLD">
+                              เลื่อน ซ้าย-ขวา เพื่อดูหมวดหมู่ทั้งหมด
+                            </p>
                             <p>ไอคอนโดย : Flaticon {"(@justicon)"}</p>
                           </div>
                         }
@@ -88,7 +93,9 @@ function GoodPage() {
                     <CategoryGrid />
                   </div>
                 </>
-              ) : (<></>)}
+              ) : (
+                <></>
+              )}
               <section className="max-w-6xl pb-7 -mt-2">
                 <h1 className="text-xl my-2">
                   สินค้าทั้งหมดของ{" "}
